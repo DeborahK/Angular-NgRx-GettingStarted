@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
 
 @Component({
   selector: 'pm-criteria',
@@ -6,6 +6,10 @@ import { Component, OnInit, EventEmitter, Output } from '@angular/core';
   styleUrls: ['./criteria.component.css']
 })
 export class CriteriaComponent implements OnInit {
+  @Input()
+  set defaultListFilter(value: string) {
+    this.listFilter = value;
+  }
   @Output() valueChange: EventEmitter<string> =
                           new EventEmitter<string>();
 

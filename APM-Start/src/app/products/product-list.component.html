@@ -6,7 +6,8 @@
   <div class='panel-body'>
     <div class='row form-group'>
       <pm-criteria class='col-md-12'
-          (valueChange)='onValueChange($event)'>
+        [defaultListFilter]='filterBy'
+        (valueChange)='onValueChange($event)'>
       </pm-criteria>
     </div>
 
@@ -19,6 +20,12 @@
         {{ product.productName }} ({{ product.productCode }})
       </button>
     </div>
+  </div>
+
+  <div class="panel-footer text-right">
+    <a class="btn btn-primary" (click)='onAdd()'>
+        Add
+    </a>
   </div>
 </div>
 <div *ngIf='errorMessage' class='alert alert-danger'>

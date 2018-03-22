@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
 import { IProduct } from './product';
 import { ProductService } from './product.service';
+import { ProductParameterService } from './product-parameter.service';
 
 @Component({
   selector: 'pm-product-list',
@@ -11,13 +12,25 @@ export class ProductListComponent implements OnInit {
   pageTitle: string = 'Products';
   errorMessage: string;
 
+  @Output() productSelected = new EventEmitter<IProduct>();
+  @Output() addSelected = new EventEmitter();
+  
   products: IProduct[];
   filteredProducts: IProduct[];
+
+  get filterBy(): string {
+    return this.productParameterService.filterBy;
+  }
+  set filterBy(value: string) {
+    this.productParameterService.filterBy = value;
+  }
 
   get selectedProduct(): IProduct | null {
     return this.productService.currentProduct;
   }
-  constructor(private productService: ProductService) { }
+  
+  constructor(private productService: ProductService,
+              private productParameterService: ProductParameterService) { }
 
   ngOnInit(): void {
     this.productService.getProducts().subscribe(
@@ -29,11 +42,17 @@ export class ProductListComponent implements OnInit {
     );
   }
 
+  onAdd(): void {
+    this.addSelected.emit();
+  }
+
   onSelected(product: IProduct): void {
-    this.productService.currentProduct = product;
+    this.productSelected.emit(product);
   }
 
   onValueChange(value: string): void {
+    // Retain the selection
+    this.filterBy = value;
     this.performFilter(value);
   }
 

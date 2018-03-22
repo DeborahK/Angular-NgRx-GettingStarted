@@ -6,7 +6,7 @@
     <div class="panel-body">
         <form class="form-horizontal" 
               novalidate
-              (ngSubmit)="saveProduct()">
+              (ngSubmit)="onSave()">
             <fieldset *ngIf="product">
                 <div class="form-group" 
                      [ngClass]="{'has-error': (productNameVar.touched || 
@@ -14,7 +14,7 @@
                                                !productNameVar.valid }">
                     <label class="col-md-2 control-label" for="productNameId">Product Name</label>
 
-                    <div class="col-md-8">
+                    <div class="col-md-9">
                         <input class="form-control" 
                                id="productNameId" 
                                type="text" 
@@ -43,7 +43,7 @@
                                                !productCodeVar.valid }">
                     <label class="col-md-2 control-label" for="productCodeId">Product Code</label>
 
-                    <div class="col-md-8">
+                    <div class="col-md-9">
                         <input class="form-control" 
                                id="productCodeId" 
                                type="text" 
@@ -65,7 +65,7 @@
                 <div class="form-group">
                     <label class="col-md-2 control-label" for="descriptionId">Description</label>
 
-                    <div class="col-md-8">
+                    <div class="col-md-9">
                         <textarea class="form-control" 
                                   id="descriptionId" 
                                   placeholder="Description" 
@@ -79,21 +79,21 @@
                 <div class="has-error" *ngIf="errorMessage">{{errorMessage}}</div>
 
                 <div class="form-group">
-                    <div class="col-md-4 col-md-offset-2">
+                    <div class="col-md-10 col-md-offset-2">
                         <span>
                             <button class="btn btn-primary" type="submit" style="width:80px;margin-right:10px" [disabled]='!editForm.valid'>
                                 Save
                             </button>
                         </span>
                         <span>
-                            <a class="btn btn-default" style="width:80px" (click)="cancel()">
+                            <button class="btn btn-default" style="width:80px;margin-right:10px" (click)="onCancel()">
                                 Cancel
-                            </a>
+                            </button>
                         </span>
                         <span>
-                            <a class="btn btn-default" style="width:80px" (click)="deleteProduct()">
+                            <button class="btn btn-default" style="width:80px" (click)="onDelete()">
                                 Delete
-                            </a>
+                            </button>
                         </span>   
                     </div>
                 </div>
