@@ -1,16 +1,6 @@
-<div class='row' *ngIf='monthCount'>
-  <div class='col-md-4'>
-    <h4>
-      Number of months on the market: {{ monthCount }}
-    </h4>
-  </div>
-</div>
 <div class='row'>
   <div class='col-md-4'>
-    <pm-product-list 
-      (productSelected)='onProductSelected($event)' 
-      (addSelected)='onAddSelected()'>
-    </pm-product-list>
+    <pm-product-list></pm-product-list>
   </div>
   <div class='col-md-8'>
     <router-outlet></router-outlet>

@@ -1,9 +1,9 @@
-<div class='panel panel-primary' *ngIf='products?.length'>
+<div class='panel panel-primary'>
   <div class='panel-heading'>
     {{pageTitle}}
   </div>
 
-  <div class='panel-body'>
+  <div class='panel-body' *ngIf='products?.length'>
     <div class='row form-group'>
       <pm-criteria class='col-md-12'
         [defaultListFilter]='filterBy'

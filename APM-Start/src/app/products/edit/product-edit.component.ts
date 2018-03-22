@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NgForm } from '@angular/forms';
+import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
 
 import { IProduct } from '../product';
 import { ProductService } from '../product.service';
@@ -15,28 +16,23 @@ export class ProductEditComponent implements OnInit {
   errorMessage: string;
 
   private originalProduct: IProduct;
-  private editedProduct: IProduct | null;
+  private product: IProduct;
 
-  get product(): IProduct | null {
-    if (this.productService.currentProduct && 
-        (!this.editedProduct || this.productService.currentProduct.id !== this.editedProduct.id)) {
-      this.onProductRetrieved(this.productService.currentProduct);
-    }
-    return this.editedProduct;
+  constructor(private router: Router,
+              private route: ActivatedRoute,
+              private productService: ProductService) {
   }
 
-  constructor(private productService: ProductService,
-    private router: Router,
-    private route: ActivatedRoute) {
-  }
-
-  ngOnInit(): void {
-    // Watch for changes to the parameter
-    // This notifies the component when the user
-    // changes from an edit to an add operation
+  ngOnInit() {
     this.route.params.subscribe(
       param => {
-        this.editedProduct = null;
+        if (param.hasOwnProperty('id')) {
+          const id = +param['id'];
+          this.productService.getProduct(id).subscribe(
+            (product: IProduct) => this.onProductRetrieved(product),
+            (err: ErrorObservable) => this.errorMessage = err.error
+          );
+        }
       }
     );
   }
@@ -50,8 +46,8 @@ export class ProductEditComponent implements OnInit {
     // Display the data in the form
     // Use a copy to allow cancel.
     this.originalProduct = product;
-    this.editedProduct = Object.assign({}, product);
-
+    this.product = Object.assign({}, product);
+    
     if (product.id === 0) {
       this.pageTitle = 'Add Product';
     } else {
@@ -74,39 +70,34 @@ export class ProductEditComponent implements OnInit {
       if (confirm(`Really delete the product: ${this.product.productName}?`)) {
         this.productService.deleteProduct(this.product.id)
           .subscribe(
-            () => this.onSaveComplete(),
-            (error: any) => this.errorMessage = <any>error
+            () => this.router.navigate(['/products']),
+            (err: ErrorObservable) => this.errorMessage = err.error
           );
       }
     } else {
       // Don't delete, it was never saved.
-      this.onSaveComplete();
+      // Navigate back to the product list
+      this.router.navigate(['/products']);
     }
   }
 
   onSave(): void {
     if (this.editForm.valid) {
-      this.productService.saveProduct(this.editedProduct)
+      this.productService.saveProduct(this.product)
         .subscribe(() => {
           // Assign the changes from the copy
-          Object.keys(this.editedProduct).forEach(key =>
-            this.originalProduct[key] = this.editedProduct[key]
+          Object.keys(this.product).forEach(key =>
+            this.originalProduct[key] = this.product[key]
           );
 
-          this.onSaveComplete();
+        // Navigate back to the detail
+        this.router.navigate(['/products', this.productService.currentProduct.id, 'detail']);
         },
-          (error: any) => this.errorMessage = <any>error
+          (err: ErrorObservable) => this.errorMessage = err.error
         );
     } else {
       this.errorMessage = 'Please correct the validation errors.';
     }
   }
 
-  onSaveComplete(): void {
-    // Reset back to pristine
-    this.editForm.reset(this.editForm.value);
-
-    // Navigate back to the detail
-    this.router.navigate(['/products', this.productService.currentProduct.id, 'detail']);
-  }
 }

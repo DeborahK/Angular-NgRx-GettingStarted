@@ -14,36 +14,44 @@ export class ProductService {
     private productsUrl = 'api/products';
     private products: IProduct[];
 
-    currentProduct: IProduct;
+    private _currentProduct: IProduct | null;
+    get currentProduct(): IProduct | null {
+      return this._currentProduct;
+    }
 
     constructor(private http: HttpClient) { }
 
     getProducts(): Observable<IProduct[]> {
-        if (this.products) {
-            return of(this.products);
-        }
-        return this.http.get<IProduct[]>(this.productsUrl)
-                        .pipe(
-                            tap(data => console.log(JSON.stringify(data))),
-                            tap(data => this.products = data),
-                            catchError(this.handleError)
-                        );
+      // When getting all products, clear the current product
+      this._currentProduct = null;
+      if (this.products) {
+          return of(this.products);
+      }
+      return this.http.get<IProduct[]>(this.productsUrl)
+                      .pipe(
+                          tap(data => console.log(JSON.stringify(data))),
+                          tap(data => this.products = data),
+                          catchError(this.handleError)
+                      );
     }
 
     getProduct(id: number): Observable<IProduct> {
         if (id === 0) {
-            return of(this.initializeProduct());
+          this._currentProduct = this.initializeProduct();
+          return of(this.currentProduct);
         }
         if (this.products) {
             const foundItem = this.products.find(item => item.id === id);
             if (foundItem) {
-                return of(foundItem);
+              this._currentProduct = foundItem;
+              return of(this.currentProduct);
             }
         }
         const url = `${this.productsUrl}/${id}`;
         return this.http.get<IProduct>(url)
                         .pipe(
-                            tap(data => console.log('Data: ' + JSON.stringify(data))),
+                            tap(product => console.log('Data: ' + JSON.stringify(product))),
+                            tap(product => this._currentProduct = product),
                             catchError(this.handleError)
                         );
     }
@@ -66,7 +74,7 @@ export class ProductService {
                                 const foundIndex = this.products.findIndex(item => item.id === id);
                                 if (foundIndex > -1) {
                                     this.products.splice(foundIndex, 1);
-                                    this.currentProduct = null;
+                                    this._currentProduct = null;
                                 }
                             }),
                             catchError(this.handleError)
@@ -74,16 +82,19 @@ export class ProductService {
     }
 
     private createProduct(product: IProduct, headers: HttpHeaders): Observable<IProduct> {
-        product.id = null;
-        return this.http.post<IProduct>(this.productsUrl, product,  { headers: headers} )
-                        .pipe(
-                            tap(data => console.log('createProduct: ' + JSON.stringify(data))),
-                            tap(data => {
-                                this.products.push(data);
-                                this.currentProduct = data;
-                            }),
-                            catchError(this.handleError)
-                        );
+      // Make a copy so changing the id does not affect change detection
+      // id must be set to null for the in-memory web api
+      const productToSave = Object.assign({}, product);
+      productToSave.id = null;
+      return this.http.post<IProduct>(this.productsUrl, productToSave,  { headers: headers} )
+                      .pipe(
+                          tap(data => console.log('createProduct: ' + JSON.stringify(data))),
+                          tap(data => {
+                              this.products.push(data);
+                              this._currentProduct = data;
+                          }),
+                          catchError(this.handleError)
+                      );
     }
 
     private updateProduct(product: IProduct, headers: HttpHeaders): Observable<IProduct> {

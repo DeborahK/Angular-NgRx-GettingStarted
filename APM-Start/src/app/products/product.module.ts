@@ -12,13 +12,11 @@ import { ProductService } from './product.service';
 import { ProductParameterService } from './product-parameter.service';
 
 const productRoutes: Routes = [
-  { path: '', component: ProductShellComponent},
-  {
-    path: ':id',
+  { path: '', 
     component: ProductShellComponent,
     children: [
-      { path: 'detail', component: ProductDetailComponent },
-      { path: 'edit', component: ProductEditComponent }
+      { path: ':id/detail', component: ProductDetailComponent },
+      { path: ':id/edit', component: ProductEditComponent }
     ]
   }
 ];

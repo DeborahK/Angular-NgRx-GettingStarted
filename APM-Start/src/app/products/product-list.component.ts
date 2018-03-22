@@ -3,6 +3,8 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { IProduct } from './product';
 import { ProductService } from './product.service';
 import { ProductParameterService } from './product-parameter.service';
+import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'pm-product-list',
@@ -11,9 +13,6 @@ import { ProductParameterService } from './product-parameter.service';
 export class ProductListComponent implements OnInit {
   pageTitle: string = 'Products';
   errorMessage: string;
-
-  @Output() productSelected = new EventEmitter<IProduct>();
-  @Output() addSelected = new EventEmitter();
   
   products: IProduct[];
   filteredProducts: IProduct[];
@@ -29,7 +28,8 @@ export class ProductListComponent implements OnInit {
     return this.productService.currentProduct;
   }
   
-  constructor(private productService: ProductService,
+  constructor(private router: Router,
+              private productService: ProductService,
               private productParameterService: ProductParameterService) { }
 
   ngOnInit(): void {
@@ -38,16 +38,18 @@ export class ProductListComponent implements OnInit {
         this.products = products;
         this.performFilter(null);
       },
-      (error: any) => this.errorMessage = <any>error
+      (err: ErrorObservable) => this.errorMessage = err.error
     );
   }
 
   onAdd(): void {
-    this.addSelected.emit();
+    // Navigate to the edit
+    this.router.navigate(['/products', 0, 'edit']);
   }
 
   onSelected(product: IProduct): void {
-    this.productSelected.emit(product);
+    // Navigate to the detail
+    this.router.navigate(['/products', product.id, 'detail']);;
   }
 
   onValueChange(value: string): void {
