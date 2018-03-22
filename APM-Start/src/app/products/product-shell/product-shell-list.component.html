@@ -1,0 +1,20 @@
+<div class='panel panel-primary' *ngIf='products?.length'>
+  <div class='panel-heading'>
+    {{pageTitle}}
+  </div>
+
+  <div class='panel-body'>
+    <div class='list-group'>
+      <button type='button'
+              class='list-group-item'
+              *ngFor='let product of products'
+              [ngClass]="{'active': product?.id === selectedProduct?.id}"
+              (click)='onSelected(product)'>
+        {{ product.productName }} ({{ product.productCode }})
+      </button>
+    </div>
+  </div>
+</div>
+<div *ngIf='errorMessage' class='alert alert-danger'>
+  Error: {{ errorMessage }}
+</div>
