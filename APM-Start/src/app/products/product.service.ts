@@ -44,16 +44,12 @@ export class ProductService {
             const foundItem = this.products.find(item => item.id === id);
             if (foundItem) {
               this._currentProduct = foundItem;
+              console.log(this._currentProduct);
               return of(this.currentProduct);
             }
         }
-        const url = `${this.productsUrl}/${id}`;
-        return this.http.get<IProduct>(url)
-                        .pipe(
-                            tap(product => console.log('Data: ' + JSON.stringify(product))),
-                            tap(product => this._currentProduct = product),
-                            catchError(this.handleError)
-                        );
+        // TODO: When handling a deep link, the products are not yet
+        //       set and this code returns nothing. Need to fix.
     }
 
     saveProduct(product: IProduct): Observable<IProduct> {

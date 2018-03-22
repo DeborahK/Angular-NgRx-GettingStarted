@@ -13,7 +13,7 @@ import { Router } from '@angular/router';
 export class ProductListComponent implements OnInit {
   pageTitle: string = 'Products';
   errorMessage: string;
-  
+
   products: IProduct[];
   filteredProducts: IProduct[];
 
@@ -24,10 +24,11 @@ export class ProductListComponent implements OnInit {
     this.productParameterService.filterBy = value;
   }
 
+  // Used to highlight the selected product in the list
   get selectedProduct(): IProduct | null {
     return this.productService.currentProduct;
   }
-  
+
   constructor(private router: Router,
               private productService: ProductService,
               private productParameterService: ProductParameterService) { }
@@ -49,7 +50,7 @@ export class ProductListComponent implements OnInit {
 
   onSelected(product: IProduct): void {
     // Navigate to the detail
-    this.router.navigate(['/products', product.id, 'detail']);;
+    this.router.navigate(['/products', product.id, 'detail']);
   }
 
   onValueChange(value: string): void {

@@ -12,7 +12,7 @@ import { ProductService } from './product.service';
 import { ProductParameterService } from './product-parameter.service';
 
 const productRoutes: Routes = [
-  { path: '', 
+  { path: '',
     component: ProductShellComponent,
     children: [
       { path: ':id/detail', component: ProductDetailComponent },

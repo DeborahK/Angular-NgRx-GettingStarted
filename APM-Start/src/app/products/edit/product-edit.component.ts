@@ -13,10 +13,10 @@ import { ProductService } from '../product.service';
 export class ProductEditComponent implements OnInit {
   @ViewChild(NgForm) editForm: NgForm;
   pageTitle: string = 'Product Edit';
-  errorMessage: string;
+  errorMessage: string = '';
 
   private originalProduct: IProduct;
-  private product: IProduct;
+  product: IProduct;
 
   constructor(private router: Router,
               private route: ActivatedRoute,
@@ -46,8 +46,10 @@ export class ProductEditComponent implements OnInit {
     // Display the data in the form
     // Use a copy to allow cancel.
     this.originalProduct = product;
+    console.log(this.originalProduct);
     this.product = Object.assign({}, product);
-    
+    console.log(this.product);
+
     if (product.id === 0) {
       this.pageTitle = 'Add Product';
     } else {
@@ -56,12 +58,12 @@ export class ProductEditComponent implements OnInit {
   }
 
   onCancel(): void {
-    if (this.productService.currentProduct.id === 0) {
+    if (this.product.id === 0) {
       // Navigate back to the product list on cancel of add
       this.router.navigate(['/products']);
     } else {
       // Navigate back to the product detail
-      this.router.navigate(['/products', this.productService.currentProduct.id, 'detail']);
+      this.router.navigate(['/products', this.product.id, 'detail']);
     }
   }
 
@@ -90,8 +92,8 @@ export class ProductEditComponent implements OnInit {
             this.originalProduct[key] = this.product[key]
           );
 
-        // Navigate back to the detail
-        this.router.navigate(['/products', this.productService.currentProduct.id, 'detail']);
+          // Navigate back to the detail
+          this.router.navigate(['/products', this.product.id, 'detail']);
         },
           (err: ErrorObservable) => this.errorMessage = err.error
         );
