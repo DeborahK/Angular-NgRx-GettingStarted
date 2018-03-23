@@ -17,15 +17,25 @@
               *ngFor='let product of filteredProducts'
               [ngClass]="{'active': product?.id === selectedProduct?.id}"
               (click)='onSelected(product)'>
-        {{ product.productName }} ({{ product.productCode }})
+        {{ product.productName }}
+        <ng-container *ngIf='displayCode'>
+          ({{ product.productCode }})
+        </ng-container>
       </button>
     </div>
   </div>
 
-  <div class="panel-footer text-right">
-    <a class="btn btn-primary" (click)='onAdd()'>
-        Add
-    </a>
+  <div class="panel-footer">
+    <div class="row">
+      <label class="col-md-8">
+        <input type="checkbox" [(ngModel)]="displayCode"> Display Product Code
+      </label>
+      <div class="col-md-4 text-right">
+        <a class="btn btn-primary" (click)='onAdd()'>
+          Add
+        </a>
+      </div>
+    </div>
   </div>
 </div>
 <div *ngIf='errorMessage' class='alert alert-danger'>

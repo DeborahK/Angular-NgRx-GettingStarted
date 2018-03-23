@@ -13,7 +13,8 @@ import { Router } from '@angular/router';
 export class ProductListComponent implements OnInit {
   pageTitle: string = 'Products';
   errorMessage: string;
-
+  displayCode: boolean = false;
+  
   products: IProduct[];
   filteredProducts: IProduct[];
 

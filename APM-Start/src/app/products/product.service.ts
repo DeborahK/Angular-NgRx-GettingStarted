@@ -36,20 +36,30 @@ export class ProductService {
     }
 
     getProduct(id: number): Observable<IProduct> {
-        if (id === 0) {
-          this._currentProduct = this.initializeProduct();
-          return of(this.currentProduct);
-        }
-        if (this.products) {
-            const foundItem = this.products.find(item => item.id === id);
-            if (foundItem) {
-              this._currentProduct = foundItem;
-              console.log(this._currentProduct);
-              return of(this.currentProduct);
-            }
-        }
-        // TODO: When handling a deep link, the products are not yet
-        //       set and this code returns nothing. Need to fix.
+      if (id === 0) {
+        this._currentProduct = this.initializeProduct();
+        return of(this.currentProduct);
+      }
+      if (this.products) {
+          const foundItem = this.products.find(item => item.id === id);
+          if (foundItem) {
+            this._currentProduct = foundItem;
+            return of(this.currentProduct);
+          }
+      }
+      const url = `${this.productsUrl}/${id}`;
+      return this.http.get<IProduct>(url)
+                 .pipe(
+                    tap(product => console.log('Data: ' + JSON.stringify(product))),
+                    tap(product => this._currentProduct = product),
+                    catchError(this.handleError)
+                 );
+        // TODO: When handling a deep link, the products are not collected yet
+        //       so this gets the item from the server.
+        //       This works OK on a retrieve, but for the edit, the
+        //       edited item is not then in the product array and the edits don't
+        //       appear in the Product List.
+        //       Need to fix.
     }
 
     saveProduct(product: IProduct): Observable<IProduct> {

@@ -46,9 +46,7 @@ export class ProductEditComponent implements OnInit {
     // Display the data in the form
     // Use a copy to allow cancel.
     this.originalProduct = product;
-    console.log(this.originalProduct);
     this.product = Object.assign({}, product);
-    console.log(this.product);
 
     if (product.id === 0) {
       this.pageTitle = 'Add Product';
