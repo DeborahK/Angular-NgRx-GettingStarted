@@ -5,7 +5,12 @@ import { IProduct } from './product';
 import { ProductService } from './product.service';
 import { ProductParameterService } from './product-parameter.service';
 import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
+
 import { Store } from '@ngrx/store';
+import * as productActions from './state/product.actions'
+
+// (5)
+import * as fromRoot from './state/index'
 
 @Component({
   selector: 'pm-product-list',
@@ -15,18 +20,7 @@ export class ProductListComponent implements OnInit {
   pageTitle: string = 'Products';
   errorMessage: string;
 
-  // (1) Add code to monitor action in the component
-  private _displayCode: boolean;
-  get displayCode(): boolean {
-    return this._displayCode;
-  }
-  set displayCode(value: boolean) {
-    // (3) Dispatch action
-    this.store.dispatch({
-      type: 'TOGGLE_PRODUCT_CODE',
-      payload: value
-    });
-  }
+  displayCode: boolean;
 
   products: IProduct[];
   filteredProducts: IProduct[];
@@ -43,11 +37,11 @@ export class ProductListComponent implements OnInit {
     return this.productService.currentProduct;
   }
 
-  // (2) Inject the store
+  // (5) Strongly type the generic parameter for the store.
   constructor(private router: Router,
-              private store: Store<any>,
-              private productService: ProductService,
-              private productParameterService: ProductParameterService) { }
+    private store: Store<fromRoot.State>,
+    private productService: ProductService,
+    private productParameterService: ProductParameterService) { }
 
   ngOnInit(): void {
     this.productService.getProducts().subscribe(
@@ -58,19 +52,21 @@ export class ProductListComponent implements OnInit {
       (err: ErrorObservable) => this.errorMessage = err.error
     );
 
-    // (6) Always get the entire state tree
-    this.store.select('products').subscribe(
-      products => {
-        if (products) {
-          this._displayCode = products.showProductCode;
-        }
-      }
+    // (6) Use our strongly typed state
+    // Get only what you need
+    this.store.select(state => state.product.showProductCode).subscribe(
+      showProductCode => this.displayCode = showProductCode
     );
   }
 
   onAdd(): void {
     // Navigate to the edit
     this.router.navigate(['/products', 0, 'edit']);
+  }
+
+  onChange(value: boolean): void {
+    // (4) Dispatch action
+    this.store.dispatch(new productActions.ToggleProductCodeAction(value));
   }
 
   onSelected(product: IProduct): void {

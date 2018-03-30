@@ -20,7 +20,7 @@ import { PageNotFoundComponent } from './home/page-not-found.component';
 import { UserModule } from './user/user.module';
 
 // ngrx
-import { reducer } from './products/state/product.reducer';
+import { reducers } from './products/state/index';
 
 @NgModule({
   imports: [
@@ -30,9 +30,7 @@ import { reducer } from './products/state/product.reducer';
     UserModule,
     AppRoutingModule,
     // (5) Provide the reducer to the store
-    StoreModule.forRoot({
-      products: reducer
-    })
+    StoreModule.forRoot(reducers)
   ],
   declarations: [
     AppComponent,

@@ -28,7 +28,9 @@
   <div class="panel-footer">
     <div class="row">
       <label class="col-md-8">
-        <input type="checkbox" [(ngModel)]="displayCode"> Display Product Code
+        <input type="checkbox" 
+              (change)='onChange($event.target.checked)'
+              [checked]='displayCode'> Display Product Code
       </label>
       <div class="col-md-4 text-right">
         <a class="btn btn-primary" (click)='onAdd()'>
