@@ -7,10 +7,10 @@ import { ProductParameterService } from './product-parameter.service';
 import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
 
 import { Store } from '@ngrx/store';
-import * as productActions from './state/product.actions'
+import * as productActions from './state/product.actions';
 
 // (5)
-import * as fromRoot from './state/index'
+import * as fromProduct from './state/product.reducer';
 
 @Component({
   selector: 'pm-product-list',
@@ -39,7 +39,7 @@ export class ProductListComponent implements OnInit {
 
   // (5) Strongly type the generic parameter for the store.
   constructor(private router: Router,
-    private store: Store<fromRoot.State>,
+    private store: Store<fromProduct.State>,
     private productService: ProductService,
     private productParameterService: ProductParameterService) { }
 

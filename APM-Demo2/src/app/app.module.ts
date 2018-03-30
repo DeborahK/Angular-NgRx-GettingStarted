@@ -18,9 +18,10 @@ import { PageNotFoundComponent } from './home/page-not-found.component';
 
 /* Feature Modules */
 import { UserModule } from './user/user.module';
+import { reducer } from './products/state/product.reducer';
 
 // ngrx
-import { reducers } from './products/state/index';
+// import { reducers } from './products/state/index';
 
 @NgModule({
   imports: [
@@ -30,7 +31,9 @@ import { reducers } from './products/state/index';
     UserModule,
     AppRoutingModule,
     // (5) Provide the reducer to the store
-    StoreModule.forRoot(reducers)
+    StoreModule.forRoot({
+      product: reducer
+    })
   ],
   declarations: [
     AppComponent,
