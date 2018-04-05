@@ -1,16 +1,39 @@
 import { Action } from '@ngrx/store';
+import { IProduct } from '../product';
 
-// (1)
+// (1) Start with the action
 export enum ProductStateActionTypes {
-  ToggleProductCode = '[ProductState] Toggle Product Code'  // Helps to identify this in the logging
+  ToggleProductCode = '[ProductState] Toggle Product Code',
+  LoadProducts = '[ProductState] Load Products',
+  LoadProductsSuccess = '[ProductState] Load Products Success',
+  LoadProductsFail = '[ProductState] Load Products Fail'
 }
 
-// (2) Action creator
 export class ToggleProductCodeAction implements Action {
   readonly type = ProductStateActionTypes.ToggleProductCode;
 
-  constructor(public payload: boolean) {}
+  constructor(public payload: boolean) { }
 }
 
-// (3) Union all the valid types
-export type ProductStateAction = ToggleProductCodeAction;
+export class LoadProductsAction implements Action {
+  readonly type = ProductStateActionTypes.LoadProducts;
+
+  constructor() { }
+}
+
+export class LoadProductsActionSuccess implements Action {
+  readonly type = ProductStateActionTypes.LoadProductsSuccess;
+
+  constructor(public payload: IProduct[]) { }
+}
+
+export class LoadProductsFailAction implements Action {
+  readonly type = ProductStateActionTypes.LoadProductsFail;
+
+  constructor(public payload: string) { }
+}
+
+export type ProductStateAction = ToggleProductCodeAction
+  | LoadProductsAction
+  | LoadProductsActionSuccess
+  | LoadProductsFailAction;

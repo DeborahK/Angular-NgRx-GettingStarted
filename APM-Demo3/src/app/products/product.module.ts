@@ -10,6 +10,8 @@ import { ProductEditComponent } from './edit/product-edit.component';
 
 import { ProductService } from './product.service';
 import { ProductParameterService } from './product-parameter.service';
+import { ProductEffects } from './state/product.effect';
+import { EffectsModule } from '@ngrx/effects';
 
 const productRoutes: Routes = [
   { path: '',
@@ -24,7 +26,11 @@ const productRoutes: Routes = [
 @NgModule({
   imports: [
     SharedModule,
-    RouterModule.forChild(productRoutes)
+    RouterModule.forChild(productRoutes),
+    // (3) Register the effects
+    EffectsModule.forRoot(
+      [ ProductEffects ]
+    ),
   ],
   declarations: [
     ProductShellComponent,
@@ -34,7 +40,9 @@ const productRoutes: Routes = [
   ],
   providers: [
     ProductService,
-    ProductParameterService
+    ProductParameterService,
+    // (3) Register the effects service
+    ProductEffects
   ]
 })
 export class ProductModule { }

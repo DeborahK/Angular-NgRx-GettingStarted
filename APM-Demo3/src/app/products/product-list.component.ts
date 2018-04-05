@@ -9,8 +9,8 @@ import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
 import { Store } from '@ngrx/store';
 import * as productActions from './state/product.actions';
 
-// (5)
 import * as fromProduct from './state/product.reducer';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'pm-product-list',
@@ -22,15 +22,9 @@ export class ProductListComponent implements OnInit {
 
   displayCode: boolean;
 
-  products: IProduct[];
-  filteredProducts: IProduct[];
-
-  get filterBy(): string {
-    return this.productParameterService.filterBy;
-  }
-  set filterBy(value: string) {
-    this.productParameterService.filterBy = value;
-  }
+  // (5) Define the observable property
+  // (6) Change to a async pipe
+  products$: Store<IProduct[]>;
 
   // Used to highlight the selected product in the list
   get selectedProduct(): IProduct | null {
@@ -44,16 +38,14 @@ export class ProductListComponent implements OnInit {
     private productParameterService: ProductParameterService) { }
 
   ngOnInit(): void {
-    this.productService.getProducts().subscribe(
-      (products: IProduct[]) => {
-        this.products = products;
-        this.performFilter(null);
-      },
-      (err: ErrorObservable) => this.errorMessage = err.error
-    );
+    // (5) Select the slice of state ... displays the initial state
+    this.products$ = this.store.select(state => state.product.products);
 
-    // (6) Use our strongly typed state
+    // (5) Dispatch the load
+    this.store.dispatch(new productActions.LoadProductsAction());
+
     // Get only what you need
+    // Subscribe here because it does not use an async pipe
     this.store.select(state => state.product.showProductCode).subscribe(
       showProductCode => this.displayCode = showProductCode
     );
@@ -72,22 +64,6 @@ export class ProductListComponent implements OnInit {
   onSelected(product: IProduct): void {
     // Navigate to the detail
     this.router.navigate(['/products', product.id, 'detail']);
-  }
-
-  onValueChange(value: string): void {
-    // Retain the selection
-    this.filterBy = value;
-    this.performFilter(value);
-  }
-
-  performFilter(filterBy: string | null): void {
-    if (filterBy) {
-      filterBy = filterBy.toLocaleLowerCase();
-      this.filteredProducts = this.products.filter((product: IProduct) =>
-        product.productName.toLocaleLowerCase().indexOf(filterBy) !== -1);
-    } else {
-      this.filteredProducts = this.products;
-    }
   }
 
 }
