@@ -5,7 +5,7 @@ import { Observable } from 'rxjs/Observable';
 import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
 import { of } from 'rxjs/observable/of';
 
-import { catchError, tap } from 'rxjs/operators';
+import { catchError, tap, map } from 'rxjs/operators';
 
 import { IProduct } from './product';
 
@@ -70,7 +70,7 @@ export class ProductService {
         return this.updateProduct(product, headers);
     }
 
-    deleteProduct(id: number): Observable<IProduct> {
+    deleteProduct(id: number): Observable<{}> {
         const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
         const url = `${this.productsUrl}/${id}`;
         return this.http.delete<IProduct>(url, { headers: headers} )
@@ -92,7 +92,7 @@ export class ProductService {
       // id must be set to null for the in-memory web api
       const productToSave = Object.assign({}, product);
       productToSave.id = null;
-      return this.http.post<IProduct>(this.productsUrl, productToSave,  { headers: headers} )
+      return this.http.post<IProduct>(this.productsUrl, productToSave, { headers: headers} )
                       .pipe(
                           tap(data => console.log('createProduct: ' + JSON.stringify(data))),
                           tap(data => {
@@ -107,7 +107,8 @@ export class ProductService {
         const url = `${this.productsUrl}/${product.id}`;
         return this.http.put<IProduct>(url, product, { headers: headers} )
                         .pipe(
-                            tap(data => console.log('updateProduct: ' + product.id)),
+                            tap(() => console.log('updateProduct: ' + product.id)),
+                            map(() => product),
                             catchError(this.handleError)
                         );
     }

@@ -4,13 +4,14 @@ import { Router } from '@angular/router';
 import { IProduct } from './product';
 import { ProductService } from './product.service';
 import { ProductParameterService } from './product-parameter.service';
+import { Observable } from 'rxjs/Observable';
 import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
 
+/* ngrx */
 import { Store } from '@ngrx/store';
 import * as productActions from './state/product.actions';
 
 import * as fromProduct from './state/product.reducer';
-import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'pm-product-list',

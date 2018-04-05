@@ -1,6 +1,6 @@
-# APM-Demo 2
+# APM-Demo 3
 
-Demo of a basic implementation of ngrx for a simple boolean flag, but using strong typing.
+Demo of using effects for retrieving and displaying data.
 
 The goal of this demo is to introduce the parts of ngrx for a simple, easy to reason about, use case.
 

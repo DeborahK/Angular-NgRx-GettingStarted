@@ -6,8 +6,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { HttpClientInMemoryWebApiModule  } from 'angular-in-memory-web-api';
 import { ProductData } from './products/product-data';
 
-import { StoreModule } from '@ngrx/store';
-
 import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
@@ -19,7 +17,8 @@ import { PageNotFoundComponent } from './home/page-not-found.component';
 /* Feature Modules */
 import { UserModule } from './user/user.module';
 
-// ngrx
+/* ngrx */
+import { StoreModule } from '@ngrx/store';
 import { reducer } from './products/state/product.reducer';
 
 @NgModule({
@@ -29,9 +28,8 @@ import { reducer } from './products/state/product.reducer';
     HttpClientInMemoryWebApiModule.forRoot(ProductData),
     UserModule,
     AppRoutingModule,
-    // (5) Provide the reducer to the store
     StoreModule.forRoot({
-      products: reducer
+      product: reducer
     })
   ],
   declarations: [

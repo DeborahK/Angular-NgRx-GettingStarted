@@ -6,10 +6,9 @@ import { ProductService } from './product.service';
 import { ProductParameterService } from './product-parameter.service';
 import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
 
+/* ngrx */
 import { Store } from '@ngrx/store';
 import * as productActions from './state/product.actions';
-
-// (5)
 import * as fromProduct from './state/product.reducer';
 
 @Component({
@@ -23,14 +22,6 @@ export class ProductListComponent implements OnInit {
   displayCode: boolean;
 
   products: IProduct[];
-  filteredProducts: IProduct[];
-
-  get filterBy(): string {
-    return this.productParameterService.filterBy;
-  }
-  set filterBy(value: string) {
-    this.productParameterService.filterBy = value;
-  }
 
   // Used to highlight the selected product in the list
   get selectedProduct(): IProduct | null {
@@ -45,15 +36,10 @@ export class ProductListComponent implements OnInit {
 
   ngOnInit(): void {
     this.productService.getProducts().subscribe(
-      (products: IProduct[]) => {
-        this.products = products;
-        this.performFilter(null);
-      },
+      (products: IProduct[]) => this.products = products,
       (err: ErrorObservable) => this.errorMessage = err.error
     );
 
-    // (6) Use our strongly typed state
-    // Get only what you need
     this.store.select(state => state.product.showProductCode).subscribe(
       showProductCode => this.displayCode = showProductCode
     );
@@ -65,29 +51,12 @@ export class ProductListComponent implements OnInit {
   }
 
   onChange(value: boolean): void {
-    // (4) Dispatch action
     this.store.dispatch(new productActions.ToggleProductCodeAction(value));
   }
 
   onSelected(product: IProduct): void {
     // Navigate to the detail
     this.router.navigate(['/products', product.id, 'detail']);
-  }
-
-  onValueChange(value: string): void {
-    // Retain the selection
-    this.filterBy = value;
-    this.performFilter(value);
-  }
-
-  performFilter(filterBy: string | null): void {
-    if (filterBy) {
-      filterBy = filterBy.toLocaleLowerCase();
-      this.filteredProducts = this.products.filter((product: IProduct) =>
-        product.productName.toLocaleLowerCase().indexOf(filterBy) !== -1);
-    } else {
-      this.filteredProducts = this.products;
-    }
   }
 
 }

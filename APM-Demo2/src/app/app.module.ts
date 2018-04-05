@@ -6,8 +6,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { HttpClientInMemoryWebApiModule  } from 'angular-in-memory-web-api';
 import { ProductData } from './products/product-data';
 
-import { StoreModule } from '@ngrx/store';
-
 import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
@@ -18,10 +16,12 @@ import { PageNotFoundComponent } from './home/page-not-found.component';
 
 /* Feature Modules */
 import { UserModule } from './user/user.module';
-import { reducer } from './products/state/product.reducer';
 
-// ngrx
-// import { reducers } from './products/state/index';
+/* ngrx */
+import { StoreModule } from '@ngrx/store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { reducer } from './products/state/product.reducer';
+import { environment } from '../environments/environment';
 
 @NgModule({
   imports: [
@@ -30,10 +30,10 @@ import { reducer } from './products/state/product.reducer';
     HttpClientInMemoryWebApiModule.forRoot(ProductData),
     UserModule,
     AppRoutingModule,
-    // (5) Provide the reducer to the store
     StoreModule.forRoot({
       product: reducer
-    })
+    }),
+    !environment.production ? StoreDevtoolsModule.instrument() : []
   ],
   declarations: [
     AppComponent,

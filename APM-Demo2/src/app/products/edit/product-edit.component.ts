@@ -84,14 +84,14 @@ export class ProductEditComponent implements OnInit {
   onSave(): void {
     if (this.editForm.valid) {
       this.productService.saveProduct(this.product)
-        .subscribe(() => {
+        .subscribe((product) => {
           // Assign the changes from the copy
-          Object.keys(this.product).forEach(key =>
-            this.originalProduct[key] = this.product[key]
+          Object.keys(product).forEach(key =>
+            this.originalProduct[key] = product[key]
           );
 
           // Navigate back to the detail
-          this.router.navigate(['/products', this.product.id, 'detail']);
+          this.router.navigate(['/products', product.id, 'detail']);
         },
           (err: ErrorObservable) => this.errorMessage = err.error
         );

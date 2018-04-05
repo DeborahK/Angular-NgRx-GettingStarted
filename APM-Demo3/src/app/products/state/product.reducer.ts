@@ -10,7 +10,7 @@ export interface State {
 // (0) Add the slice of state
 export interface ProductState {
   showProductCode: boolean;
-  products: IProduct[]
+  products: IProduct[];
 }
 
 // (0) Set its initial state
@@ -30,7 +30,7 @@ export function reducer(state = initialState, action: fromProduct.ProductStateAc
 
     // (7) Add the new action types
     case fromProduct.ProductStateActionTypes.LoadProductsSuccess: {
-      return { ...state, products: action.payload }
+      return { ...state, products: action.payload };
     }
 
     default: {
