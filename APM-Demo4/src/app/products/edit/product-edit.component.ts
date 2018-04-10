@@ -6,7 +6,13 @@ import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
 import { IProduct } from '../product';
 import { ProductService } from '../product.service';
 
+/* ngrx */
+import { Store } from '@ngrx/store';
+import * as fromProduct from '../state/product.reducer';
+import * as productActions from '../state/product.actions';
+
 @Component({
+  selector: 'pm-product-edit',
   templateUrl: './product-edit.component.html',
   styleUrls: ['./product-edit.component.css']
 })
@@ -20,33 +26,26 @@ export class ProductEditComponent implements OnInit {
 
   constructor(private router: Router,
               private route: ActivatedRoute,
+              private store: Store<fromProduct.State>,
               private productService: ProductService) {
   }
 
+  // Need to handle unsubscribe!
   ngOnInit() {
-    this.route.params.subscribe(
-      param => {
-        if (param.hasOwnProperty('id')) {
-          const id = +param['id'];
-          this.productService.getProduct(id).subscribe(
-            (product: IProduct) => this.onProductRetrieved(product),
-            (err: ErrorObservable) => this.errorMessage = err.error
-          );
-        }
+    this.store.select(state => state.product.currentProduct).subscribe(product => {
+      if (product) {
+        this.onProductRetrieved(product);
       }
-    );
+      this.product = product;
+    });
   }
 
   onProductRetrieved(product: IProduct): void {
+    // TODO: Change to reactive forms
     // Reset the form back to pristine
-    if (this.editForm) {
-      this.editForm.reset();
-    }
-
-    // Display the data in the form
-    // Use a copy to allow cancel.
-    this.originalProduct = product;
-    this.product = Object.assign({}, product);
+    // if (this.editForm) {
+    //   this.editForm.reset();
+    // }
 
     if (product.id === 0) {
       this.pageTitle = 'Add Product';
@@ -56,13 +55,7 @@ export class ProductEditComponent implements OnInit {
   }
 
   onCancel(): void {
-    if (this.product.id === 0) {
-      // Navigate back to the product list on cancel of add
-      this.router.navigate(['/products']);
-    } else {
-      // Navigate back to the product detail
-      this.router.navigate(['/products', this.product.id, 'detail']);
-    }
+    // TODO: Abort the edit
   }
 
   onDelete(): void {
@@ -74,27 +67,13 @@ export class ProductEditComponent implements OnInit {
             (err: ErrorObservable) => this.errorMessage = err.error
           );
       }
-    } else {
-      // Don't delete, it was never saved.
-      // Navigate back to the product list
-      this.router.navigate(['/products']);
     }
   }
 
   onSave(): void {
     if (this.editForm.valid) {
-      this.productService.saveProduct(this.product)
-        .subscribe((product) => {
-          // Assign the changes from the copy
-          Object.keys(product).forEach(key =>
-            this.originalProduct[key] = product[key]
-          );
-
-          // Navigate back to the detail
-          this.router.navigate(['/products', product.id, 'detail']);
-        },
-          (err: ErrorObservable) => this.errorMessage = err.error
-        );
+      // Change to obtain the values from the reactive form.
+      this.store.dispatch(new productActions.UpdateProductAction(this.product));
     } else {
       this.errorMessage = 'Please correct the validation errors.';
     }

@@ -5,22 +5,14 @@ import { SharedModule } from '../shared/shared.module';
 
 import { ProductShellComponent } from './product-shell.component';
 import { ProductListComponent } from './product-list.component';
-import { ProductDetailComponent } from './product-detail.component';
 import { ProductEditComponent } from './edit/product-edit.component';
 
 import { ProductService } from './product.service';
-import { ProductParameterService } from './product-parameter.service';
 import { ProductEffects } from './state/product.effect';
 import { EffectsModule } from '@ngrx/effects';
 
 const productRoutes: Routes = [
-  { path: '',
-    component: ProductShellComponent,
-    children: [
-      { path: ':id/detail', component: ProductDetailComponent },
-      { path: ':id/edit', component: ProductEditComponent }
-    ]
-  }
+  { path: '',     component: ProductShellComponent }
 ];
 
 @NgModule({
@@ -35,13 +27,10 @@ const productRoutes: Routes = [
   declarations: [
     ProductShellComponent,
     ProductListComponent,
-    ProductDetailComponent,
     ProductEditComponent
   ],
   providers: [
     ProductService,
-    ProductParameterService,
-    // (3) Register the effects service
     ProductEffects
   ]
 })

@@ -7,30 +7,52 @@ export interface State {
 }
 
 // Slice of the feature state
-// (0) Add the slice of state
 export interface ProductState {
   showProductCode: boolean;
+  currentProduct: IProduct;
   products: IProduct[];
 }
 
-// (0) Set its initial state
 export const initialState: ProductState = {
   showProductCode: false,
+  currentProduct: null,
   products: []
 };
 
 // Change to the appropriate action
 export function reducer(state = initialState, action: fromProduct.ProductStateAction): ProductState {
 
-  // (0) Ensure the full object is returned
   switch (action.type) {
     case fromProduct.ProductStateActionTypes.ToggleProductCode: {
       return { ...state, showProductCode: action.payload };
     }
 
-    // (7) Add the new action types
     case fromProduct.ProductStateActionTypes.LoadProductsSuccess: {
       return { ...state, products: action.payload };
+    }
+
+    // Homework
+    case fromProduct.ProductStateActionTypes.ClearCurrentProduct: {
+      return {...state, currentProduct: null};
+    }
+
+    // Homework
+    case fromProduct.ProductStateActionTypes.SetCurrentProduct: {
+      return {...state, currentProduct: action.payload};
+    }
+
+    case fromProduct.ProductStateActionTypes.UpdateProductSuccess: {
+      // const newProducts = state.products.map(item => {
+      // if (action.payload.id !== item.id) {
+      //   // This isn't the item we care about - keep it as-is
+      //   return item;
+      // }
+
+      // // Otherwise, this is the one we want - return an updated value
+      // return action.payload;
+      const newProducts = state.products.map(
+        item => action.payload.id === item.id ? action.payload : item);
+      return { ...state, currentProduct: action.payload, products: newProducts };
     }
 
     default: {

@@ -1,4 +1,4 @@
-<div class="panel panel-primary">
+<div class="panel panel-primary" *ngIf="product">
     <div class="panel-heading">
         {{pageTitle}}
     </div>
@@ -7,7 +7,7 @@
         <form class="form-horizontal" 
               novalidate
               (ngSubmit)="onSave()">
-            <fieldset *ngIf="product">
+            <fieldset>
                 <div class="form-group" 
                      [ngClass]="{'has-error': (productNameVar.touched || 
                                                productNameVar.dirty || product.id !== 0) && 
@@ -81,7 +81,7 @@
                 <div class="form-group">
                     <div class="col-md-10 col-md-offset-2">
                         <span>
-                            <button class="btn btn-primary" type='submit' style="width:80px;margin-right:10px" [disabled]='!editForm.valid'>
+                            <button class="btn btn-primary" type='submit' style="width:80px;margin-right:10px" [disabled]='editForm && (!editForm.valid || !editForm.dirty)'>
                                 Save
                             </button>
                         </span>

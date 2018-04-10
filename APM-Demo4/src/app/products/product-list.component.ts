@@ -2,15 +2,10 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { IProduct } from './product';
-import { ProductService } from './product.service';
-import { ProductParameterService } from './product-parameter.service';
-import { Observable } from 'rxjs/Observable';
-import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
 
 /* ngrx */
 import { Store } from '@ngrx/store';
 import * as productActions from './state/product.actions';
-
 import * as fromProduct from './state/product.reducer';
 
 @Component({
@@ -28,19 +23,21 @@ export class ProductListComponent implements OnInit {
   products$: Store<IProduct[]>;
 
   // Used to highlight the selected product in the list
-  get selectedProduct(): IProduct | null {
-    return this.productService.currentProduct;
-  }
+  selectedProduct: IProduct | null;
 
   // (5) Strongly type the generic parameter for the store.
   constructor(private router: Router,
-    private store: Store<fromProduct.State>,
-    private productService: ProductService,
-    private productParameterService: ProductParameterService) { }
+    private store: Store<fromProduct.State>) { }
 
   ngOnInit(): void {
+    // TODO: DUNCAN: This now uses all of the state ... do we do it differently?
+
     // (5) Select the slice of state ... displays the initial state
     this.products$ = this.store.select(state => state.product.products);
+
+    this.store.select(state => state.product.currentProduct).subscribe(product => {
+      this.selectedProduct = product;
+    });
 
     // (5) Dispatch the load
     this.store.dispatch(new productActions.LoadProductsAction());
@@ -53,18 +50,16 @@ export class ProductListComponent implements OnInit {
   }
 
   onAdd(): void {
-    // Navigate to the edit
-    this.router.navigate(['/products', 0, 'edit']);
+    // TODO: Dispatch an action to create an empty product
   }
 
   onChange(value: boolean): void {
-    // (4) Dispatch action
     this.store.dispatch(new productActions.ToggleProductCodeAction(value));
   }
 
   onSelected(product: IProduct): void {
-    // Navigate to the detail
-    this.router.navigate(['/products', product.id, 'detail']);
+    // Dispatch an action to set the current product
+    this.store.dispatch(new productActions.SetCurrentProductAction(product));
   }
 
 }
