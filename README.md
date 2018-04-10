@@ -5,7 +5,7 @@ Materials for NgRx course.
 
 `APM-Demo1`: Completed files after the *First Look at NgRX* module. It demonstrates a very simple, but complete NgRx example.
 
-`APM-Demo2`: Completed files after the *Strong Typing Actions with Action Creators* module. It refactors the simple example to include developer tooling support and strong typing. It also includes the completed 'selectedProduct' homework.
+`APM-Demo2`: Completed files after the *Strong Typing Actions with Action Creators* module. It refactors the simple example to include developer tooling support and strong typing. It also includes the completed 'currentProduct' homework.
 
 `APM-Demo3`: Completed files after the *Working with Effects* module. It adds an effect to retrieve data via http.
 
