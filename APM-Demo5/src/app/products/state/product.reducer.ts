@@ -3,7 +3,12 @@ import { IProduct } from '../product';
 
 // State for this feature (Product)
 export interface State {
+  productFeature: StateSlice;
+}
+
+export interface StateSlice {
   product: ProductState;
+  search: null
 }
 
 // Slice of the feature state

@@ -32,9 +32,10 @@ import { ProductEffects } from './products/state/product.effect';
     HttpClientInMemoryWebApiModule.forRoot(ProductData),
     UserModule,
     AppRoutingModule,
-    StoreModule.forRoot({
-      product: reducer
-    }),
+    // (1) Change to an empty object
+    StoreModule.forRoot({ }),
+    // (2) Add here with an empty object
+    EffectsModule.forRoot([]),
     !environment.production ? StoreDevtoolsModule.instrument() : []
   ],
   declarations: [

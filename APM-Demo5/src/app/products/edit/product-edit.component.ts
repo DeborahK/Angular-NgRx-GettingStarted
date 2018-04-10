@@ -32,7 +32,7 @@ export class ProductEditComponent implements OnInit {
 
   // Need to handle unsubscribe!
   ngOnInit() {
-    this.store.select(state => state.product.currentProduct).subscribe(product => {
+    this.store.select(state => state.productFeature.product.currentProduct).subscribe(product => {
       if (product) {
         this.onProductRetrieved(product);
       }

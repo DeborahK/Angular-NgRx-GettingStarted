@@ -10,6 +10,8 @@ import { ProductEditComponent } from './edit/product-edit.component';
 import { ProductService } from './product.service';
 import { ProductEffects } from './state/product.effect';
 import { EffectsModule } from '@ngrx/effects';
+import { StoreModule } from '@ngrx/store';
+import { reducer } from './state/product.reducer';
 
 const productRoutes: Routes = [
   { path: '',     component: ProductShellComponent }
@@ -19,8 +21,13 @@ const productRoutes: Routes = [
   imports: [
     SharedModule,
     RouterModule.forChild(productRoutes),
-    // (3) Register the effects
-    EffectsModule.forRoot(
+    // (3) Add this using forFeature
+    StoreModule.forFeature('productFeature', {
+      product: reducer
+    }),
+    // (4) Change this to forFeature
+    // Registered when lazy loaded.
+    EffectsModule.forFeature(
       [ ProductEffects ]
     ),
   ],

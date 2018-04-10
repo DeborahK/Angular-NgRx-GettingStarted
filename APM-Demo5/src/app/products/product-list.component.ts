@@ -33,9 +33,9 @@ export class ProductListComponent implements OnInit {
     // TODO: DUNCAN: This now uses all of the state ... do we do it differently?
 
     // (5) Select the slice of state ... displays the initial state
-    this.products$ = this.store.select(state => state.product.products);
+    this.products$ = this.store.select(state => state.productFeature.product.products);
 
-    this.store.select(state => state.product.currentProduct).subscribe(product => {
+    this.store.select(state => state.productFeature.product.currentProduct).subscribe(product => {
       this.selectedProduct = product;
     });
 
@@ -44,7 +44,7 @@ export class ProductListComponent implements OnInit {
 
     // Get only what you need
     // Subscribe here because it does not use an async pipe
-    this.store.select(state => state.product.showProductCode).subscribe(
+    this.store.select(state => state.productFeature.product.showProductCode).subscribe(
       showProductCode => this.displayCode = showProductCode
     );
   }
