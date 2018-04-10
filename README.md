@@ -1,2 +1,2 @@
 # Angular-ngrx
-Materials for ngrx course.
+Materials for NgRx course.
