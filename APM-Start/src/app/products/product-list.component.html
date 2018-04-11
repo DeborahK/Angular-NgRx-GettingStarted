@@ -4,19 +4,13 @@
   </div>
 
   <div class='panel-body' *ngIf='products?.length'>
-    <div class='row form-group'>
-      <pm-criteria class='col-md-12'
-        [defaultListFilter]='filterBy'
-        (valueChange)='onValueChange($event)'>
-      </pm-criteria>
-    </div>
 
     <div class= 'list-group'>
       <button type='button'
               class='list-group-item'
-              *ngFor='let product of filteredProducts'
+              *ngFor='let product of products'
               [ngClass]="{'active': product?.id === selectedProduct?.id}"
-              (click)='onSelected(product)'>
+              (click)='productSelected(product)'>
         {{ product.productName }}
         <ng-container *ngIf='displayCode'>
           ({{ product.productCode }})
@@ -28,7 +22,9 @@
   <div class="panel-footer">
     <div class="row">
       <label class="col-md-8">
-        <input type="checkbox" [(ngModel)]="displayCode"> Display Product Code
+        <input type="checkbox" 
+              (change)='checkChanged($event.target.checked)'
+              [checked]='displayCode'> Display Product Code
       </label>
       <div class="col-md-4 text-right">
         <a class="btn btn-primary" (click)='onAdd()'>
