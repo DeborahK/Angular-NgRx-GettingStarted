@@ -2,7 +2,7 @@
 
 Demo of the most basic implementation of NgRx for a simple boolean flag.
 
-The goal of this demo is to introduce the parts of ngrx for a simple, easy to reason about, use case.
+The goal of this demo is to introduce the parts of NgRx for a simple, easy to reason about, use case.
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.7.3.
 

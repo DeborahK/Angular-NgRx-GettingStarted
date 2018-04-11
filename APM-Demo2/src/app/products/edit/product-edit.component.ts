@@ -141,7 +141,7 @@ export class ProductEditComponent implements OnInit, OnDestroy {
     if (this.productForm.valid) {
       if (this.productForm.dirty) {
         // Create an object starting with an empty object
-        // Copy over all of the current product properties
+        // Copy over all of the original product properties
         // Then copy over the values from the form
         const p = Object.assign({}, this.product, this.productForm.value);
 
