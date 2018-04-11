@@ -119,7 +119,7 @@ export class ProductEditComponent implements OnInit, OnDestroy {
       if (confirm(`Really delete the product: ${this.product.productName}?`)) {
         this.productService.deleteProduct(this.product.id).subscribe(
             undefined,
-            (err:any) => this.errorMessage = err.error
+            (err: any) => this.errorMessage = err.error
           );
       }
     } else {
@@ -136,7 +136,7 @@ export class ProductEditComponent implements OnInit, OnDestroy {
 
         this.productService.saveProduct(this.product).subscribe(
           null,
-          (err:any) => this.errorMessage = err.error
+          (err: any) => this.errorMessage = err.error
         );
       }
     } else {
