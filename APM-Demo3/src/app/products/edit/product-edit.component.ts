@@ -11,6 +11,7 @@ import { NumberValidators } from '../../shared/number.validator';
 /* NgRx */
 import { Store } from '@ngrx/store';
 import * as fromProduct from '../state/product.reducer';
+import * as productActions from '../state/product.actions';
 
 @Component({
   selector: 'pm-product-edit',
@@ -66,7 +67,6 @@ export class ProductEditComponent implements OnInit, OnDestroy {
       description: ''
     });
 
-    // Homework
     // Watch for changes to the currently selected product
     this.sub = this.store.select(state => state.product.currentProduct).subscribe(
       selectedProduct =>  this.displayProduct(selectedProduct)
@@ -123,24 +123,27 @@ export class ProductEditComponent implements OnInit, OnDestroy {
     if (this.product && this.product.id) {
       if (confirm(`Really delete the product: ${this.product.productName}?`)) {
         this.productService.deleteProduct(this.product.id).subscribe(
-            undefined,
-            (err: any) => this.errorMessage = err.error
-          );
+          () => this.store.dispatch(new productActions.ClearCurrentProductAction()),
+           (err: any) => this.errorMessage = err.error
+        );
       }
     } else {
       // No need to delete, it was never saved
-      this.product = null;
+      // Just clear the current product
+      this.store.dispatch(new productActions.ClearCurrentProductAction());
     }
   }
 
   saveProduct(): void {
     if (this.productForm.valid) {
       if (this.productForm.dirty) {
-        // Copy the form values over the product object values
-        Object.assign(this.product, this.productForm.value);
+        // Create an object starting with an empty object
+        // Copy over all of the original product properties
+        // Then copy over the values from the form
+        const p = Object.assign({}, this.product, this.productForm.value);
 
-        this.productService.saveProduct(this.product).subscribe(
-          undefined,
+        this.productService.saveProduct(p).subscribe(
+          product => this.store.dispatch(new productActions.SetCurrentProductAction(product)),
           (err: any) => this.errorMessage = err.error
         );
       }
