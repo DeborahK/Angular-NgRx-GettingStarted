@@ -18,7 +18,8 @@
                                id="productNameId" 
                                type="text" 
                                placeholder="Name (required)" 
-                               formControlName="productName" />
+                               formControlName="productName"
+                               (blur)="blur()" />
                         <span class="help-block" *ngIf="displayMessage.productName">
                           {{displayMessage.productName}}
                         </span>
@@ -34,7 +35,8 @@
                                id="productCodeId" 
                                type="text" 
                                placeholder="Code (required)" 
-                               formControlName="productCode" />
+                               formControlName="productCode"
+                               (blur)="blur()" />
                         <span class="help-block" *ngIf="displayMessage.productCode">
                           {{displayMessage.productCode}}
                         </span>

@@ -62,7 +62,7 @@ export class ProductEditComponent implements OnInit, OnDestroy {
       description: ''
     });
 
-    // Watch for changes to the product
+    // Watch for changes to the currently selected product
     this.sub = this.productService.selectedProductChanges$.subscribe(
       selectedProduct => this.displayProduct(selectedProduct)
     );
@@ -77,7 +77,13 @@ export class ProductEditComponent implements OnInit, OnDestroy {
     this.sub.unsubscribe();
   }
 
-  displayProduct(product: IProduct): void {
+  // Also validate on blur
+  // Helpful if the user tabs through required fields
+  blur(): void {
+    this.displayMessage = this.genericValidator.processMessages(this.productForm);
+  }
+
+  displayProduct(product: IProduct | null): void {
     // Set the local product property
     this.product = product;
 
@@ -109,11 +115,11 @@ export class ProductEditComponent implements OnInit, OnDestroy {
   }
 
   deleteProduct(): void {
-    if (this.product.id) {
+    if (this.product && this.product.id) {
       if (confirm(`Really delete the product: ${this.product.productName}?`)) {
         this.productService.deleteProduct(this.product.id).subscribe(
-            null,
-            err => this.errorMessage = err.error
+            undefined,
+            (err:any) => this.errorMessage = err.error
           );
       }
     } else {
@@ -130,7 +136,7 @@ export class ProductEditComponent implements OnInit, OnDestroy {
 
         this.productService.saveProduct(this.product).subscribe(
           null,
-          err => this.errorMessage = err.error
+          (err:any) => this.errorMessage = err.error
         );
       }
     } else {

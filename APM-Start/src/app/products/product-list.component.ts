@@ -33,20 +33,20 @@ export class ProductListComponent implements OnInit, OnDestroy {
     );
   }
 
+  ngOnDestroy(): void {
+    this.sub.unsubscribe();
+  }
+
   checkChanged(value: boolean): void {
     this.displayCode = value;
   }
 
-  onAdd(): void {
+  newProduct(): void {
     this.productService.newProduct();
   }
 
   productSelected(product: IProduct): void {
     this.productService.changeSelectedProduct(product);
-  }
-
-  ngOnDestroy(): void {
-    this.sub.unsubscribe();
   }
 
 }

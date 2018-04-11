@@ -66,11 +66,8 @@ export class ProductService {
   }
 
   private createProduct(product: IProduct, headers: HttpHeaders): Observable<IProduct> {
-    // Make a copy so changing the id does not affect change detection
-    // id must be set to null for the in-memory web api
-    const productToSave = Object.assign({}, product);
-    productToSave.id = null;
-    return this.http.post<IProduct>(this.productsUrl, productToSave,  { headers: headers} )
+    product.id = null;
+    return this.http.post<IProduct>(this.productsUrl, product,  { headers: headers} )
                     .pipe(
                         tap(data => console.log('createProduct: ' + JSON.stringify(data))),
                         tap(data => {
