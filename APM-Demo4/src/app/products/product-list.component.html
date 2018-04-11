@@ -10,7 +10,7 @@
               class='list-group-item'
               *ngFor='let product of products'
               [ngClass]="{'active': product?.id === selectedProduct?.id}"
-              (click)='onSelected(product)'>
+              (click)='productSelected(product)'>
         {{ product.productName }}
         <ng-container *ngIf='displayCode'>
           ({{ product.productCode }})
@@ -23,11 +23,11 @@
     <div class="row">
       <label class="col-md-8">
         <input type="checkbox" 
-              (change)='onChange($event.target.checked)'
+              (change)='checkChanged($event.target.checked)'
               [checked]='displayCode'> Display Product Code
       </label>
       <div class="col-md-4 text-right">
-        <a class="btn btn-primary" (click)='onAdd()'>
+        <a class="btn btn-primary" (click)='newProduct()'>
           Add
         </a>
       </div>

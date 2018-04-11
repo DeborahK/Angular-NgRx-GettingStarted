@@ -12,7 +12,7 @@ import { ProductEffects } from './state/product.effect';
 import { EffectsModule } from '@ngrx/effects';
 
 const productRoutes: Routes = [
-  { path: '',     component: ProductShellComponent }
+  { path: '', component: ProductShellComponent }
 ];
 
 @NgModule({

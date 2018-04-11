@@ -29,18 +29,16 @@ export function reducer(state = initialState, action: fromProduct.ProductStateAc
       return { ...state, showProductCode: action.payload };
     }
 
-    case fromProduct.ProductStateActionTypes.LoadProductsSuccess: {
-      return { ...state, products: action.payload };
-    }
-
-    // Homework
     case fromProduct.ProductStateActionTypes.ClearCurrentProduct: {
       return {...state, currentProduct: null};
     }
 
-    // Homework
     case fromProduct.ProductStateActionTypes.SetCurrentProduct: {
       return {...state, currentProduct: action.payload};
+    }
+
+    case fromProduct.ProductStateActionTypes.LoadProductsSuccess: {
+      return { ...state, products: action.payload };
     }
 
     case fromProduct.ProductStateActionTypes.UpdateProductSuccess: {

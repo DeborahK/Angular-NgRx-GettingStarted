@@ -6,20 +6,33 @@ import { Action } from '@ngrx/store';
 // (1) Start with the action
 export enum ProductStateActionTypes {
   ToggleProductCode = '[ProductState] Toggle Product Code',
+  ClearCurrentProduct = '[ProductState] Clear Current Product',
+  SetCurrentProduct = '[ProductState] Set Current Product',
   LoadProducts = '[ProductState] Load Products',
   LoadProductsSuccess = '[ProductState] Load Products Success',
   LoadProductsFail = '[ProductState] Load Products Fail',
-  ClearCurrentProduct = '[ProductState] Clear Current Product',
-  SetCurrentProduct = '[ProductState] Set Current Product',
   UpdateProduct = '[ProductState] Update Product',
   UpdateProductSuccess = '[ProductState] Update Product Success',
   UpdateProductFail = '[ProductState] Update Product Fail'
 }
 
+// Action Creators
 export class ToggleProductCodeAction implements Action {
   readonly type = ProductStateActionTypes.ToggleProductCode;
 
-  constructor(public payload: boolean) { }
+  constructor(public payload: boolean) {}
+}
+
+export class ClearCurrentProductAction implements Action {
+  readonly type = ProductStateActionTypes.ClearCurrentProduct;
+
+  constructor() { }
+}
+
+export class SetCurrentProductAction implements Action {
+  readonly type = ProductStateActionTypes.SetCurrentProduct;
+
+  constructor(public payload: IProduct) { }
 }
 
 export class LoadProductsAction implements Action {
@@ -40,21 +53,6 @@ export class LoadProductsFailAction implements Action {
   constructor(public payload: string) { }
 }
 
-// Discuss the multiple ways to accomplish this
-// Homework
-export class ClearCurrentProductAction implements Action {
-  readonly type = ProductStateActionTypes.ClearCurrentProduct;
-
-  constructor() { }
-}
-
-// Homework
-export class SetCurrentProductAction implements Action {
-  readonly type = ProductStateActionTypes.SetCurrentProduct;
-
-  constructor(public payload: IProduct) { }
-}
-
 export class UpdateProductAction implements Action {
   readonly type = ProductStateActionTypes.UpdateProduct;
 
@@ -73,12 +71,13 @@ export class UpdateProductFailAction implements Action {
   constructor(public payload: string) { }
 }
 
+// Union all the valid types
 export type ProductStateAction = ToggleProductCodeAction
+  | ClearCurrentProductAction
+  | SetCurrentProductAction
   | LoadProductsAction
   | LoadProductsSuccessAction
   | LoadProductsFailAction
-  | ClearCurrentProductAction
-  | SetCurrentProductAction
   | UpdateProductAction
   | UpdateProductSuccessAction
   | UpdateProductFailAction;

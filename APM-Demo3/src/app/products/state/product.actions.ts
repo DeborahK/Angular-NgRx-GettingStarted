@@ -38,7 +38,7 @@ export class LoadProductsAction implements Action {
   constructor() { }
 }
 
-export class LoadProductsActionSuccess implements Action {
+export class LoadProductsSuccessAction implements Action {
   readonly type = ProductStateActionTypes.LoadProductsSuccess;
 
   constructor(public payload: IProduct[]) { }
@@ -55,5 +55,5 @@ export type ProductStateAction = ToggleProductCodeAction
   | ClearCurrentProductAction
   | SetCurrentProductAction
   | LoadProductsAction
-  | LoadProductsActionSuccess
+  | LoadProductsSuccessAction
   | LoadProductsFailAction;
