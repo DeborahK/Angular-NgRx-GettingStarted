@@ -1,4 +1,4 @@
-<div class="panel panel-primary">
+<div class="panel panel-primary"  *ngIf="product">
     <div class="panel-heading">
         {{pageTitle}}
     </div>
@@ -6,12 +6,11 @@
     <div class="panel-body">
         <form class="form-horizontal" 
               novalidate
-              (ngSubmit)="onSave()">
-            <fieldset *ngIf="product">
+              (ngSubmit)="saveProduct()"
+              [formGroup]="productForm">
+            <fieldset>
                 <div class="form-group" 
-                     [ngClass]="{'has-error': (productNameVar.touched || 
-                                               productNameVar.dirty || product.id !== 0) && 
-                                               !productNameVar.valid }">
+                     [ngClass]="{'has-error': displayMessage.productName }">
                     <label class="col-md-2 control-label" for="productNameId">Product Name</label>
 
                     <div class="col-md-9">
@@ -19,28 +18,16 @@
                                id="productNameId" 
                                type="text" 
                                placeholder="Name (required)" 
-                               required 
-                               minlength="3" 
-                               [(ngModel)]=product.productName 
-                               name="productName" 
-                               #productNameVar="ngModel" />
-                        <span class="help-block" *ngIf="(productNameVar.touched ||
-                                                         productNameVar.dirty || product.id !== 0) &&
-                                                         productNameVar.errors">
-                            <span *ngIf="productNameVar.errors.required">
-                                Product name is required.
-                            </span>
-                            <span *ngIf="productNameVar.errors.minlength">
-                                Product name must be at least three characters.
-                            </span>
+                               formControlName="productName"
+                               (blur)="blur()" />
+                        <span class="help-block" *ngIf="displayMessage.productName">
+                          {{displayMessage.productName}}
                         </span>
                     </div>
                 </div>
 
                 <div class="form-group" 
-                     [ngClass]="{'has-error': (productCodeVar.touched || 
-                                               productCodeVar.dirty || product.id !== 0) && 
-                                               !productCodeVar.valid }">
+                     [ngClass]="{'has-error': displayMessage.productCode}">
                     <label class="col-md-2 control-label" for="productCodeId">Product Code</label>
 
                     <div class="col-md-9">
@@ -48,53 +35,73 @@
                                id="productCodeId" 
                                type="text" 
                                placeholder="Code (required)" 
-                               required 
-                               [(ngModel)]=product.productCode
-                               name="productCode" 
-                               #productCodeVar="ngModel" />
-                        <span class="help-block" *ngIf="(productCodeVar.touched ||
-                                                         productCodeVar.dirty || product.id !== 0) &&
-                                                         productCodeVar.errors">
-                            <span *ngIf="productCodeVar.errors.required">
-                                Product code is required.
-                            </span>
+                               formControlName="productCode"
+                               (blur)="blur()" />
+                        <span class="help-block" *ngIf="displayMessage.productCode">
+                          {{displayMessage.productCode}}
                         </span>
                     </div>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group"
+                     [ngClass]="{'has-error': displayMessage.starRating}">
+                  <label class="col-md-2 control-label" for="starRatingId">Star Rating (1-5)</label>
+
+                  <div class="col-md-9">
+                    <input class="form-control" 
+                            id="starRatingId" 
+                            type="text" 
+                            placeholder="Rating" 
+                            formControlName="starRating" />
+                    <span class="help-block" *ngIf="displayMessage.starRating">
+                            {{displayMessage.starRating}}
+                    </span>
+                  </div>
+                </div>
+
+                <div class="form-group"
+                     [ngClass]="{'has-error': displayMessage.description}">
                     <label class="col-md-2 control-label" for="descriptionId">Description</label>
 
                     <div class="col-md-9">
-                        <textarea class="form-control" 
-                                  id="descriptionId" 
-                                  placeholder="Description" 
-                                  rows=3 
-                                  [(ngModel)]=product.description 
-                                  name="description">
-                        </textarea>
+                      <textarea class="form-control" 
+                                id="descriptionId" 
+                                placeholder="Description" 
+                                rows=3 
+                                formControlName="description">
+                      </textarea>
+                      <span class="help-block" *ngIf="displayMessage.description">
+                        {{ displayMessage.description}}
+                      </span>
                     </div>
                 </div>
 
-                <div class="has-error" *ngIf="errorMessage">{{errorMessage}}</div>
-
                 <div class="form-group">
                     <div class="col-md-10 col-md-offset-2">
-                        <span>
-                            <button class="btn btn-primary" type='submit' style="width:80px;margin-right:10px" [disabled]='!editForm.valid'>
-                                Save
-                            </button>
-                        </span>
-                        <span>
-                            <button class="btn btn-default" type='button' style="width:80px;margin-right:10px" (click)="onCancel()">
-                                Cancel
-                            </button>
-                        </span>
-                        <span>
-                            <button class="btn btn-default" type='button' style="width:80px" (click)="onDelete()">
-                                Delete
-                            </button>
-                        </span>   
+                      <span>
+                        <button class="btn btn-primary" 
+                                type='submit' 
+                                style="width:80px;margin-right:10px" 
+                                [disabled]='!productForm.valid || !productForm.dirty'>
+                            Save
+                        </button>
+                      </span>
+                      <span>
+                        <button class="btn btn-default" 
+                                type='button' 
+                                style="width:80px;margin-right:10px" 
+                                (click)="cancelEdit()">
+                            Cancel
+                        </button>
+                      </span>
+                      <span>
+                        <button class="btn btn-default" 
+                                type='button' 
+                                style="width:80px" 
+                                (click)="deleteProduct()">
+                            Delete
+                        </button>
+                      </span>   
                     </div>
                 </div>
             </fieldset>

@@ -1,17 +1,12 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
 
 import { IProduct } from './product';
 import { ProductService } from './product.service';
-import { ProductParameterService } from './product-parameter.service';
-import { Observable } from 'rxjs/Observable';
-import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
 
 /* NgRx */
 import { Store } from '@ngrx/store';
-import * as productActions from './state/product.actions';
-
 import * as fromProduct from './state/product.reducer';
+import * as productActions from './state/product.actions';
 
 @Component({
   selector: 'pm-product-list',
@@ -28,15 +23,10 @@ export class ProductListComponent implements OnInit {
   products$: Store<IProduct[]>;
 
   // Used to highlight the selected product in the list
-  get selectedProduct(): IProduct | null {
-    return this.productService.currentProduct;
-  }
+  selectedProduct: IProduct | null;
 
-  // (5) Strongly type the generic parameter for the store.
-  constructor(private router: Router,
-    private store: Store<fromProduct.State>,
-    private productService: ProductService,
-    private productParameterService: ProductParameterService) { }
+  constructor(private store: Store<fromProduct.State>,
+              private productService: ProductService) { }
 
   ngOnInit(): void {
     // (5) Select the slice of state ... displays the initial state
@@ -52,19 +42,17 @@ export class ProductListComponent implements OnInit {
     );
   }
 
-  onAdd(): void {
-    // Navigate to the edit
-    this.router.navigate(['/products', 0, 'edit']);
-  }
-
-  onChange(value: boolean): void {
-    // (4) Dispatch action
+  checkChanged(value: boolean): void {
     this.store.dispatch(new productActions.ToggleProductCodeAction(value));
   }
 
-  onSelected(product: IProduct): void {
-    // Navigate to the detail
-    this.router.navigate(['/products', product.id, 'detail']);
+  newProduct(): void {
+    this.productSelected(this.productService.newProduct());
+  }
+
+  productSelected(product: IProduct): void {
+
+    this.store.dispatch(new productActions.SetCurrentProductAction(product));
   }
 
 }
