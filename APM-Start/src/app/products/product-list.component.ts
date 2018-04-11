@@ -43,7 +43,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
   }
 
   newProduct(): void {
-    this.productService.newProduct();
+    this.productService.changeSelectedProduct(this.productService.newProduct());
   }
 
   productSelected(product: IProduct): void {

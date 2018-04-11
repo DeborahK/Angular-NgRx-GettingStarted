@@ -1,148 +1,127 @@
+// TODO: Duncan: The update and delete no longer work correctly
+//       because the code in the service is still using the BehaviorSubject
+//       Do we change this now? Or leave it broken? Or ?
+
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 
 import { Observable } from 'rxjs/Observable';
 import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
 import { of } from 'rxjs/observable/of';
-
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { catchError, tap, map } from 'rxjs/operators';
 
 import { IProduct } from './product';
 
 @Injectable()
 export class ProductService {
-    private productsUrl = 'api/products';
-    private products: IProduct[];
+  private productsUrl = 'api/products';
+  private products: IProduct[];
 
-    private _currentProduct: IProduct | null;
-    get currentProduct(): IProduct | null {
-      return this._currentProduct;
+  private selectedProductSource = new BehaviorSubject<IProduct | null>(null);
+  selectedProductChanges$ = this.selectedProductSource.asObservable();
+
+  constructor(private http: HttpClient) { }
+
+  changeSelectedProduct(selectedProduct: IProduct | null): void {
+    this.selectedProductSource.next(selectedProduct);
+  }
+
+  getProducts(): Observable<IProduct[]> {
+    if (this.products) {
+        return of(this.products);
     }
+    return this.http.get<IProduct[]>(this.productsUrl)
+                    .pipe(
+                        tap(data => console.log(JSON.stringify(data))),
+                        tap(data => this.products = data),
+                        catchError(this.handleError)
+                    );
+  }
 
-    constructor(private http: HttpClient) { }
+  // Return an initialized product
+  newProduct(): IProduct {
+    return this.initializeProduct();
+  }
 
-    getProducts(): Observable<IProduct[]> {
-      // When getting all products, clear the current product
-      this._currentProduct = null;
-      if (this.products) {
-          return of(this.products);
+  saveProduct(product: IProduct): Observable<IProduct> {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    if (product.id === 0) {
+        return this.createProduct(product, headers);
+    }
+    return this.updateProduct(product, headers);
+  }
+
+  deleteProduct(id: number): Observable<IProduct> {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    const url = `${this.productsUrl}/${id}`;
+    return this.http.delete<IProduct>(url, { headers: headers} )
+                    .pipe(
+                        tap(data => console.log('deleteProduct: ' + id)),
+                        tap(data => {
+                            const foundIndex = this.products.findIndex(item => item.id === id);
+                            if (foundIndex > -1) {
+                                this.products.splice(foundIndex, 1);
+                            }
+                            this.changeSelectedProduct(null);
+                        }),
+                        catchError(this.handleError)
+                    );
+  }
+
+  private createProduct(product: IProduct, headers: HttpHeaders): Observable<IProduct> {
+    product.id = null;
+    return this.http.post<IProduct>(this.productsUrl, product,  { headers: headers} )
+                    .pipe(
+                        tap(data => console.log('createProduct: ' + JSON.stringify(data))),
+                        tap(data => {
+                            this.products.push(data);
+                            this.changeSelectedProduct(data);
+                        }),
+                        catchError(this.handleError)
+                    );
+  }
+
+  private updateProduct(product: IProduct, headers: HttpHeaders): Observable<IProduct> {
+    const url = `${this.productsUrl}/${product.id}`;
+    return this.http.put<IProduct>(url, product, { headers: headers} )
+                    .pipe(
+                        tap(() => console.log('updateProduct: ' + product.id)),
+                        tap(() => this.changeSelectedProduct(product)),
+                        catchError(this.handleError)
+                    );
+  }
+
+  private initializeProduct(): IProduct {
+    // Return an initialized object
+    return {
+        'id': 0,
+        productName: '',
+        productCode: '',
+        category: '',
+        tags: [],
+        releaseDate: '',
+        price: 0,
+        description: '',
+        starRating: 0,
+        imageUrl: ''
+    };
+  }
+
+  private handleError(err: HttpErrorResponse): ErrorObservable {
+      // in a real world app, we may send the server to some remote logging infrastructure
+      // instead of just logging it to the console
+      let errorMessage: string;
+      if (err.error instanceof Error) {
+          // A client-side or network error occurred. Handle it accordingly.
+          errorMessage = `An error occurred: ${err.error.message}`;
+      } else {
+          // The backend returned an unsuccessful response code.
+          // The response body may contain clues as to what went wrong,
+          errorMessage = `Backend returned code ${err.status}, body was: ${err.error}`;
       }
-      return this.http.get<IProduct[]>(this.productsUrl)
-                      .pipe(
-                          tap(data => console.log(JSON.stringify(data))),
-                          tap(data => this.products = data),
-                          catchError(this.handleError)
-                      );
-    }
-
-    getProduct(id: number): Observable<IProduct> {
-      if (id === 0) {
-        this._currentProduct = this.initializeProduct();
-        return of(this.currentProduct);
-      }
-      if (this.products) {
-          const foundItem = this.products.find(item => item.id === id);
-          if (foundItem) {
-            this._currentProduct = foundItem;
-            return of(this.currentProduct);
-          }
-      }
-      const url = `${this.productsUrl}/${id}`;
-      return this.http.get<IProduct>(url)
-                 .pipe(
-                    tap(product => console.log('Data: ' + JSON.stringify(product))),
-                    tap(product => this._currentProduct = product),
-                    catchError(this.handleError)
-                 );
-        // TODO: When handling a deep link, the products are not collected yet
-        //       so this gets the item from the server.
-        //       This works OK on a retrieve, but for the edit, the
-        //       edited item is not then in the product array and the edits don't
-        //       appear in the Product List.
-        //       Need to fix.
-    }
-
-    saveProduct(product: IProduct): Observable<IProduct> {
-        const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-        if (product.id === 0) {
-            return this.createProduct(product, headers);
-        }
-        return this.updateProduct(product, headers);
-    }
-
-    deleteProduct(id: number): Observable<{}> {
-        const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-        const url = `${this.productsUrl}/${id}`;
-        return this.http.delete<IProduct>(url, { headers: headers} )
-                        .pipe(
-                            tap(data => console.log('deleteProduct: ' + id)),
-                            tap(data => {
-                                const foundIndex = this.products.findIndex(item => item.id === id);
-                                if (foundIndex > -1) {
-                                    this.products.splice(foundIndex, 1);
-                                    this._currentProduct = null;
-                                }
-                            }),
-                            catchError(this.handleError)
-                        );
-    }
-
-    private createProduct(product: IProduct, headers: HttpHeaders): Observable<IProduct> {
-      // Make a copy so changing the id does not affect change detection
-      // id must be set to null for the in-memory web api
-      const productToSave = Object.assign({}, product);
-      productToSave.id = null;
-      return this.http.post<IProduct>(this.productsUrl, productToSave, { headers: headers} )
-                      .pipe(
-                          tap(data => console.log('createProduct: ' + JSON.stringify(data))),
-                          tap(data => {
-                              this.products.push(data);
-                              this._currentProduct = data;
-                          }),
-                          catchError(this.handleError)
-                      );
-    }
-
-    private updateProduct(product: IProduct, headers: HttpHeaders): Observable<IProduct> {
-        const url = `${this.productsUrl}/${product.id}`;
-        return this.http.put<IProduct>(url, product, { headers: headers} )
-                        .pipe(
-                            tap(() => console.log('updateProduct: ' + product.id)),
-                            map(() => product),
-                            catchError(this.handleError)
-                        );
-    }
-
-    private initializeProduct(): IProduct {
-        // Return an initialized object
-        return {
-            'id': 0,
-            productName: '',
-            productCode: '',
-            category: '',
-            tags: [],
-            releaseDate: '',
-            price: 0,
-            description: '',
-            starRating: 0,
-            imageUrl: ''
-        };
-    }
-
-    private handleError(err: HttpErrorResponse): ErrorObservable {
-        // in a real world app, we may send the server to some remote logging infrastructure
-        // instead of just logging it to the console
-        let errorMessage: string;
-        if (err.error instanceof Error) {
-            // A client-side or network error occurred. Handle it accordingly.
-            errorMessage = `An error occurred: ${err.error.message}`;
-        } else {
-            // The backend returned an unsuccessful response code.
-            // The response body may contain clues as to what went wrong,
-            errorMessage = `Backend returned code ${err.status}, body was: ${err.error}`;
-        }
-        console.error(err);
-        return new ErrorObservable(errorMessage);
-    }
+      console.error(err);
+      return new ErrorObservable(errorMessage);
+  }
 
 }

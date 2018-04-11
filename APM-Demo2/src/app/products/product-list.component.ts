@@ -1,15 +1,12 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
 
 import { IProduct } from './product';
 import { ProductService } from './product.service';
-import { ProductParameterService } from './product-parameter.service';
-import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
 
-/* ngrx */
+/* NgRx */
 import { Store } from '@ngrx/store';
-import * as productActions from './state/product.actions';
 import * as fromProduct from './state/product.reducer';
+import * as productActions from './state/product.actions';
 
 @Component({
   selector: 'pm-product-list',
@@ -24,39 +21,40 @@ export class ProductListComponent implements OnInit {
   products: IProduct[];
 
   // Used to highlight the selected product in the list
-  get selectedProduct(): IProduct | null {
-    return this.productService.currentProduct;
-  }
+  selectedProduct: IProduct | null;
 
   // (5) Strongly type the generic parameter for the store.
-  constructor(private router: Router,
-    private store: Store<fromProduct.State>,
-    private productService: ProductService,
-    private productParameterService: ProductParameterService) { }
+  constructor(private store: Store<fromProduct.State>,
+              private productService: ProductService) { }
 
   ngOnInit(): void {
     this.productService.getProducts().subscribe(
       (products: IProduct[]) => this.products = products,
-      (err: ErrorObservable) => this.errorMessage = err.error
+      (err: any) => this.errorMessage = err.error
     );
+
+    // Homework
+    this.store.select(state => state.product.currentProduct).subscribe(product => {
+      this.selectedProduct = product;
+    });
 
     this.store.select(state => state.product.showProductCode).subscribe(
       showProductCode => this.displayCode = showProductCode
     );
   }
 
-  onAdd(): void {
-    // Navigate to the edit
-    this.router.navigate(['/products', 0, 'edit']);
-  }
-
-  onChange(value: boolean): void {
+  checkChanged(value: boolean): void {
     this.store.dispatch(new productActions.ToggleProductCodeAction(value));
   }
 
-  onSelected(product: IProduct): void {
-    // Navigate to the detail
-    this.router.navigate(['/products', product.id, 'detail']);
+  // Homework +
+  newProduct(): void {
+    this.productSelected(this.productService.newProduct());
+  }
+
+  productSelected(product: IProduct): void {
+    // Homework
+    this.store.dispatch(new productActions.SetCurrentProductAction(product));
   }
 
 }

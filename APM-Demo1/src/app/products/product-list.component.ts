@@ -34,7 +34,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
 
     this.productService.getProducts().subscribe(
       (products: IProduct[]) => this.products = products,
-      err => this.errorMessage = err.error
+      (err: any) => this.errorMessage = err.error
     );
 
     this.store.select('product').subscribe(
@@ -58,7 +58,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
   }
 
   newProduct(): void {
-    this.productService.newProduct();
+    this.productService.changeSelectedProduct(this.productService.newProduct());
   }
 
   productSelected(product: IProduct): void {

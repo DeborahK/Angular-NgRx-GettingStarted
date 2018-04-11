@@ -1,6 +1,6 @@
 # APM-Demo 2
 
-Demo of a basic implementation of ngrx for a simple boolean flag, but using strong typing.
+Demo of a basic implementation of NgRx for a simple boolean flag, but using strong typing. Includes implementation of the dev tools.
 
 The goal of this demo is to introduce the parts of ngrx for a simple, easy to reason about, use case.
 

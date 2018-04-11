@@ -1,6 +1,6 @@
 # APM-Demo 1
 
-Demo of the most basic implementation of ngrx for a simple boolean flag.
+Demo of the most basic implementation of NgRx for a simple boolean flag.
 
 The goal of this demo is to introduce the parts of ngrx for a simple, easy to reason about, use case.
 

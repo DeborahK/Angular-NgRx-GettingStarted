@@ -35,9 +35,9 @@ export class ProductService {
                     );
   }
 
-  // Create an initialized product
-  newProduct(): void {
-    this.changeSelectedProduct(this.initializeProduct());
+  // Return an initialized product
+  newProduct(): IProduct {
+    return this.initializeProduct();
   }
 
   saveProduct(product: IProduct): Observable<IProduct> {

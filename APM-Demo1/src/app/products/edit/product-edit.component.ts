@@ -1,5 +1,4 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { Subscription } from 'rxjs/Subscription';
@@ -135,7 +134,7 @@ export class ProductEditComponent implements OnInit, OnDestroy {
         Object.assign(this.product, this.productForm.value);
 
         this.productService.saveProduct(this.product).subscribe(
-          null,
+          undefined,
           (err: any) => this.errorMessage = err.error
         );
       }
