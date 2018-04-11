@@ -117,7 +117,7 @@ export class ProductEditComponent implements OnInit, OnDestroy {
     if (this.product && this.product.id) {
       if (confirm(`Really delete the product: ${this.product.productName}?`)) {
         this.productService.deleteProduct(this.product.id).subscribe(
-            undefined,
+            () => this.productService.changeSelectedProduct(null),
             (err: any) => this.errorMessage = err.error
           );
       }
@@ -130,11 +130,13 @@ export class ProductEditComponent implements OnInit, OnDestroy {
   saveProduct(): void {
     if (this.productForm.valid) {
       if (this.productForm.dirty) {
-        // Copy the form values over the product object values
-        Object.assign(this.product, this.productForm.value);
+        // Create an object starting with an empty object
+        // Copy over all of the current product properties
+        // Then copy over the values from the form
+        const p = Object.assign({}, this.product, this.productForm.value);
 
-        this.productService.saveProduct(this.product).subscribe(
-          null,
+        this.productService.saveProduct(p).subscribe(
+          product => this.productService.changeSelectedProduct(product),
           (err: any) => this.errorMessage = err.error
         );
       }
