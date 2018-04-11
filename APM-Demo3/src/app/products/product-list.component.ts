@@ -7,7 +7,7 @@ import { ProductParameterService } from './product-parameter.service';
 import { Observable } from 'rxjs/Observable';
 import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
 
-/* ngrx */
+/* NgRx */
 import { Store } from '@ngrx/store';
 import * as productActions from './state/product.actions';
 

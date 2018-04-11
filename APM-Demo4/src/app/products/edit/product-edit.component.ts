@@ -6,7 +6,7 @@ import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
 import { IProduct } from '../product';
 import { ProductService } from '../product.service';
 
-/* ngrx */
+/* NgRx */
 import { Store } from '@ngrx/store';
 import * as fromProduct from '../state/product.reducer';
 import * as productActions from '../state/product.actions';

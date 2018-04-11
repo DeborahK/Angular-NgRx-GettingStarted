@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 
 import { IProduct } from './product';
 
-/* ngrx */
+/* NgRx */
 import { Store } from '@ngrx/store';
 import * as productActions from './state/product.actions';
 import * as fromProduct from './state/product.reducer';

@@ -1,5 +1,7 @@
-import * as fromProduct from './product.actions';
 import { IProduct } from '../product';
+
+/* NgRx */
+import * as fromProduct from './product.actions';
 
 // State for this feature (Product)
 export interface State {

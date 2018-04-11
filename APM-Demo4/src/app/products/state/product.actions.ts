@@ -1,5 +1,7 @@
-import { Action } from '@ngrx/store';
 import { IProduct } from '../product';
+
+/* NgRx */
+import { Action } from '@ngrx/store';
 
 // (1) Start with the action
 export enum ProductStateActionTypes {
