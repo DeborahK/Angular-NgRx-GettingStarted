@@ -7,9 +7,10 @@ import { ProductShellComponent } from './product-shell.component';
 import { ProductListComponent } from './product-list.component';
 import { ProductEditComponent } from './edit/product-edit.component';
 import { ProductService } from './product.service';
+
 /* NgRx */
-import { ProductEffects } from './state/product.effect';
 import { EffectsModule } from '@ngrx/effects';
+import { ProductEffects } from './state/product.effect';
 
 const productRoutes: Routes = [
   { path: '', component: ProductShellComponent }

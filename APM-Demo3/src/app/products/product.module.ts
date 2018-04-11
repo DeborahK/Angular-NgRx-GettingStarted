@@ -6,10 +6,11 @@ import { SharedModule } from '../shared/shared.module';
 import { ProductShellComponent } from './product-shell.component';
 import { ProductListComponent } from './product-list.component';
 import { ProductEditComponent } from './edit/product-edit.component';
-
 import { ProductService } from './product.service';
-import { ProductEffects } from './state/product.effect';
+
+/* NgRx */
 import { EffectsModule } from '@ngrx/effects';
+import { ProductEffects } from './state/product.effect';
 
 const productRoutes: Routes = [
   { path: '', component: ProductShellComponent }
