@@ -8,24 +8,24 @@ import { WelcomeComponent } from './home/welcome.component';
 import { PageNotFoundComponent } from './home/page-not-found.component';
 
 @NgModule({
-    imports: [
-        RouterModule.forRoot([
+  imports: [
+    RouterModule.forRoot([
+      {
+        path: '',
+        component: ShellComponent,
+        children: [
+            { path: 'welcome', component: WelcomeComponent },
             {
-                path: '',
-                component: ShellComponent,
-                children: [
-                    { path: 'welcome', component: WelcomeComponent },
-                    {
-                        path: 'products',
-                        // canActivate: [AuthGuard],
-                        loadChildren: './products/product.module#ProductModule'
-                    },
-                    { path: '', redirectTo: 'welcome', pathMatch: 'full' },
-                ]
+                path: 'products',
+                // canActivate: [AuthGuard],
+                loadChildren: './products/product.module#ProductModule'
             },
-            { path: '**', component: PageNotFoundComponent }
-        ]) // , { enableTracing: true })
-    ],
-    exports: [RouterModule]
+            { path: '', redirectTo: 'welcome', pathMatch: 'full' },
+        ]
+      },
+      { path: '**', component: PageNotFoundComponent }
+    ])
+  ],
+  exports: [RouterModule]
 })
 export class AppRoutingModule { }

@@ -1,5 +1,7 @@
-import * as fromProduct from './product.actions';
 import { IProduct } from '../product';
+
+/* NgRx */
+import * as fromProduct from './product.actions';
 
 // State for this feature (Product)
 export interface State {
@@ -8,7 +10,6 @@ export interface State {
 
 export interface StateSlice {
   product: ProductState;
-  search: null
 }
 
 // Slice of the feature state
@@ -32,18 +33,16 @@ export function reducer(state = initialState, action: fromProduct.ProductStateAc
       return { ...state, showProductCode: action.payload };
     }
 
-    case fromProduct.ProductStateActionTypes.LoadProductsSuccess: {
-      return { ...state, products: action.payload };
-    }
-
-    // Homework
     case fromProduct.ProductStateActionTypes.ClearCurrentProduct: {
       return {...state, currentProduct: null};
     }
 
-    // Homework
     case fromProduct.ProductStateActionTypes.SetCurrentProduct: {
       return {...state, currentProduct: action.payload};
+    }
+
+    case fromProduct.ProductStateActionTypes.LoadProductsSuccess: {
+      return { ...state, products: action.payload };
     }
 
     case fromProduct.ProductStateActionTypes.UpdateProductSuccess: {

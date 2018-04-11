@@ -1,13 +1,17 @@
 import { Injectable } from '@angular/core';
 
+
+import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs/observable/of';
+import { mergeMap, map, catchError } from 'rxjs/operators';
+
+import { ProductService } from '../product.service';
+import { IProduct } from '../product';
+
+/* NgRx */
 import { Action } from '@ngrx/store';
 import { Actions, Effect, ofType } from '@ngrx/effects';
-import { Observable } from 'rxjs/Observable';
 import * as fromProduct from './product.actions';
-import { mergeMap, map, catchError } from 'rxjs/operators';
-import { ProductService } from '../product.service';
-import { of } from 'rxjs/observable/of';
-import { IProduct } from '../product';
 
 @Injectable()
 export class ProductEffects {

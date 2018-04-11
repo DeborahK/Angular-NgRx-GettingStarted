@@ -1,8 +1,6 @@
-# APM-Demo 3
+# APM-Demo 5
 
-Demo of using effects for retrieving and displaying data.
-
-The goal of this demo is to introduce the parts of ngrx for a simple, easy to reason about, use case.
+Demo of feature module state composition.
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.7.3.
 

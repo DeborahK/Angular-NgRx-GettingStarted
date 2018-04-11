@@ -1,12 +1,12 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
 
 import { IProduct } from './product';
+import { ProductService } from './product.service';
 
-/* ngrx */
+/* NgRx */
 import { Store } from '@ngrx/store';
-import * as productActions from './state/product.actions';
 import * as fromProduct from './state/product.reducer';
+import * as productActions from './state/product.actions';
 
 @Component({
   selector: 'pm-product-list',
@@ -18,47 +18,42 @@ export class ProductListComponent implements OnInit {
 
   displayCode: boolean;
 
-  // (5) Define the observable property
-  // (6) Change to a async pipe
   products$: Store<IProduct[]>;
 
   // Used to highlight the selected product in the list
   selectedProduct: IProduct | null;
 
-  // (5) Strongly type the generic parameter for the store.
-  constructor(private router: Router,
-    private store: Store<fromProduct.State>) { }
+  constructor(private store: Store<fromProduct.State>,
+              private productService: ProductService) { }
 
   ngOnInit(): void {
     // TODO: DUNCAN: This now uses all of the state ... do we do it differently?
 
-    // (5) Select the slice of state ... displays the initial state
+    // Do NOT subscribe here because it DOES use an async pipe
     this.products$ = this.store.select(state => state.productFeature.product.products);
 
+    this.store.dispatch(new productActions.LoadProductsAction());
+
+    // Subscribe here because it does not use an async pipe
     this.store.select(state => state.productFeature.product.currentProduct).subscribe(product => {
       this.selectedProduct = product;
     });
 
-    // (5) Dispatch the load
-    this.store.dispatch(new productActions.LoadProductsAction());
-
-    // Get only what you need
     // Subscribe here because it does not use an async pipe
     this.store.select(state => state.productFeature.product.showProductCode).subscribe(
       showProductCode => this.displayCode = showProductCode
     );
   }
 
-  onAdd(): void {
-    // TODO: Dispatch an action to create an empty product
-  }
-
-  onChange(value: boolean): void {
+  checkChanged(value: boolean): void {
     this.store.dispatch(new productActions.ToggleProductCodeAction(value));
   }
 
-  onSelected(product: IProduct): void {
-    // Dispatch an action to set the current product
+  newProduct(): void {
+    this.productSelected(this.productService.newProduct());
+  }
+
+  productSelected(product: IProduct): void {
     this.store.dispatch(new productActions.SetCurrentProductAction(product));
   }
 
