@@ -1,14 +1,9 @@
-// TODO: Duncan: The update and delete no longer work correctly
-//       because the code in the service is still using the BehaviorSubject
-//       Do we change this now? Or leave it broken? Or ?
-
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 
 import { Observable } from 'rxjs/Observable';
 import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
 import { of } from 'rxjs/observable/of';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { catchError, tap, map } from 'rxjs/operators';
 
 import { IProduct } from './product';
@@ -18,14 +13,7 @@ export class ProductService {
   private productsUrl = 'api/products';
   private products: IProduct[];
 
-  private selectedProductSource = new BehaviorSubject<IProduct | null>(null);
-  selectedProductChanges$ = this.selectedProductSource.asObservable();
-
   constructor(private http: HttpClient) { }
-
-  changeSelectedProduct(selectedProduct: IProduct | null): void {
-    this.selectedProductSource.next(selectedProduct);
-  }
 
   getProducts(): Observable<IProduct[]> {
     if (this.products) {
@@ -63,7 +51,6 @@ export class ProductService {
                             if (foundIndex > -1) {
                                 this.products.splice(foundIndex, 1);
                             }
-                            this.changeSelectedProduct(null);
                         }),
                         catchError(this.handleError)
                     );
@@ -76,7 +63,6 @@ export class ProductService {
                         tap(data => console.log('createProduct: ' + JSON.stringify(data))),
                         tap(data => {
                             this.products.push(data);
-                            this.changeSelectedProduct(data);
                         }),
                         catchError(this.handleError)
                     );
@@ -87,7 +73,8 @@ export class ProductService {
     return this.http.put<IProduct>(url, product, { headers: headers} )
                     .pipe(
                         tap(() => console.log('updateProduct: ' + product.id)),
-                        tap(() => this.changeSelectedProduct(product)),
+                        // Return the product on an update
+                        map(() => product),
                         catchError(this.handleError)
                     );
   }

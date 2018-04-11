@@ -11,6 +11,7 @@ import { NumberValidators } from '../../shared/number.validator';
 /* NgRx */
 import { Store } from '@ngrx/store';
 import * as fromProduct from '../state/product.reducer';
+import * as productActions from '../state/product.actions';
 
 @Component({
   selector: 'pm-product-edit',
@@ -123,13 +124,16 @@ export class ProductEditComponent implements OnInit, OnDestroy {
     if (this.product && this.product.id) {
       if (confirm(`Really delete the product: ${this.product.productName}?`)) {
         this.productService.deleteProduct(this.product.id).subscribe(
-            undefined,
-            (err: any) => this.errorMessage = err.error
-          );
+          // Homework +
+          () => this.store.dispatch(new productActions.ClearCurrentProductAction()),
+           (err: any) => this.errorMessage = err.error
+        );
       }
     } else {
       // No need to delete, it was never saved
-      this.product = null;
+      // Just clear the current product
+      // Homework +
+      this.store.dispatch(new productActions.ClearCurrentProductAction());
     }
   }
 
@@ -140,7 +144,8 @@ export class ProductEditComponent implements OnInit, OnDestroy {
         Object.assign(this.product, this.productForm.value);
 
         this.productService.saveProduct(this.product).subscribe(
-          undefined,
+          // Homework +
+          product => this.store.dispatch(new productActions.SetCurrentProductAction(product)),
           (err: any) => this.errorMessage = err.error
         );
       }
