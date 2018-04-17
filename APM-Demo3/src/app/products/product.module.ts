@@ -21,7 +21,7 @@ const productRoutes: Routes = [
     SharedModule,
     RouterModule.forChild(productRoutes),
     // (3) Register the effects
-    EffectsModule.forRoot(
+    EffectsModule.forFeature(
       [ ProductEffects ]
     ),
   ],
