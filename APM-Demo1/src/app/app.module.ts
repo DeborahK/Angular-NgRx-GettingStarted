@@ -28,9 +28,7 @@ import { reducer } from './products/state/product.reducer';
     HttpClientInMemoryWebApiModule.forRoot(ProductData),
     UserModule,
     AppRoutingModule,
-    StoreModule.forRoot({
-      product: reducer
-    })
+    StoreModule.forRoot({})
   ],
   declarations: [
     AppComponent,

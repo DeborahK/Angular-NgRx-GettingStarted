@@ -30,7 +30,7 @@ export class ProductListComponent implements OnInit {
     // TODO: DUNCAN: This now uses all of the state ... do we do it differently?
 
     // Do NOT subscribe here because it DOES use an async pipe
-    this.products$ = this.store.select(state => state.productFeature.product.products);
+    this.products$ = this.store.select(state => state.productFeature.product.data);
 
     this.store.dispatch(new productActions.LoadProductsAction());
 

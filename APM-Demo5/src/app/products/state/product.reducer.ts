@@ -13,16 +13,32 @@ export interface StateSlice {
 }
 
 // Slice of the feature state
+//                feature        reducer reducerProperty
+// state => state.product.invoices.data
+// state => state.product.product.data
+
+// choices
+// state => state.product.product.data
+// state => state.productFeature.product.data
+// state => state.product.productState.data
+// state => state.productFeature.productState.data
+
+// this.store.pipe(select(getProducts))
+
+
+// state => state.counter.data.count
+// state => state.counter.list.
+//
 export interface ProductState {
   showProductCode: boolean;
   currentProduct: IProduct;
-  products: IProduct[];
+  data: IProduct[];
 }
 
 export const initialState: ProductState = {
   showProductCode: false,
   currentProduct: null,
-  products: []
+  data: []
 };
 
 // Change to the appropriate action
@@ -41,8 +57,8 @@ export function reducer(state = initialState, action: ProductStateAction): Produ
       return {...state, currentProduct: action.payload};
     }
 
-    case ProductStateActionTypes.LoadProductsSuccess: {
-      return { ...state, products: action.payload };
+    case fromProduct.ProductStateActionTypes.LoadProductsSuccess: {
+      return { ...state, data: action.payload };
     }
 
     case ProductStateActionTypes.UpdateProductSuccess: {
@@ -54,9 +70,9 @@ export function reducer(state = initialState, action: ProductStateAction): Produ
 
       // // Otherwise, this is the one we want - return an updated value
       // return action.payload;
-      const newProducts = state.products.map(
+      const newProducts = state.data.map(
         item => action.payload.id === item.id ? action.payload : item);
-      return { ...state, currentProduct: action.payload, products: newProducts };
+      return { ...state, currentProduct: action.payload, data: newProducts };
     }
 
     default: {
