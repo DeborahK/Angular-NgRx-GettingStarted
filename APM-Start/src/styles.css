@@ -6,3 +6,7 @@ li {
 div.panel-heading {
    font-size: x-large;
 }
+
+body {
+  margin-top: 50px;
+}
