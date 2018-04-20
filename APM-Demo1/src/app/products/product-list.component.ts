@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { Subscription } from 'rxjs/Subscription';
 
-import { IProduct } from './product';
+import { Product } from './product';
 import { ProductService } from './product.service';
 
 /* NgRx */
@@ -18,10 +18,10 @@ export class ProductListComponent implements OnInit, OnDestroy {
 
   displayCode: boolean;
 
-  products: IProduct[];
+  products: Product[];
 
   // Used to highlight the selected product in the list
-  selectedProduct: IProduct | null;
+  selectedProduct: Product | null;
   sub: Subscription;
 
   constructor(private store: Store<any>,
@@ -33,7 +33,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
     );
 
     this.productService.getProducts().subscribe(
-      (products: IProduct[]) => this.products = products,
+      (products: Product[]) => this.products = products,
       (err: any) => this.errorMessage = err.error
     );
 
@@ -61,7 +61,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
     this.productService.changeSelectedProduct(this.productService.newProduct());
   }
 
-  productSelected(product: IProduct): void {
+  productSelected(product: Product): void {
     this.productService.changeSelectedProduct(product);
   }
 
