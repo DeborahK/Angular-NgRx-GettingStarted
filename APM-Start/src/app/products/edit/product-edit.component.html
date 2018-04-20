@@ -5,47 +5,47 @@
   <div class="card-body">
     <form  novalidate (ngSubmit)="saveProduct()" [formGroup]="productForm">
       <fieldset>
-        <div class="form-group row" [ngClass]="{'has-error': displayMessage.productName }">
+        <div class="form-group row">
           <label class="col-md-3 col-form-label" for="productNameId">Product Name</label>
 
           <div class="col-md-9">
-            <input class="form-control" id="productNameId" type="text" placeholder="Name (required)" formControlName="productName" (blur)="blur()"/>
-            <span class="text-danger" *ngIf="displayMessage.productName">
+            <input [ngClass]="{'is-invalid': displayMessage.productName }" class="form-control" id="productNameId" type="text" placeholder="Name (required)" formControlName="productName" (blur)="blur()"/>
+            <span class="invalid-feedback" *ngIf="displayMessage.productName">
               {{displayMessage.productName}}
             </span>
           </div>
         </div>
 
-        <div class="form-group row" [ngClass]="{'has-error': displayMessage.productCode}">
+        <div class="form-group row">
           <label class="col-md-3 col-form-label" for="productCodeId">Product Code</label>
 
           <div class="col-md-9">
-            <input class="form-control" id="productCodeId" type="text" placeholder="Code (required)" formControlName="productCode" (blur)="blur()"
+            <input [ngClass]="{'is-invalid': displayMessage.productCode}" class="form-control" id="productCodeId" type="text" placeholder="Code (required)" formControlName="productCode" (blur)="blur()"
             />
-            <span class="text-danger" *ngIf="displayMessage.productCode">
+            <span class="invalid-feedback" *ngIf="displayMessage.productCode">
               {{displayMessage.productCode}}
             </span>
           </div>
         </div>
 
-        <div class="form-group row" [ngClass]="{'has-error': displayMessage.starRating}">
+        <div class="form-group row">
           <label class="col-md-3 col-form-label" for="starRatingId">Star Rating (1-5)</label>
 
           <div class="col-md-9">
-            <input class="form-control" id="starRatingId" type="text" placeholder="Rating" formControlName="starRating" />
-            <span class="text-danger" *ngIf="displayMessage.starRating">
+            <input [ngClass]="{'is-invalid': displayMessage.starRating}" class="form-control" id="starRatingId" type="text" placeholder="Rating" formControlName="starRating" />
+            <span class="invalid-feedback" *ngIf="displayMessage.starRating">
               {{displayMessage.starRating}}
             </span>
           </div>
         </div>
 
-        <div class="form-group row" [ngClass]="{'has-error': displayMessage.description}">
+        <div class="form-group row" >
           <label class="col-md-3 col-form-label" for="descriptionId">Description</label>
 
           <div class="col-md-9">
-            <textarea class="form-control" id="descriptionId" placeholder="Description" rows=3 formControlName="description">
+            <textarea [ngClass]="{'is-invalid': displayMessage.description}" class="form-control" id="descriptionId" placeholder="Description" rows=3 formControlName="description">
                       </textarea>
-            <span class="text-danger" *ngIf="displayMessage.description">
+            <span class="invalid-feedback" *ngIf="displayMessage.description">
               {{ displayMessage.description}}
             </span>
           </div>
@@ -54,17 +54,17 @@
         <div class="form-group">
           <div class="col-md-10 col-md-offset-2">
             <span>
-              <button class="btn btn-primary" type='submit' style="width:80px;margin-right:10px" [disabled]='!productForm.valid || !productForm.dirty'>
+              <button class="btn btn-primary" type="submit" style="width:80px;margin-right:10px" [disabled]="!productForm.valid || !productForm.dirty">
                 Save
               </button>
             </span>
             <span>
-              <button class="btn btn-light" type='button' style="width:80px;margin-right:10px" (click)="cancelEdit()">
+              <button class="btn btn-light" type="button" style="width:80px;margin-right:10px" (click)="cancelEdit()">
                 Cancel
               </button>
             </span>
             <span>
-              <button class="btn btn-light" type='button' style="width:80px" (click)="deleteProduct()">
+              <button class="btn btn-light" type="button" style="width:80px" (click)="deleteProduct()">
                 Delete
               </button>
             </span>
@@ -74,6 +74,6 @@
     </form>
   </div>
 </div>
-<div *ngIf='errorMessage' class='alert alert-danger'>
+<div *ngIf="errorMessage" class="alert alert-danger">
   Error: {{ errorMessage }}
 </div>
