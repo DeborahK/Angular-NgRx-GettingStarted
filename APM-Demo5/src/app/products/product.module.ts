@@ -22,15 +22,8 @@ const productRoutes: Routes = [
   imports: [
     SharedModule,
     RouterModule.forChild(productRoutes),
-    // (3) Add this using forFeature
-    StoreModule.forFeature('productFeature', {
-      product: reducer
-    }),
-    // (4) Change this to forFeature
-    // Registered when lazy loaded.
-    EffectsModule.forFeature(
-      [ ProductEffects ]
-    ),
+    StoreModule.forFeature('products', reducer),
+    EffectsModule.forFeature([ProductEffects]),
   ],
   declarations: [
     ProductShellComponent,
