@@ -7,7 +7,7 @@
     "start": "ng serve -o",
     "build": "ng build --prod",
     "test": "ng test",
-    "lint": "ng lint --type-check",
+    "lint": "ng lint",
     "e2e": "ng e2e"
   },
   "private": true,
@@ -23,7 +23,7 @@
     "@angular/router": "^5.0.0",
     "@ngrx/store": "^5.2.0",
     "@ngrx/store-devtools": "^5.2.0",
-    "bootstrap": "^3.3.7",
+    "bootstrap": "^4.1.0",
     "core-js": "^2.4.1",
     "rxjs": "^5.5.6",
     "zone.js": "^0.8.19"

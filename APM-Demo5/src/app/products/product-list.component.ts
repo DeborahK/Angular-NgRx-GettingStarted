@@ -37,14 +37,14 @@ export class ProductListComponent implements OnInit {
     this.store.dispatch(new productActions.Load());
 
     // Subscribe here because it does not use an async pipe
-    this.store.pipe(select(fromProduct.getCurentProduct)).subscribe(product => {
-      this.selectedProduct = product;
-    });
+    this.store.pipe(
+      select(fromProduct.getCurentProduct)
+    ).subscribe(product => this.selectedProduct = product);
 
     // Subscribe here because it does not use an async pipe
-    this.store.pipe(select(fromProduct.getShowProductCode)).subscribe(
-      showProductCode => this.displayCode = showProductCode
-    );
+    this.store.pipe(
+      select(fromProduct.getShowProductCode)
+    ).subscribe(showProductCode => this.displayCode = showProductCode);
   }
 
   checkChanged(value: boolean): void {
