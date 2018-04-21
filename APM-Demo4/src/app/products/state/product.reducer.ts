@@ -1,7 +1,7 @@
 import { IProduct } from '../product';
 
 /* NgRx */
-import * as fromProduct from './product.actions';
+import { ProductStateActionTypes, ProductStateActions } from './product.actions';
 
 // State for this feature (Product)
 export interface State {
@@ -22,26 +22,26 @@ export const initialState: ProductState = {
 };
 
 // Change to the appropriate action
-export function reducer(state = initialState, action: fromProduct.ProductStateAction): ProductState {
+export function reducer(state = initialState, action: ProductStateActions): ProductState {
 
   switch (action.type) {
-    case fromProduct.ProductStateActionTypes.ToggleProductCode: {
+    case ProductStateActionTypes.ToggleProductCode: {
       return { ...state, showProductCode: action.payload };
     }
 
-    case fromProduct.ProductStateActionTypes.ClearCurrentProduct: {
-      return {...state, currentProduct: null};
+    case ProductStateActionTypes.ClearCurrentProduct: {
+      return { ...state, currentProduct: null };
     }
 
-    case fromProduct.ProductStateActionTypes.SetCurrentProduct: {
-      return {...state, currentProduct: action.payload};
+    case ProductStateActionTypes.SetCurrentProduct: {
+      return { ...state, currentProduct: action.payload };
     }
 
-    case fromProduct.ProductStateActionTypes.LoadProductsSuccess: {
+    case ProductStateActionTypes.LoadProductsSuccess: {
       return { ...state, products: action.payload };
     }
 
-    case fromProduct.ProductStateActionTypes.UpdateProductSuccess: {
+    case ProductStateActionTypes.UpdateProductSuccess: {
       // const newProducts = state.products.map(item => {
       // if (action.payload.id !== item.id) {
       //   // This isn't the item we care about - keep it as-is
@@ -53,6 +53,14 @@ export function reducer(state = initialState, action: fromProduct.ProductStateAc
       const newProducts = state.products.map(
         item => action.payload.id === item.id ? action.payload : item);
       return { ...state, currentProduct: action.payload, products: newProducts };
+    }
+
+    case ProductStateActionTypes.CreateProductSuccess: {
+      return { ...state, products: [...state.products, action.payload] };
+    }
+
+    case ProductStateActionTypes.DeleteProductSuccess: {
+      return { ...state, products: state.products.filter(product => product.id !== action.payload.id), currentProduct: null };
     }
 
     default: {

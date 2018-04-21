@@ -13,14 +13,20 @@ export enum ProductStateActionTypes {
   LoadProductsFail = '[ProductState] Load Products Fail',
   UpdateProduct = '[ProductState] Update Product',
   UpdateProductSuccess = '[ProductState] Update Product Success',
-  UpdateProductFail = '[ProductState] Update Product Fail'
+  UpdateProductFail = '[ProductState] Update Product Fail',
+  CreateProduct = '[ProductState] Create Product',
+  CreateProductSuccess = '[ProductState] Create Product Success',
+  CreateProductFail = '[ProductState] Create Product Fail',
+  DeleteProduct = '[ProductState] Delete Product',
+  DeleteProductSuccess = '[ProductState] Delete Product Success',
+  DeleteProductFail = '[ProductState] Delete Product Fail'
 }
 
 // Action Creators
 export class ToggleProductCodeAction implements Action {
   readonly type = ProductStateActionTypes.ToggleProductCode;
 
-  constructor(public payload: boolean) {}
+  constructor(public payload: boolean) { }
 }
 
 export class ClearCurrentProductAction implements Action {
@@ -71,8 +77,44 @@ export class UpdateProductFailAction implements Action {
   constructor(public payload: string) { }
 }
 
+export class CreateProductAction implements Action {
+  readonly type = ProductStateActionTypes.CreateProduct;
+
+  constructor(public payload: IProduct) { }
+}
+
+export class CreateProductSuccessAction implements Action {
+  readonly type = ProductStateActionTypes.CreateProductSuccess;
+
+  constructor(public payload: IProduct) { }
+}
+
+export class CreateProductFailAction implements Action {
+  readonly type = ProductStateActionTypes.CreateProductFail;
+
+  constructor(public payload: string) { }
+}
+
+export class DeleteProductAction implements Action {
+  readonly type = ProductStateActionTypes.DeleteProduct;
+
+  constructor(public payload: IProduct) { }
+}
+
+export class DeleteProductSuccessAction implements Action {
+  readonly type = ProductStateActionTypes.DeleteProductSuccess;
+
+  constructor(public payload: IProduct) { }
+}
+
+export class DeleteProductFailAction implements Action {
+  readonly type = ProductStateActionTypes.DeleteProductFail;
+
+  constructor(public payload: string) { }
+}
+
 // Union all the valid types
-export type ProductStateAction = ToggleProductCodeAction
+export type ProductStateActions = ToggleProductCodeAction
   | ClearCurrentProductAction
   | SetCurrentProductAction
   | LoadProductsAction
@@ -80,4 +122,11 @@ export type ProductStateAction = ToggleProductCodeAction
   | LoadProductsFailAction
   | UpdateProductAction
   | UpdateProductSuccessAction
-  | UpdateProductFailAction;
+  | UpdateProductFailAction
+  | CreateProductAction
+  | CreateProductSuccessAction
+  | CreateProductFailAction
+  | DeleteProductAction
+  | DeleteProductSuccessAction
+  | DeleteProductFailAction
+

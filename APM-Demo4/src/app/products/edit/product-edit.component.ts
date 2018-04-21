@@ -32,36 +32,36 @@ export class ProductEditComponent implements OnInit, OnDestroy {
   private genericValidator: GenericValidator;
 
   constructor(private fb: FormBuilder,
-              private store: Store<fromProduct.State>,
-              private productService: ProductService) {
+    private store: Store<fromProduct.State>,
+    private productService: ProductService) {
 
     // Defines all of the validation messages for the form.
     // These could instead be retrieved from a file or database.
     this.validationMessages = {
       productName: {
-          required: 'Product name is required.',
-          minlength: 'Product name must be at least three characters.',
-          maxlength: 'Product name cannot exceed 50 characters.'
+        required: 'Product name is required.',
+        minlength: 'Product name must be at least three characters.',
+        maxlength: 'Product name cannot exceed 50 characters.'
       },
       productCode: {
-          required: 'Product code is required.'
+        required: 'Product code is required.'
       },
       starRating: {
-          range: 'Rate the product between 1 (lowest) and 5 (highest).'
+        range: 'Rate the product between 1 (lowest) and 5 (highest).'
       }
-  };
+    };
 
-  // Define an instance of the validator for use with this form,
-  // passing in this form's set of validation messages.
-  this.genericValidator = new GenericValidator(this.validationMessages);
+    // Define an instance of the validator for use with this form,
+    // passing in this form's set of validation messages.
+    this.genericValidator = new GenericValidator(this.validationMessages);
   }
 
   ngOnInit() {
     // Define the form group
     this.productForm = this.fb.group({
       productName: ['', [Validators.required,
-                         Validators.minLength(3),
-                         Validators.maxLength(50)]],
+      Validators.minLength(3),
+      Validators.maxLength(50)]],
       productCode: ['', Validators.required],
       starRating: ['', NumberValidators.range(1, 5)],
       description: ''
@@ -69,7 +69,7 @@ export class ProductEditComponent implements OnInit, OnDestroy {
 
     // Watch for changes to the currently selected product
     this.sub = this.store.select(state => state.product.currentProduct).subscribe(
-      selectedProduct =>  this.displayProduct(selectedProduct)
+      selectedProduct => this.displayProduct(selectedProduct)
     );
 
     // Watch for value changes
@@ -122,10 +122,7 @@ export class ProductEditComponent implements OnInit, OnDestroy {
   deleteProduct(): void {
     if (this.product && this.product.id) {
       if (confirm(`Really delete the product: ${this.product.productName}?`)) {
-        this.productService.deleteProduct(this.product.id).subscribe(
-          () => this.store.dispatch(new productActions.ClearCurrentProductAction()),
-           (err: any) => this.errorMessage = err.error
-        );
+        this.store.dispatch(new productActions.DeleteProductAction(this.product));
       }
     } else {
       // No need to delete, it was never saved
@@ -134,12 +131,14 @@ export class ProductEditComponent implements OnInit, OnDestroy {
     }
   }
 
+  // TODO: Convert to check id===0 then dispatch udate or create action 
   saveProduct(): void {
     if (this.productForm.valid) {
       if (this.productForm.dirty) {
         // Create an object starting with an empty object
         // Copy over all of the original product properties
         // Then copy over the values from the form
+
         const p = Object.assign({}, this.product, this.productForm.value);
 
         this.store.dispatch(new productActions.UpdateProductAction(p));
