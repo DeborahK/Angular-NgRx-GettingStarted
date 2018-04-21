@@ -5,21 +5,27 @@
     </div>
 
     <ul class="list-group">
-      <li class="list-group-item rounded-0" *ngFor="let product of products" [ngClass]="{'active': product?.id === selectedProduct?.id}"
-        (click)="productSelected(product)">
-        {{ product.productName }}
+      <button class="list-group-item list-group-item-action rounded-0" 
+          *ngFor="let product of products" 
+          [ngClass]="{'active': product?.id === selectedProduct?.id}"
+          (click)="productSelected(product)">{{ product.productName }}
         <ng-container *ngIf="displayCode">
           ({{ product.productCode }})
         </ng-container>
-      </li>
+      </button>
     </ul>
   </div>
 
   <div class="card-footer">
     <div class="row">
-      <div class="form-check form-check-inline col-md-7">
-        <input class="form-check-input" type="checkbox" (change)="checkChanged($event.target.checked)" [checked]="displayCode">
-        <label class="form-check-label">Display Product Code</label>
+      <div class="form-check col-md-7">
+        <label>
+          <input class="form-check-input" 
+                 type="checkbox" 
+                 (change)="checkChanged($event.target.checked)" 
+                 [checked]="displayCode">
+          Display Product Code
+        </label>
       </div>
       <div class="col-md-4 text-right">
         <button type="button" class="btn btn-primary" (click)="newProduct()">

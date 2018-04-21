@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { Subscription } from 'rxjs/Subscription';
 
-import { IProduct } from '../product';
+import { Product } from '../product';
 import { ProductService } from '../product.service';
 import { GenericValidator } from '../../shared/generic-validator';
 import { NumberValidators } from '../../shared/number.validator';
@@ -18,7 +18,7 @@ export class ProductEditComponent implements OnInit, OnDestroy {
   errorMessage: string = '';
   productForm: FormGroup;
 
-  product: IProduct | null;
+  product: Product | null;
   sub: Subscription;
 
   // Use with the generic validation message class
@@ -27,35 +27,35 @@ export class ProductEditComponent implements OnInit, OnDestroy {
   private genericValidator: GenericValidator;
 
   constructor(private fb: FormBuilder,
-              private productService: ProductService) {
+    private productService: ProductService) {
 
     // Defines all of the validation messages for the form.
     // These could instead be retrieved from a file or database.
     this.validationMessages = {
       productName: {
-          required: 'Product name is required.',
-          minlength: 'Product name must be at least three characters.',
-          maxlength: 'Product name cannot exceed 50 characters.'
+        required: 'Product name is required.',
+        minlength: 'Product name must be at least three characters.',
+        maxlength: 'Product name cannot exceed 50 characters.'
       },
       productCode: {
-          required: 'Product code is required.'
+        required: 'Product code is required.'
       },
       starRating: {
-          range: 'Rate the product between 1 (lowest) and 5 (highest).'
+        range: 'Rate the product between 1 (lowest) and 5 (highest).'
       }
-  };
+    };
 
-  // Define an instance of the validator for use with this form,
-  // passing in this form's set of validation messages.
-  this.genericValidator = new GenericValidator(this.validationMessages);
+    // Define an instance of the validator for use with this form,
+    // passing in this form's set of validation messages.
+    this.genericValidator = new GenericValidator(this.validationMessages);
   }
 
   ngOnInit() {
     // Define the form group
     this.productForm = this.fb.group({
       productName: ['', [Validators.required,
-                         Validators.minLength(3),
-                         Validators.maxLength(50)]],
+      Validators.minLength(3),
+      Validators.maxLength(50)]],
       productCode: ['', Validators.required],
       starRating: ['', NumberValidators.range(1, 5)],
       description: ''
@@ -82,7 +82,7 @@ export class ProductEditComponent implements OnInit, OnDestroy {
     this.displayMessage = this.genericValidator.processMessages(this.productForm);
   }
 
-  displayProduct(product: IProduct | null): void {
+  displayProduct(product: Product | null): void {
     // Set the local product property
     this.product = product;
 
@@ -117,9 +117,9 @@ export class ProductEditComponent implements OnInit, OnDestroy {
     if (this.product && this.product.id) {
       if (confirm(`Really delete the product: ${this.product.productName}?`)) {
         this.productService.deleteProduct(this.product.id).subscribe(
-            () => this.productService.changeSelectedProduct(null),
-            (err: any) => this.errorMessage = err.error
-          );
+          () => this.productService.changeSelectedProduct(null),
+          (err: any) => this.errorMessage = err.error
+        );
       }
     } else {
       // No need to delete, it was never saved
@@ -133,12 +133,20 @@ export class ProductEditComponent implements OnInit, OnDestroy {
         // Create an object starting with an empty object
         // Copy over all of the original product properties
         // Then copy over the values from the form
+        // This ensurse values not on the form, such as the Id, are retained
         const p = Object.assign({}, this.product, this.productForm.value);
 
-        this.productService.saveProduct(p).subscribe(
-          product => this.productService.changeSelectedProduct(product),
-          (err: any) => this.errorMessage = err.error
-        );
+        if (p.id === 0) {
+          this.productService.createProduct(p).subscribe(
+            product => this.productService.changeSelectedProduct(product),
+            (err: any) => this.errorMessage = err.error
+          );
+        } else {
+          this.productService.updateProduct(p).subscribe(
+            product => this.productService.changeSelectedProduct(product),
+            (err: any) => this.errorMessage = err.error
+          );
+        }
       }
     } else {
       this.errorMessage = 'Please correct the validation errors.';
