@@ -32,23 +32,16 @@ export class ProductListComponent implements OnInit {
     // No, keep them separate because only want notifications when appropriate.
 
     // Do NOT subscribe here because it DOES use an async pipe
-    // this.products$ = this.store.select(state => state.productFeature.products);
     this.products$ = this.store.pipe(select(fromProduct.getProducts)) as Observable<Product[]>;
 
     this.store.dispatch(new productActions.Load());
 
     // Subscribe here because it does not use an async pipe
-    // this.store.select(state => state.productFeature.currentProduct).subscribe(product => {
-    //   this.selectedProduct = product;
-    // });
     this.store.pipe(select(fromProduct.getCurentProduct)).subscribe(product => {
       this.selectedProduct = product;
     });
 
     // Subscribe here because it does not use an async pipe
-    // this.store.select(state => state.productFeature.showProductCode).subscribe(
-    //   showProductCode => this.displayCode = showProductCode
-    // );
     this.store.pipe(select(fromProduct.getShowProductCode)).subscribe(
       showProductCode => this.displayCode = showProductCode
     );

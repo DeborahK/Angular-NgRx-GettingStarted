@@ -33,21 +33,21 @@ export class ProductEditComponent implements OnInit, OnDestroy {
     // These could instead be retrieved from a file or database.
     this.validationMessages = {
       productName: {
-          required: 'Product name is required.',
-          minlength: 'Product name must be at least three characters.',
-          maxlength: 'Product name cannot exceed 50 characters.'
+        required: 'Product name is required.',
+        minlength: 'Product name must be at least three characters.',
+        maxlength: 'Product name cannot exceed 50 characters.'
       },
       productCode: {
-          required: 'Product code is required.'
+        required: 'Product code is required.'
       },
       starRating: {
-          range: 'Rate the product between 1 (lowest) and 5 (highest).'
+        range: 'Rate the product between 1 (lowest) and 5 (highest).'
       }
-  };
+    };
 
-  // Define an instance of the validator for use with this form,
-  // passing in this form's set of validation messages.
-  this.genericValidator = new GenericValidator(this.validationMessages);
+    // Define an instance of the validator for use with this form,
+    // passing in this form's set of validation messages.
+    this.genericValidator = new GenericValidator(this.validationMessages);
   }
 
   ngOnInit() {
@@ -91,10 +91,10 @@ export class ProductEditComponent implements OnInit, OnDestroy {
       this.productForm.reset();
 
       // Display the appropriate page title
-      if (product.id === 0) {
+      if (this.product.id === 0) {
         this.pageTitle = 'Add Product';
       } else {
-        this.pageTitle = `Edit Product: ${product.productName}`;
+        this.pageTitle = `Edit Product: ${this.product.productName}`;
       }
 
       // Update the data on the form
@@ -117,9 +117,9 @@ export class ProductEditComponent implements OnInit, OnDestroy {
     if (this.product && this.product.id) {
       if (confirm(`Really delete the product: ${this.product.productName}?`)) {
         this.productService.deleteProduct(this.product.id).subscribe(
-            () => this.productService.changeSelectedProduct(null),
-            (err: any) => this.errorMessage = err.error
-          );
+          () => this.productService.changeSelectedProduct(null),
+          (err: any) => this.errorMessage = err.error
+        );
       }
     } else {
       // No need to delete, it was never saved
@@ -133,12 +133,20 @@ export class ProductEditComponent implements OnInit, OnDestroy {
         // Create an object starting with an empty object
         // Copy over all of the original product properties
         // Then copy over the values from the form
+        // This ensurse values not on the form, such as the Id, are retained
         const p = Object.assign({}, this.product, this.productForm.value);
 
-        this.productService.saveProduct(p).subscribe(
-          product => this.productService.changeSelectedProduct(product),
-          (err: any) => this.errorMessage = err.error
-        );
+        if (p.id === 0) {
+          this.productService.createProduct(p).subscribe(
+            product => this.productService.changeSelectedProduct(product),
+            (err: any) => this.errorMessage = err.error
+          );
+        } else {
+          this.productService.updateProduct(p).subscribe(
+            product => this.productService.changeSelectedProduct(product),
+            (err: any) => this.errorMessage = err.error
+          );
+        }
       }
     } else {
       this.errorMessage = 'Please correct the validation errors.';

@@ -10,7 +10,8 @@ import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'pm-product-list',
-  templateUrl: './product-list.component.html'
+  templateUrl: './product-list.component.html',
+  styleUrls: ['./product-list.component.css']
 })
 export class ProductListComponent implements OnInit, OnDestroy {
   pageTitle: string = 'Products';
@@ -37,10 +38,10 @@ export class ProductListComponent implements OnInit, OnDestroy {
       (err: any) => this.errorMessage = err.error
     );
 
-    this.store.select('productFeature').subscribe(
+    this.store.select('products').subscribe(
       productFeature => {
-        if (productFeature.productState) {
-          this.displayCode = productFeature.productState.showProductCode;
+        if (productFeature) {
+          this.displayCode = productFeature.showProductCode;
         }
       }
     );

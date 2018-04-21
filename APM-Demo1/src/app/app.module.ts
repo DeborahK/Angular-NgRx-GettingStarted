@@ -19,7 +19,6 @@ import { UserModule } from './user/user.module';
 
 /* NgRx */
 import { StoreModule } from '@ngrx/store';
-import { reducer } from './products/state/product.reducer';
 
 @NgModule({
   imports: [
