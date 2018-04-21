@@ -91,10 +91,10 @@ export class ProductEditComponent implements OnInit, OnDestroy {
       this.productForm.reset();
 
       // Display the appropriate page title
-      if (product.id === 0) {
+      if (this.product.id === 0) {
         this.pageTitle = 'Add Product';
       } else {
-        this.pageTitle = `Edit Product: ${product.productName}`;
+        this.pageTitle = `Edit Product: ${this.product.productName}`;
       }
 
       // Update the data on the form
