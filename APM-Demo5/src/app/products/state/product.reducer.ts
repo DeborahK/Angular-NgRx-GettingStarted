@@ -31,7 +31,6 @@ export const getProducts = createSelector(
   state => state.products
 );
 
-// Add sort here.
 export const getCurentProduct = createSelector(
   getProductFeatureState,
   state => state.currentProduct
@@ -64,17 +63,19 @@ export function reducer(
     }
 
     case ProductActionTypes.UpdateProductSuccess: {
-      // const newProducts = state.products.map(item => {
-      // if (action.payload.id !== item.id) {
-      //   // This isn't the item we care about - keep it as-is
-      //   return item;
-      // }
-
-      // // Otherwise, this is the one we want - return an updated value
-      // return action.payload;
-      const newProducts = state.products.map(
+      const updatedProducts = state.products.map(
         item => action.payload.id === item.id ? action.payload : item);
-      return { ...state, currentProduct: action.payload, products: newProducts };
+      return { ...state, products: updatedProducts, currentProduct: action.payload };
+    }
+
+    // After a create, the currentProduct is the new product.
+    case ProductActionTypes.CreateProductSuccess: {
+      return { ...state, products: [...state.products, action.payload], currentProduct: action.payload };
+    }
+
+    // After a delete, the currentProduct is null.
+    case ProductActionTypes.DeleteProductSuccess: {
+      return { ...state, products: state.products.filter(product => product.id !== action.payload.id), currentProduct: null };
     }
 
     default: {

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { Product } from './product';
 import { ProductService } from './product.service';
@@ -12,9 +12,10 @@ import * as productActions from './state/product.actions';
 
 @Component({
   selector: 'pm-product-list',
-  templateUrl: './product-list.component.html'
+  templateUrl: './product-list.component.html',
+  styleUrls: ['./product-list.component.css']
 })
-export class ProductListComponent implements OnInit {
+export class ProductListComponent implements OnInit, OnDestroy {
   pageTitle: string = 'Products';
   errorMessage: string;
 
@@ -46,6 +47,10 @@ export class ProductListComponent implements OnInit {
     this.store.pipe(
       select(fromProduct.getShowProductCode)
     ).subscribe(showProductCode => this.displayCode = showProductCode);
+  }
+
+  ngOnDestroy(): void {
+    // TODO: Should we unsubscribe?
   }
 
   checkChanged(value: boolean): void {

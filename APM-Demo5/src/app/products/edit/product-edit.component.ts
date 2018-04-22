@@ -1,8 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import { Subscription } from 'rxjs/Subscription';
-
 import { Product } from '../product';
 import { ProductService } from '../product.service';
 import { GenericValidator } from '../../shared/generic-validator';
@@ -24,7 +22,6 @@ export class ProductEditComponent implements OnInit, OnDestroy {
   productForm: FormGroup;
 
   product: Product | null;
-  sub: Subscription;
 
   // Use with the generic validation message class
   displayMessage: { [key: string]: string } = {};
@@ -39,21 +36,21 @@ export class ProductEditComponent implements OnInit, OnDestroy {
     // These could instead be retrieved from a file or database.
     this.validationMessages = {
       productName: {
-          required: 'Product name is required.',
-          minlength: 'Product name must be at least three characters.',
-          maxlength: 'Product name cannot exceed 50 characters.'
+        required: 'Product name is required.',
+        minlength: 'Product name must be at least three characters.',
+        maxlength: 'Product name cannot exceed 50 characters.'
       },
       productCode: {
-          required: 'Product code is required.'
+        required: 'Product code is required.'
       },
       starRating: {
-          range: 'Rate the product between 1 (lowest) and 5 (highest).'
+        range: 'Rate the product between 1 (lowest) and 5 (highest).'
       }
-  };
+    };
 
-  // Define an instance of the validator for use with this form,
-  // passing in this form's set of validation messages.
-  this.genericValidator = new GenericValidator(this.validationMessages);
+    // Define an instance of the validator for use with this form,
+    // passing in this form's set of validation messages.
+    this.genericValidator = new GenericValidator(this.validationMessages);
   }
 
   ngOnInit() {
@@ -68,12 +65,9 @@ export class ProductEditComponent implements OnInit, OnDestroy {
     });
 
     // Watch for changes to the currently selected product
-    // this.sub = this.store.select(state => state.productFeature.currentProduct).subscribe(
-    //   selectedProduct =>  this.displayProduct(selectedProduct)
-    // );
-    this.sub = this.store.pipe(select(fromProduct.getCurentProduct)).subscribe(
-      selectedProduct =>  this.displayProduct(selectedProduct)
-    );
+    this.store.pipe(
+      select(fromProduct.getCurentProduct)
+    ).subscribe(selectedProduct => this.displayProduct(selectedProduct));
 
     // Watch for value changes
     this.productForm.valueChanges.subscribe(value =>
@@ -82,7 +76,7 @@ export class ProductEditComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.sub.unsubscribe();
+    // TODO: Should we be unsubscribing?
   }
 
   // Also validate on blur
@@ -100,10 +94,10 @@ export class ProductEditComponent implements OnInit, OnDestroy {
       this.productForm.reset();
 
       // Display the appropriate page title
-      if (product.id === 0) {
+      if (this.product.id === 0) {
         this.pageTitle = 'Add Product';
       } else {
-        this.pageTitle = `Edit Product: ${product.productName}`;
+        this.pageTitle = `Edit Product: ${this.product.productName}`;
       }
 
       // Update the data on the form
@@ -125,10 +119,7 @@ export class ProductEditComponent implements OnInit, OnDestroy {
   deleteProduct(): void {
     if (this.product && this.product.id) {
       if (confirm(`Really delete the product: ${this.product.productName}?`)) {
-        this.productService.deleteProduct(this.product.id).subscribe(
-          () => this.store.dispatch(new productActions.ClearCurrentProduct()),
-           (err: any) => this.errorMessage = err.error
-        );
+        this.store.dispatch(new productActions.DeleteProduct(this.product));
       }
     } else {
       // No need to delete, it was never saved
@@ -143,9 +134,15 @@ export class ProductEditComponent implements OnInit, OnDestroy {
         // Create an object starting with an empty object
         // Copy over all of the original product properties
         // Then copy over the values from the form
+        // This ensures values not on the form, such as the Id, are retained
         const p = Object.assign({}, this.product, this.productForm.value);
 
-        this.store.dispatch(new productActions.UpdateProduct(p));
+        if (p.id === 0) {
+          this.store.dispatch(new productActions.CreateProduct(p));
+        } else {
+          this.store.dispatch(new productActions.UpdateProduct(p));
+        }
+
       }
     } else {
       this.errorMessage = 'Please correct the validation errors.';

@@ -20,10 +20,8 @@ import { UserModule } from './user/user.module';
 /* NgRx */
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { reducer } from './products/state/product.reducer';
 import { environment } from '../environments/environment';
 import { EffectsModule } from '@ngrx/effects';
-import { ProductEffects } from './products/state/product.effect';
 
 @NgModule({
   imports: [
@@ -32,11 +30,12 @@ import { ProductEffects } from './products/state/product.effect';
     HttpClientInMemoryWebApiModule.forRoot(ProductData),
     UserModule,
     AppRoutingModule,
-    // (1) Change to an empty object
-    StoreModule.forRoot({ }),
-    // (2) Add here with an empty object
-    EffectsModule.forRoot([]),
-    !environment.production ? StoreDevtoolsModule.instrument() : []
+    StoreModule.forRoot({}),
+    StoreDevtoolsModule.instrument({
+      name: 'APM Demo App DevTools',
+      logOnly: environment.production,
+    }),
+    EffectsModule.forRoot([])
   ],
   declarations: [
     AppComponent,
