@@ -23,7 +23,6 @@ const productRoutes: Routes = [
     SharedModule,
     RouterModule.forChild(productRoutes),
     StoreModule.forFeature('products', reducer),
-    // (3) Register the effects
     EffectsModule.forFeature(
       [ ProductEffects ]
     ),
@@ -35,7 +34,6 @@ const productRoutes: Routes = [
   ],
   providers: [
     ProductService,
-    // (3) Register the effects service
     ProductEffects
   ]
 })

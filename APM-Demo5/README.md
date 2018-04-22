@@ -1,6 +1,6 @@
 # APM-Demo 5
 
-Demo of feature module state composition.
+Demo of TBD: Architecture module.
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.7.3.
 

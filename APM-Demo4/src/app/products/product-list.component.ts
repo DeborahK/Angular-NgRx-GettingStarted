@@ -30,8 +30,6 @@ export class ProductListComponent implements OnInit, OnDestroy {
               private productService: ProductService) { }
 
   ngOnInit(): void {
-    // This now uses all of the state ... do we do it differently?
-    // No, keep them separate because only want notifications when appropriate.
 
     // Do NOT subscribe here because it DOES use an async pipe
     this.products$ = this.store.pipe(select(fromProduct.getProducts)) as Observable<Product[]>;

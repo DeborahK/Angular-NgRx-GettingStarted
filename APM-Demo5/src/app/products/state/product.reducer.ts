@@ -55,11 +55,11 @@ export function reducer(
     }
 
     case ProductActionTypes.SetCurrentProduct: {
-      return {...state, currentProduct: action.payload};
+      return {...state, currentProduct: {...action.payload}};
     }
 
     case ProductActionTypes.LoadSuccess: {
-      return { ...state, products: action.payload };
+      return {...state, products: [...action.payload]};
     }
 
     case ProductActionTypes.UpdateProductSuccess: {

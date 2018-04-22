@@ -2,7 +2,6 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { Product } from '../product';
-import { ProductService } from '../product.service';
 import { GenericValidator } from '../../shared/generic-validator';
 import { NumberValidators } from '../../shared/number.validator';
 
@@ -29,8 +28,7 @@ export class ProductEditComponent implements OnInit, OnDestroy {
   private genericValidator: GenericValidator;
 
   constructor(private fb: FormBuilder,
-              private store: Store<fromProduct.State>,
-              private productService: ProductService) {
+              private store: Store<fromProduct.State>) {
 
     // Defines all of the validation messages for the form.
     // These could instead be retrieved from a file or database.

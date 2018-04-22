@@ -36,7 +36,6 @@ export class ProductListComponent implements OnInit, OnDestroy {
     // Do NOT subscribe here because it DOES use an async pipe
     this.products$ = this.store.pipe(select(fromProduct.getProducts)) as Observable<Product[]>;
 
-    // (5) Dispatch the load
     this.store.dispatch(new productActions.Load());
 
     // Subscribe here because it does not use an async pipe

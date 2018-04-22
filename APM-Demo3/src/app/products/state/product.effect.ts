@@ -17,7 +17,6 @@ export class ProductEffects {
   constructor(private productService: ProductService,
               private actions$: Actions) {}
 
-  // (2) Listen for the load actions
   @Effect()
   loadingProducts$: Observable<Action> = this.actions$.pipe(
     ofType(fromProduct.ProductActionTypes.Load),

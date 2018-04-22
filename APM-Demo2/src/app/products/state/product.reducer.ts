@@ -51,7 +51,7 @@ export function reducer(
 
     // Homework
     case ProductActionTypes.SetCurrentProduct: {
-      return {...state, currentProduct: action.payload};
+      return {...state, currentProduct: {...action.payload}};
     }
 
     default: {
