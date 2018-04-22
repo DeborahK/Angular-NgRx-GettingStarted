@@ -3,11 +3,12 @@ import { Component, OnInit } from '@angular/core';
 import { Product } from './product';
 import { ProductService } from './product.service';
 
+import { Observable } from 'rxjs/Observable';
+
 /* NgRx */
 import { Store, select } from '@ngrx/store';
 import * as fromProduct from './state/product.reducer';
 import * as productActions from './state/product.actions';
-import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'pm-product-list',

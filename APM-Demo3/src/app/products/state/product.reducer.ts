@@ -1,47 +1,64 @@
-import { IProduct } from '../product';
+import { Product } from '../product';
 
 /* NgRx */
-import * as fromProduct from './product.actions';
+import { ProductActions, ProductActionTypes } from './product.actions';
+import * as fromRoot from '../../state';
+import { createFeatureSelector, createSelector } from '@ngrx/store';
+
+// Single source of truth
+export interface State extends fromRoot.State {
+  productFeature: ProductState;
+}
 
 // State for this feature (Product)
-export interface State {
-  product: ProductState;
-}
-
-// Slice of the feature state
-// (0) Add the slice of state
 export interface ProductState {
   showProductCode: boolean;
-  currentProduct: IProduct;
-  products: IProduct[];
+  currentProduct: Product;
+  products: Product[];
 }
 
-// (0) Set its initial state
 export const initialState: ProductState = {
   showProductCode: false,
   currentProduct: null,
   products: []
 };
 
-// Change to the appropriate action
-export function reducer(state = initialState, action: fromProduct.ProductStateAction): ProductState {
+// Selector functions
+export const getProductFeatureState = createFeatureSelector<ProductState>('products');
 
-  // (0) Ensure the full object is returned
+export const getProducts = createSelector(
+  getProductFeatureState,
+  state => state.products
+);
+
+export const getCurentProduct = createSelector(
+  getProductFeatureState,
+  state => state.currentProduct
+);
+
+export const getShowProductCode = createSelector(
+  getProductFeatureState,
+  state => state.showProductCode
+);
+
+export function reducer(
+  state = initialState,
+  action: ProductActions): ProductState {
+
   switch (action.type) {
-    case fromProduct.ProductStateActionTypes.ToggleProductCode: {
+    case ProductActionTypes.ToggleProductCode: {
       return { ...state, showProductCode: action.payload };
     }
 
-    case fromProduct.ProductStateActionTypes.ClearCurrentProduct: {
+    case ProductActionTypes.ClearCurrentProduct: {
       return {...state, currentProduct: null};
     }
 
-    case fromProduct.ProductStateActionTypes.SetCurrentProduct: {
+    case ProductActionTypes.SetCurrentProduct: {
       return {...state, currentProduct: action.payload};
     }
 
-    // (0) Add the new action type
-    case fromProduct.ProductStateActionTypes.LoadProductsSuccess: {
+    case ProductActionTypes.LoadSuccess: {
       return { ...state, products: action.payload };
     }
 

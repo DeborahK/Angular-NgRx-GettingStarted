@@ -1,59 +1,59 @@
-import { IProduct } from '../product';
+import { Product } from '../product';
 
 /* NgRx */
 import { Action } from '@ngrx/store';
 
 // (1) Start with the action
-export enum ProductStateActionTypes {
-  ToggleProductCode = '[ProductState] Toggle Product Code',
-  ClearCurrentProduct = '[ProductState] Clear Current Product',
-  SetCurrentProduct = '[ProductState] Set Current Product',
-  LoadProducts = '[ProductState] Load Products',
-  LoadProductsSuccess = '[ProductState] Load Products Success',
-  LoadProductsFail = '[ProductState] Load Products Fail'
+export enum ProductActionTypes {
+  ToggleProductCode = '[Product] Toggle Product Code',
+  ClearCurrentProduct = '[Product] Clear Current Product',
+  SetCurrentProduct = '[Product] Set Current Product',
+  Load = '[Product] Load',
+  LoadSuccess = '[Product] Load Success',
+  LoadFail = '[Product] Load Fail'
 }
 
 // Action Creators
-export class ToggleProductCodeAction implements Action {
-  readonly type = ProductStateActionTypes.ToggleProductCode;
+export class ToggleProductCode implements Action {
+  readonly type = ProductActionTypes.ToggleProductCode;
 
   constructor(public payload: boolean) {}
 }
 
-export class ClearCurrentProductAction implements Action {
-  readonly type = ProductStateActionTypes.ClearCurrentProduct;
+export class ClearCurrentProduct implements Action {
+  readonly type = ProductActionTypes.ClearCurrentProduct;
 
-  constructor() { }
+  constructor() {}
 }
 
-export class SetCurrentProductAction implements Action {
-  readonly type = ProductStateActionTypes.SetCurrentProduct;
+export class SetCurrentProduct implements Action {
+  readonly type = ProductActionTypes.SetCurrentProduct;
 
-  constructor(public payload: IProduct) { }
+  constructor(public payload: Product) {}
 }
 
-export class LoadProductsAction implements Action {
-  readonly type = ProductStateActionTypes.LoadProducts;
+export class Load implements Action {
+  readonly type = ProductActionTypes.Load;
 
-  constructor() { }
+  constructor() {}
 }
 
-export class LoadProductsSuccessAction implements Action {
-  readonly type = ProductStateActionTypes.LoadProductsSuccess;
+export class LoadSuccess implements Action {
+  readonly type = ProductActionTypes.LoadSuccess;
 
-  constructor(public payload: IProduct[]) { }
+  constructor(public payload: Product[]) {}
 }
 
-export class LoadProductsFailAction implements Action {
-  readonly type = ProductStateActionTypes.LoadProductsFail;
+export class LoadFail implements Action {
+  readonly type = ProductActionTypes.LoadFail;
 
-  constructor(public payload: string) { }
+  constructor(public payload: string) {}
 }
 
-// Union all the valid types
-export type ProductStateAction = ToggleProductCodeAction
-  | ClearCurrentProductAction
-  | SetCurrentProductAction
-  | LoadProductsAction
-  | LoadProductsSuccessAction
-  | LoadProductsFailAction;
+// Union the valid types
+export type ProductActions = ToggleProductCode
+  | ClearCurrentProduct
+  | SetCurrentProduct
+  | Load
+  | LoadSuccess
+  | LoadFail;

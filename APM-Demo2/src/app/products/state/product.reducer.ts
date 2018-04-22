@@ -2,13 +2,15 @@ import { Product } from '../product';
 
 /* NgRx */
 import { ProductActions, ProductActionTypes } from './product.actions';
+import * as fromRoot from '../../state';
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 
-// State for this feature (Product)
-export interface State {
-  product: ProductState;
+// Single source of truth
+export interface State extends fromRoot.State {
+  productFeature: ProductState;
 }
 
+// State for this feature (Product)
 export interface ProductState {
   showProductCode: boolean;
   currentProduct: Product;          // Homework
