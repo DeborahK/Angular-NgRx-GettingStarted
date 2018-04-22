@@ -20,8 +20,8 @@ import { UserModule } from './user/user.module';
 /* NgRx */
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { reducer } from './products/state/product.reducer';
 import { environment } from '../environments/environment';
+import { EffectsModule } from '@ngrx/effects';
 
 @NgModule({
   imports: [
@@ -30,10 +30,12 @@ import { environment } from '../environments/environment';
     HttpClientInMemoryWebApiModule.forRoot(ProductData),
     UserModule,
     AppRoutingModule,
-    StoreModule.forRoot({
-      product: reducer
+    StoreModule.forRoot({}),
+    StoreDevtoolsModule.instrument({
+      name: 'APM Demo App DevTools',
+      logOnly: environment.production,
     }),
-    !environment.production ? StoreDevtoolsModule.instrument() : []
+    EffectsModule.forRoot([])
   ],
   declarations: [
     AppComponent,

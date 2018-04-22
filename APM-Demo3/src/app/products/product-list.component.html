@@ -1,10 +1,11 @@
 <div class="card">
-  <div class="card-body" *ngIf="products$ | async as products">
-    <div class="card-header">
-      {{pageTitle}}
-    </div>
 
-    <ul class="list-group">
+  <div class="card-header">
+    {{pageTitle}}
+  </div>
+
+  <div class="card-body" *ngIf="products$ | async as products">
+    <div class="list-group">
       <button class="list-group-item list-group-item-action rounded-0" 
           *ngFor="let product of products" 
           [ngClass]="{'active': product?.id === selectedProduct?.id}"
@@ -13,7 +14,7 @@
           ({{ product.productCode }})
         </ng-container>
       </button>
-    </ul>
+    </div>
   </div>
 
   <div class="card-footer">
