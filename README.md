@@ -1,7 +1,7 @@
 # Angular-ngrx-GettingStarted
 Materials for NgRx course.
 
-`APM-Start`: The starter files set up for use in VSCode, WebStorm, or other editors. **Use this to code along with the course**.
+`APM-Demo0`: The starter files set up for use in VSCode, WebStorm, or other editors. **Use this to code along with the course**.
 
 `APM-Demo1`: Completed files after the *First Look at NgRX* module. It demonstrates a very simple, but complete NgRx example.
 
