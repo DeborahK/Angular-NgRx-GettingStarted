@@ -1,8 +1,10 @@
 <div class='container main-content'>
+
   <div class="card">
     <div class="card-header">
       {{pageTitle}}
     </div>
+
     <div class="card-body">
       <form class="needs-validation" novalidate (ngSubmit)="login(loginForm)" #loginForm="ngForm" autocomplete="off">
         <fieldset>
@@ -12,7 +14,7 @@
               <input class="form-control"
                [ngClass]="{'is-invalid': (userNameVar.touched || userNameVar.dirty) && !userNameVar.valid }"
                id="userNameId"
-               type="text"
+               [type]= "maskUserName ? 'password' : 'text'"
                placeholder="User Name (required)"
                required
                ngModel
@@ -62,5 +64,19 @@
       <div class="text-danger" *ngIf="errorMessage">{{errorMessage}}</div>
     </div>
 
+    <div class="card-footer">
+      <div class="row">
+        <div class="form-check col-md-7">
+          <label>
+            <input class="form-check-input" 
+                   type="checkbox" 
+                   (change)="checkChanged($event.target.checked)" 
+                   [checked]="maskUserName">
+            Mask user name
+          </label>
+        </div>
+      </div>
+    </div>
   </div>
+
 </div>

@@ -2,13 +2,20 @@ import { Product } from '../product';
 
 /* NgRx */
 import { ProductActions, ProductActionTypes } from './product.actions';
-import * as fromRoot from '../../state';
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 
-// Single source of truth
-export interface State extends fromRoot.State {
-  productFeature: ProductState;
-}
+// Optionally, define a single State interface
+// that encompasses all of the feature states
+// to expose all feature states to the application
+// In app | state | index.ts
+// export interface State {
+//   root: any;
+// }
+// In feature's reducer
+// import * as fromRoot from '../../state';
+// export interface State extends fromRoot.State {
+//   productFeature: ProductState;
+// }
 
 // State for this feature (Product)
 export interface ProductState {
