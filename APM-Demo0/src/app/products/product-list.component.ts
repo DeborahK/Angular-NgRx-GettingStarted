@@ -14,7 +14,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
   pageTitle: string = 'Products';
   errorMessage: string;
 
-  displayCode: boolean = false;
+  displayCode: boolean;
 
   products: Product[];
 

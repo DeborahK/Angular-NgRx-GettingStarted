@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 
-import { IUser } from './user';
+import { User } from './user';
 
 @Injectable()
 export class AuthService {
-    currentUser: IUser | null;
+    currentUser: User | null;
     redirectUrl: string;
 
     constructor() {  }

@@ -26,7 +26,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
   // Used to highlight the selected product in the list
   selectedProduct: Product | null;
 
-  constructor(private store: Store<fromProduct.State>,
+  constructor(private store: Store<fromProduct.ProductState>,
               private productService: ProductService) { }
 
   ngOnInit(): void {

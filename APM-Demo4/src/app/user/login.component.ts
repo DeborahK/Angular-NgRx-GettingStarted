@@ -12,8 +12,9 @@ import { Store } from '@ngrx/store';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  errorMessage: string;
   pageTitle = 'Log In';
+  errorMessage: string;
+
   maskUserName: boolean;
 
   constructor(private store: Store<any>,

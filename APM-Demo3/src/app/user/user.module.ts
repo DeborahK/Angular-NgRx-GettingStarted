@@ -1,18 +1,25 @@
 import { NgModule } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
+
+import { SharedModule } from '../shared/shared.module';
 
 import { LoginComponent } from './login.component';
 import { AuthService } from './auth.service';
 import { AuthGuard } from './auth-guard.service';
 
-import { SharedModule } from '../shared/shared.module';
+/* NgRx */
+import { StoreModule } from '@ngrx/store';
+import { reducer } from './state/user.reducer';
+
+const userRoutes: Routes = [
+  { path: 'login', component: LoginComponent }
+];
 
 @NgModule({
   imports: [
     SharedModule,
-    RouterModule.forChild([
-      { path: 'login', component: LoginComponent }
-    ])
+    RouterModule.forChild(userRoutes),
+    StoreModule.forFeature('users', reducer)
   ],
   declarations: [
     LoginComponent
