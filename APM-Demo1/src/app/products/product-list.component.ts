@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 
 import { Product } from './product';
 import { ProductService } from './product.service';
@@ -14,7 +14,7 @@ import { Store } from '@ngrx/store';
   styleUrls: ['./product-list.component.css']
 })
 export class ProductListComponent implements OnInit, OnDestroy {
-  pageTitle: string = 'Products';
+  pageTitle = 'Products';
   errorMessage: string;
 
   displayCode: boolean;
