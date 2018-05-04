@@ -2,29 +2,24 @@ import { Product } from '../product';
 
 /* NgRx */
 import { ProductActions, ProductActionTypes } from './product.actions';
-import * as fromRoot from '../../state';
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-
-// Single source of truth
-export interface State extends fromRoot.State {
-  productFeature: ProductState;
-}
 
 // State for this feature (Product)
 export interface ProductState {
   showProductCode: boolean;
-  currentProduct: Product;          // Homework
+  currentProduct: Product;
+  products: Product[];
 }
 
-export const initialState: ProductState = {
-  showProductCode: false,
-  currentProduct: null            // Homework
+const initialState: ProductState = {
+  showProductCode: true,
+  currentProduct: null,
+  products: []
 };
 
 // Selector functions
-export const getProductFeatureState = createFeatureSelector<ProductState>('products');
+const getProductFeatureState = createFeatureSelector<ProductState>('products');
 
-// Homework
 export const getCurentProduct = createSelector(
   getProductFeatureState,
   state => state.currentProduct
@@ -35,9 +30,14 @@ export const getShowProductCode = createSelector(
   state => state.showProductCode
 );
 
-export function reducer(
-  state = initialState,
-  action: ProductActions): ProductState {
+// For demonstration of parameterized selector functions
+// Not used.
+export const getProductById = id => createSelector(
+  getProductFeatureState,
+  state => state.products.find(p => p.id === id)
+);
+
+export function reducer(state = initialState, action: ProductActions): ProductState {
 
   switch (action.type) {
     case ProductActionTypes.ToggleProductCode: {

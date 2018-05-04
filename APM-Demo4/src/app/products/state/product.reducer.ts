@@ -31,12 +31,17 @@ export const initialState: ProductState = {
 };
 
 // Selector functions
-export const getProductFeatureState = createFeatureSelector<ProductState>('products');
+const getProductFeatureState = createFeatureSelector<ProductState>('products');
 
 // TODO: Add Sort here
 export const getProducts = createSelector(
   getProductFeatureState,
   state => state.products
+);
+
+export const getProductById = id => createSelector(
+  getProductFeatureState,
+  state => state.products.find(p => p.id === id)
 );
 
 export const getCurentProduct = createSelector(

@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 
 import { Product } from '../product';
 import { ProductService } from '../product.service';
@@ -14,8 +14,8 @@ import { NumberValidators } from '../../shared/number.validator';
   styleUrls: ['./product-edit.component.css']
 })
 export class ProductEditComponent implements OnInit, OnDestroy {
-  pageTitle: string = 'Product Edit';
-  errorMessage: string = '';
+  pageTitle = 'Product Edit';
+  errorMessage = '';
   productForm: FormGroup;
 
   product: Product | null;

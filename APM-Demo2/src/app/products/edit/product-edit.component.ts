@@ -29,7 +29,7 @@ export class ProductEditComponent implements OnInit, OnDestroy {
   private genericValidator: GenericValidator;
 
   constructor(private fb: FormBuilder,
-              private store: Store<fromProduct.State>,
+              private store: Store<fromProduct.ProductState>,
               private productService: ProductService) {
 
     // Defines all of the validation messages for the form.

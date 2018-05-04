@@ -7,6 +7,8 @@ import { ProductService } from './product.service';
 import { Store, select } from '@ngrx/store';
 import * as fromProduct from './state/product.reducer';
 import * as productActions from './state/product.actions';
+import * as fromUser from '../user/state/user.reducer'
+import { User } from '../user/user';
 
 @Component({
   selector: 'pm-product-list',
@@ -20,13 +22,13 @@ export class ProductListComponent implements OnInit, OnDestroy {
   displayCode: boolean;
 
   products: Product[];
-
+  
   // Used to highlight the selected product in the list
   selectedProduct: Product | null;
 
   // Strongly type the generic parameter for the store.
-  constructor(private store: Store<fromProduct.State>,
-              private productService: ProductService) { }
+  constructor(private store: Store<fromProduct.ProductState>,
+              private productService: ProductService) {}
 
   ngOnInit(): void {
     this.productService.getProducts().subscribe(
@@ -35,13 +37,13 @@ export class ProductListComponent implements OnInit, OnDestroy {
     );
 
     // Homework
-    this.store.pipe(
-      select(fromProduct.getCurentProduct)
-    ).subscribe(product => this.selectedProduct = product);
+    this.store.pipe(select(fromProduct.getCurentProduct)).subscribe(
+      product => this.selectedProduct = product
+    );
 
-    this.store.pipe(
-      select(fromProduct.getShowProductCode)
-    ).subscribe(showProductCode => this.displayCode = showProductCode);
+    this.store.pipe(select(fromProduct.getShowProductCode)).subscribe(
+      showProductCode => this.displayCode = showProductCode
+    );
   }
 
   ngOnDestroy(): void {
