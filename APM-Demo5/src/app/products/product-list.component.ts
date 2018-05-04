@@ -3,7 +3,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Product } from './product';
 import { ProductService } from './product.service';
 
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 
 /* NgRx */
 import { Store, select } from '@ngrx/store';
@@ -16,7 +16,7 @@ import * as productActions from './state/product.actions';
   styleUrls: ['./product-list.component.css']
 })
 export class ProductListComponent implements OnInit, OnDestroy {
-  pageTitle: string = 'Products';
+  pageTitle = 'Products';
   errorMessage: string;
 
   displayCode: boolean;
@@ -27,7 +27,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
   selectedProduct: Product | null;
 
   constructor(private store: Store<fromProduct.ProductState>,
-              private productService: ProductService) { }
+              private productService: ProductService) {}
 
   ngOnInit(): void {
 
@@ -46,6 +46,11 @@ export class ProductListComponent implements OnInit, OnDestroy {
     this.store.pipe(
       select(fromProduct.getShowProductCode)
     ).subscribe(showProductCode => this.displayCode = showProductCode);
+
+    // Demo purposes only
+    this.store.pipe(select(fromProduct.getProductById(1))).subscribe(
+      p => console.log(p)
+    );
   }
 
   ngOnDestroy(): void {

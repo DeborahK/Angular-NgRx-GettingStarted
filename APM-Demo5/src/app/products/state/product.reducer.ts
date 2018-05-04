@@ -2,13 +2,20 @@ import { Product } from '../product';
 
 /* NgRx */
 import { ProductActions, ProductActionTypes } from './product.actions';
-import * as fromRoot from '../../state';
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 
-// Single source of truth
-export interface State extends fromRoot.State {
-  productFeature: ProductState;
-}
+// Optionally, define a single State interface
+// that encompasses all of the feature states
+// to expose all feature states to the application
+// In app | state | index.ts
+// export interface State {
+//   root: any;
+// }
+// In feature's reducer
+// import * as fromRoot from '../../state';
+// export interface State extends fromRoot.State {
+//   productFeature: ProductState;
+// }
 
 // State for this feature (Product)
 export interface ProductState {
@@ -17,18 +24,18 @@ export interface ProductState {
   products: Product[];
 }
 
-export const initialState: ProductState = {
-  showProductCode: false,
+const initialState: ProductState = {
+  showProductCode: true,
   currentProduct: null,
   products: []
 };
 
 // Selector functions
-export const getProductFeatureState = createFeatureSelector<ProductState>('products');
+const getProductFeatureState = createFeatureSelector<ProductState>('products');
 
-export const getProducts = createSelector(
+export const getShowProductCode = createSelector(
   getProductFeatureState,
-  state => state.products
+  state => state.showProductCode
 );
 
 export const getCurentProduct = createSelector(
@@ -36,14 +43,19 @@ export const getCurentProduct = createSelector(
   state => state.currentProduct
 );
 
-export const getShowProductCode = createSelector(
+export const getProducts = createSelector(
   getProductFeatureState,
-  state => state.showProductCode
+  state => state.products
 );
 
-export function reducer(
-  state = initialState,
-  action: ProductActions): ProductState {
+// For demonstration of parameterized selector functions
+// Not used.
+export const getProductById = id => createSelector(
+  getProductFeatureState,
+  state => state.products.find(p => p.id === id)
+);
+
+export function reducer(state = initialState, action: ProductActions): ProductState {
 
   switch (action.type) {
     case ProductActionTypes.ToggleProductCode: {

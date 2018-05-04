@@ -10,7 +10,7 @@ export class ProductData implements InMemoryDbService {
                 'id': 1,
                 'productName': 'Leaf Rake',
                 'productCode': 'GDN-0011',
-                'description': 'Leaf rake with 48-inch wooden handle.',
+                'description': 'Leaf rake with 48-inch wooden handle',
                 'starRating': 3.2
             },
             {
