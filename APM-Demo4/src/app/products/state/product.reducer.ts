@@ -24,8 +24,8 @@ export interface ProductState {
   products: Product[];
 }
 
-export const initialState: ProductState = {
-  showProductCode: false,
+const initialState: ProductState = {
+  showProductCode: true,
   currentProduct: null,
   products: []
 };
@@ -33,15 +33,9 @@ export const initialState: ProductState = {
 // Selector functions
 const getProductFeatureState = createFeatureSelector<ProductState>('products');
 
-// TODO: Add Sort here
-export const getProducts = createSelector(
+export const getShowProductCode = createSelector(
   getProductFeatureState,
-  state => state.products
-);
-
-export const getProductById = id => createSelector(
-  getProductFeatureState,
-  state => state.products.find(p => p.id === id)
+  state => state.showProductCode
 );
 
 export const getCurentProduct = createSelector(
@@ -49,14 +43,19 @@ export const getCurentProduct = createSelector(
   state => state.currentProduct
 );
 
-export const getShowProductCode = createSelector(
+export const getProducts = createSelector(
   getProductFeatureState,
-  state => state.showProductCode
+  state => state.products
 );
 
-export function reducer(
-  state = initialState,
-  action: ProductActions): ProductState {
+// For demonstration of parameterized selector functions
+// Not used.
+export const getProductById = id => createSelector(
+  getProductFeatureState,
+  state => state.products.find(p => p.id === id)
+);
+
+export function reducer(state = initialState, action: ProductActions): ProductState {
 
   switch (action.type) {
     case ProductActionTypes.ToggleProductCode: {

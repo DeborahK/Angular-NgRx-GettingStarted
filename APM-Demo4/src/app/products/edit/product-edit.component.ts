@@ -16,8 +16,8 @@ import * as productActions from '../state/product.actions';
   styleUrls: ['./product-edit.component.css']
 })
 export class ProductEditComponent implements OnInit, OnDestroy {
-  pageTitle: string = 'Product Edit';
-  errorMessage: string = '';
+  pageTitle = 'Product Edit';
+  errorMessage = '';
   productForm: FormGroup;
 
   product: Product | null;

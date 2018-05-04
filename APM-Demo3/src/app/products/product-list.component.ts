@@ -21,8 +21,6 @@ export class ProductListComponent implements OnInit, OnDestroy {
 
   displayCode: boolean;
 
-  // (5) Define the observable property
-  // (6) Change to a async pipe
   products$: Observable<Product[]>;
 
   // Used to highlight the selected product in the list
@@ -32,7 +30,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
               private productService: ProductService) {}
 
   ngOnInit(): void {
-    // (5) Select the slice of state ... displays the initial state
+
     // Do NOT subscribe here because it DOES use an async pipe
     this.products$ = this.store.pipe(select(fromProduct.getProducts)) as Observable<Product[]>;
 
@@ -47,6 +45,11 @@ export class ProductListComponent implements OnInit, OnDestroy {
     this.store.pipe(
       select(fromProduct.getShowProductCode)
     ).subscribe(showProductCode => this.displayCode = showProductCode);
+
+    // Demo purposes only
+    this.store.pipe(select(fromProduct.getProductById(1))).subscribe(
+      p => console.log(p)
+    );
   }
 
   ngOnDestroy(): void {
