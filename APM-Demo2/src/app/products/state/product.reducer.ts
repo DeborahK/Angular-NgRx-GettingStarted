@@ -20,14 +20,19 @@ const initialState: ProductState = {
 // Selector functions
 const getProductFeatureState = createFeatureSelector<ProductState>('products');
 
+export const getShowProductCode = createSelector(
+  getProductFeatureState,
+  state => state.showProductCode
+);
+
 export const getCurentProduct = createSelector(
   getProductFeatureState,
   state => state.currentProduct
 );
 
-export const getShowProductCode = createSelector(
+export const getProducts = createSelector(
   getProductFeatureState,
-  state => state.showProductCode
+  state => state.products
 );
 
 // For demonstration of parameterized selector functions

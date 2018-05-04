@@ -1,9 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 
-import { Observable } from 'rxjs/Observable';
-import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
-import { of } from 'rxjs/observable/of';
+import { Observable, of, throwError } from 'rxjs';
 import { catchError, tap, map } from 'rxjs/operators';
 
 import { Product } from './product';
@@ -37,7 +35,7 @@ export class ProductService {
       );
   }
 
-  deleteProduct(id: number): Observable<Product> {
+  deleteProduct(id: number): Observable<{}> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     const url = `${this.productsUrl}/${id}`;
     return this.http.delete<Product>(url, { headers: headers })
@@ -70,11 +68,11 @@ export class ProductService {
     };
   }
 
-  private handleError(err: HttpErrorResponse): ErrorObservable {
+  private handleError(err: HttpErrorResponse) {
     // in a real world app, we may send the server to some remote logging infrastructure
     // instead of just logging it to the console
     let errorMessage: string;
-    if (err.error instanceof Error) {
+    if (err.error instanceof ErrorEvent) {
       // A client-side or network error occurred. Handle it accordingly.
       errorMessage = `An error occurred: ${err.error.message}`;
     } else {
@@ -83,7 +81,7 @@ export class ProductService {
       errorMessage = `Backend returned code ${err.status}, body was: ${err.error}`;
     }
     console.error(err);
-    return new ErrorObservable(errorMessage);
+    return throwError(errorMessage);
   }
 
 }
