@@ -24,7 +24,6 @@ export class ProductListComponent implements OnInit, OnDestroy {
   // Used to highlight the selected product in the list
   selectedProduct: Product | null;
 
-  // Strongly type the generic parameter for the store.
   constructor(private store: Store<fromProduct.ProductState>,
               private productService: ProductService) {}
 
@@ -34,13 +33,17 @@ export class ProductListComponent implements OnInit, OnDestroy {
       (err: any) => this.errorMessage = err.error
     );
 
-    // Homework
-    this.store.pipe(select(fromProduct.getCurentProduct)).subscribe(
-      product => this.selectedProduct = product
+    this.store.pipe(select(fromProduct.getCurrentProduct)).subscribe(
+      currentProduct => this.selectedProduct = currentProduct
     );
 
     this.store.pipe(select(fromProduct.getShowProductCode)).subscribe(
       showProductCode => this.displayCode = showProductCode
+    );
+
+    // Demo purposes only
+    this.store.pipe(select(fromProduct.getProductById(1))).subscribe(
+      p => console.log(p)
     );
   }
 
@@ -52,13 +55,11 @@ export class ProductListComponent implements OnInit, OnDestroy {
     this.store.dispatch(new productActions.ToggleProductCode(value));
   }
 
-  // Homework +
   newProduct(): void {
-    this.productSelected(this.productService.newProduct());
+    this.store.dispatch(new productActions.SetCurrentProduct(this.productService.newProduct()));
   }
 
   productSelected(product: Product): void {
-    // Homework
     this.store.dispatch(new productActions.SetCurrentProduct(product));
   }
 

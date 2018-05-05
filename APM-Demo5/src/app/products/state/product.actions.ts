@@ -5,8 +5,8 @@ import { Action } from '@ngrx/store';
 
 export enum ProductActionTypes {
   ToggleProductCode = '[Product] Toggle Product Code',
-  ClearCurrentProduct = '[Product] Clear Current Product',
   SetCurrentProduct = '[Product] Set Current Product',
+  ClearCurrentProduct = '[Product] Clear Current Product',
   Load = '[Product] Load',
   LoadSuccess = '[Product] Load Success',
   LoadFail = '[Product] Load Fail',
@@ -28,16 +28,16 @@ export class ToggleProductCode implements Action {
   constructor(public payload: boolean) {}
 }
 
-export class ClearCurrentProduct implements Action {
-  readonly type = ProductActionTypes.ClearCurrentProduct;
-
-  constructor() {}
-}
-
 export class SetCurrentProduct implements Action {
   readonly type = ProductActionTypes.SetCurrentProduct;
 
   constructor(public payload: Product) {}
+}
+
+export class ClearCurrentProduct implements Action {
+  readonly type = ProductActionTypes.ClearCurrentProduct;
+
+  constructor() {}
 }
 
 export class Load implements Action {
@@ -114,8 +114,8 @@ export class DeleteProductFail implements Action {
 
 // Union the valid types
 export type ProductActions = ToggleProductCode
-  | ClearCurrentProduct
   | SetCurrentProduct
+  | ClearCurrentProduct
   | Load
   | LoadSuccess
   | LoadFail

@@ -1,8 +1,8 @@
 import { Product } from '../product';
 
 /* NgRx */
-import { ProductActions, ProductActionTypes } from './product.actions';
 import { createFeatureSelector, createSelector } from '@ngrx/store';
+import { ProductActions, ProductActionTypes } from './product.actions';
 
 // Optionally, define a single State interface
 // that encompasses all of the feature states
@@ -38,7 +38,7 @@ export const getShowProductCode = createSelector(
   state => state.showProductCode
 );
 
-export const getCurentProduct = createSelector(
+export const getCurrentProduct = createSelector(
   getProductFeatureState,
   state => state.currentProduct
 );
@@ -58,17 +58,14 @@ export const getProductById = id => createSelector(
 export function reducer(state = initialState, action: ProductActions): ProductState {
 
   switch (action.type) {
-    case ProductActionTypes.ToggleProductCode: {
+    case ProductActionTypes.ToggleProductCode:
       return { ...state, showProductCode: action.payload };
-    }
 
-    case ProductActionTypes.ClearCurrentProduct: {
-      return {...state, currentProduct: null};
-    }
+    case ProductActionTypes.SetCurrentProduct:
+      return { ...state, currentProduct: action.payload};
 
-    case ProductActionTypes.SetCurrentProduct: {
-      return {...state, currentProduct: {...action.payload}};
-    }
+    case ProductActionTypes.ClearCurrentProduct:
+      return { ...state, currentProduct: null};
 
     case ProductActionTypes.LoadSuccess: {
       return {...state, products: [...action.payload]};
@@ -90,8 +87,7 @@ export function reducer(state = initialState, action: ProductActions): ProductSt
       return { ...state, products: state.products.filter(product => product.id !== action.payload.id), currentProduct: null };
     }
 
-    default: {
+    default:
       return state;
-    }
   }
 }

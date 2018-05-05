@@ -27,8 +27,8 @@ export class ProductEditComponent implements OnInit, OnDestroy {
   private validationMessages: { [key: string]: { [key: string]: string } };
   private genericValidator: GenericValidator;
 
-  constructor(private fb: FormBuilder,
-              private store: Store<fromProduct.ProductState>) {
+  constructor(private store: Store<fromProduct.ProductState>,
+              private fb: FormBuilder) {
 
     // Defines all of the validation messages for the form.
     // These could instead be retrieved from a file or database.
@@ -63,13 +63,13 @@ export class ProductEditComponent implements OnInit, OnDestroy {
     });
 
     // Watch for changes to the currently selected product
-    this.store.pipe(
-      select(fromProduct.getCurentProduct)
-    ).subscribe(selectedProduct => this.displayProduct(selectedProduct));
+    this.store.pipe(select(fromProduct.getCurrentProduct)).subscribe(
+      selectedProduct => this.displayProduct(selectedProduct)
+    );
 
     // Watch for value changes
-    this.productForm.valueChanges.subscribe(value =>
-      this.displayMessage = this.genericValidator.processMessages(this.productForm)
+    this.productForm.valueChanges.subscribe(
+      value => this.displayMessage = this.genericValidator.processMessages(this.productForm)
     );
   }
 
@@ -121,7 +121,6 @@ export class ProductEditComponent implements OnInit, OnDestroy {
       }
     } else {
       // No need to delete, it was never saved
-      // Just clear the current product
       this.store.dispatch(new productActions.ClearCurrentProduct());
     }
   }
@@ -140,7 +139,6 @@ export class ProductEditComponent implements OnInit, OnDestroy {
         } else {
           this.store.dispatch(new productActions.UpdateProduct(p));
         }
-
       }
     } else {
       this.errorMessage = 'Please correct the validation errors.';

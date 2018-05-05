@@ -67,8 +67,8 @@ export class ProductEditComponent implements OnInit, OnDestroy {
     );
 
     // Watch for value changes
-    this.productForm.valueChanges.subscribe(value =>
-      this.displayMessage = this.genericValidator.processMessages(this.productForm)
+    this.productForm.valueChanges.subscribe(
+      value => this.displayMessage = this.genericValidator.processMessages(this.productForm)
     );
   }
 

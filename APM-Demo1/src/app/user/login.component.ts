@@ -24,12 +24,13 @@ export class LoginComponent implements OnInit {
 
   // Homework
   ngOnInit(): void {
-    this.store.select('users')
-    .subscribe(users => {
-      if (users) {
-        this.maskUserName = users.maskUserName;
+    this.store.select('users').subscribe(
+      users => {
+        if (users) {
+          this.maskUserName = users.maskUserName;
+        }
       }
-    });
+    );
   }
 
   cancel(): void {

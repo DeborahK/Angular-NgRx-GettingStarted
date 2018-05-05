@@ -38,18 +38,18 @@ export class ProductListComponent implements OnInit, OnDestroy {
     this.store.dispatch(new productActions.Load());
 
     // Subscribe here because it does not use an async pipe
-    this.store.pipe(
-      select(fromProduct.getCurentProduct)
-    ).subscribe(product => this.selectedProduct = product);
+    this.store.pipe(select(fromProduct.getCurrentProduct)).subscribe(
+      currentProduct => this.selectedProduct = currentProduct
+    );
 
     // Subscribe here because it does not use an async pipe
-    this.store.pipe(
-      select(fromProduct.getShowProductCode)
-    ).subscribe(showProductCode => this.displayCode = showProductCode);
+    this.store.pipe(select(fromProduct.getShowProductCode)).subscribe(
+      showProductCode => this.displayCode = showProductCode
+    );
 
     // Demo purposes only
     this.store.pipe(select(fromProduct.getProductById(1))).subscribe(
-      p => console.log(p)
+      // p => console.log(p)
     );
   }
 
@@ -63,7 +63,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
 
   newProduct(): void {
     // TODO: Change to an action. Then can remove productService from this file.
-    this.productSelected(this.productService.newProduct());
+    this.store.dispatch(new productActions.SetCurrentProduct(this.productService.newProduct()));
   }
 
   productSelected(product: Product): void {

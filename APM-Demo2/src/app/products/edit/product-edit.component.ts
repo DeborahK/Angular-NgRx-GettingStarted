@@ -28,8 +28,8 @@ export class ProductEditComponent implements OnInit, OnDestroy {
   private validationMessages: { [key: string]: { [key: string]: string } };
   private genericValidator: GenericValidator;
 
-  constructor(private fb: FormBuilder,
-              private store: Store<fromProduct.ProductState>,
+  constructor(private store: Store<fromProduct.ProductState>,
+              private fb: FormBuilder,
               private productService: ProductService) {
 
     // Defines all of the validation messages for the form.
@@ -64,15 +64,14 @@ export class ProductEditComponent implements OnInit, OnDestroy {
       description: ''
     });
 
-    // Homework
     // Watch for changes to the currently selected product
-    this.store.pipe(
-      select(fromProduct.getCurentProduct)
-    ).subscribe(selectedProduct => this.displayProduct(selectedProduct));
+    this.store.pipe(select(fromProduct.getCurrentProduct)).subscribe(
+      selectedProduct => this.displayProduct(selectedProduct)
+    );
 
     // Watch for value changes
-    this.productForm.valueChanges.subscribe(value =>
-      this.displayMessage = this.genericValidator.processMessages(this.productForm)
+    this.productForm.valueChanges.subscribe(
+      value => this.displayMessage = this.genericValidator.processMessages(this.productForm)
     );
   }
 
@@ -121,15 +120,12 @@ export class ProductEditComponent implements OnInit, OnDestroy {
     if (this.product && this.product.id) {
       if (confirm(`Really delete the product: ${this.product.productName}?`)) {
         this.productService.deleteProduct(this.product.id).subscribe(
-          // Homework +
           () => this.store.dispatch(new productActions.ClearCurrentProduct()),
-           (err: any) => this.errorMessage = err.error
+          (err: any) => this.errorMessage = err.error
         );
       }
     } else {
       // No need to delete, it was never saved
-      // Just clear the current product
-      // Homework +
       this.store.dispatch(new productActions.ClearCurrentProduct());
     }
   }
@@ -143,7 +139,6 @@ export class ProductEditComponent implements OnInit, OnDestroy {
         // This ensures values not on the form, such as the Id, are retained
         const p = Object.assign({}, this.product, this.productForm.value);
 
-        // Homework +
         if (p.id === 0) {
           this.productService.createProduct(p).subscribe(
             product => this.store.dispatch(new productActions.SetCurrentProduct(product)),
@@ -155,7 +150,6 @@ export class ProductEditComponent implements OnInit, OnDestroy {
             (err: any) => this.errorMessage = err.error
           );
         }
-
       }
     } else {
       this.errorMessage = 'Please correct the validation errors.';

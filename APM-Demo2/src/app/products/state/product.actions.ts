@@ -5,8 +5,11 @@ import { Action } from '@ngrx/store';
 
 export enum ProductActionTypes {
   ToggleProductCode = '[Product] Toggle Product Code',
-  ClearCurrentProduct = '[Product] Clear Current Product',
   SetCurrentProduct = '[Product] Set Current Product',
+  ClearCurrentProduct = '[Product] Clear Current Product',
+  Load = '[Product] Load',
+  LoadSuccess = '[Product] Load Success',
+  LoadFail = '[Product] Load Fail'
 }
 
 // Action Creators
@@ -16,21 +19,39 @@ export class ToggleProductCode implements Action {
   constructor(public payload: boolean) {}
 }
 
-// Homework
-export class ClearCurrentProduct implements Action {
-  readonly type = ProductActionTypes.ClearCurrentProduct;
-
-  constructor() {}
-}
-
-// Homework
 export class SetCurrentProduct implements Action {
   readonly type = ProductActionTypes.SetCurrentProduct;
 
   constructor(public payload: Product) {}
 }
 
-// Union the valid types
+export class ClearCurrentProduct implements Action {
+  readonly type = ProductActionTypes.ClearCurrentProduct;
+
+  constructor() {}
+}
+
+export class Load implements Action {
+  readonly type = ProductActionTypes.Load;
+
+  constructor() {}
+}
+
+export class LoadSuccess implements Action {
+  readonly type = ProductActionTypes.LoadSuccess;
+
+  constructor(public payload: Product[]) {}
+}
+
+export class LoadFail implements Action {
+  readonly type = ProductActionTypes.LoadFail;
+
+  constructor(public payload: string) {}
+}
+
 export type ProductActions = ToggleProductCode
+  | SetCurrentProduct
   | ClearCurrentProduct
-  | SetCurrentProduct;
+  | Load
+  | LoadSuccess
+  | LoadFail;

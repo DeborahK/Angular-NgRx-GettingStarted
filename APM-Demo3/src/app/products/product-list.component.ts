@@ -32,19 +32,20 @@ export class ProductListComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
 
     // Do NOT subscribe here because it DOES use an async pipe
+    // This gets the initial values until the load is complete.
     this.products$ = this.store.pipe(select(fromProduct.getProducts)) as Observable<Product[]>;
 
     this.store.dispatch(new productActions.Load());
 
     // Subscribe here because it does not use an async pipe
-    this.store.pipe(
-      select(fromProduct.getCurentProduct)
-    ).subscribe(product => this.selectedProduct = product);
+    this.store.pipe(select(fromProduct.getCurrentProduct)).subscribe(
+      currentProduct => this.selectedProduct = currentProduct
+    );
 
     // Subscribe here because it does not use an async pipe
-    this.store.pipe(
-      select(fromProduct.getShowProductCode)
-    ).subscribe(showProductCode => this.displayCode = showProductCode);
+    this.store.pipe(select(fromProduct.getShowProductCode)).subscribe(
+      showProductCode => this.displayCode = showProductCode
+    );
 
     // Demo purposes only
     this.store.pipe(select(fromProduct.getProductById(1))).subscribe(
@@ -61,7 +62,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
   }
 
   newProduct(): void {
-    this.productSelected(this.productService.newProduct());
+    this.store.dispatch(new productActions.SetCurrentProduct(this.productService.newProduct()));
   }
 
   productSelected(product: Product): void {

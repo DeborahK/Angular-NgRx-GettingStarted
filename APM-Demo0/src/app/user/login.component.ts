@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 
@@ -8,7 +8,7 @@ import { AuthService } from './auth.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   pageTitle = 'Log In';
   errorMessage: string;
 
@@ -16,6 +16,10 @@ export class LoginComponent {
 
   constructor(private authService: AuthService,
               private router: Router) {
+  }
+
+  ngOnInit(): void {
+
   }
 
   cancel(): void {
