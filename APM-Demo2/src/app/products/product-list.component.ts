@@ -43,7 +43,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
 
     // Demo purposes only
     this.store.pipe(select(fromProduct.getProductById(1))).subscribe(
-      p => console.log(p)
+      // p => console.log(p)
     );
   }
 
@@ -56,7 +56,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
   }
 
   newProduct(): void {
-    this.store.dispatch(new productActions.SetCurrentProduct(this.productService.newProduct()));
+    this.store.dispatch(new productActions.InitializeCurrentProduct());
   }
 
   productSelected(product: Product): void {

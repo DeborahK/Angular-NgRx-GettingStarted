@@ -34,7 +34,13 @@ export class ProductService {
 
   // Return an initialized product
   newProduct(): Product {
-    return this.initializeProduct();
+    return {
+      id: 0,
+      productName: '',
+      productCode: 'New',
+      description: '',
+      starRating: 0
+    };
   }
 
   createProduct(product: Product): Observable<Product> {
@@ -85,17 +91,6 @@ export class ProductService {
         map(() => product),
         catchError(this.handleError)
       );
-  }
-
-  private initializeProduct(): Product {
-    // Return an initialized object
-    return {
-      'id': 0,
-      productName: '',
-      productCode: '',
-      description: '',
-      starRating: 0
-    };
   }
 
   private handleError(err: HttpErrorResponse) {

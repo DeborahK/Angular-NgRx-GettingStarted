@@ -1,7 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { Product } from './product';
-import { ProductService } from './product.service';
 
 import { Observable } from 'rxjs';
 
@@ -26,8 +25,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
   // Used to highlight the selected product in the list
   selectedProduct: Product | null;
 
-  constructor(private store: Store<fromProduct.ProductState>,
-              private productService: ProductService) {}
+  constructor(private store: Store<fromProduct.ProductState>) {}
 
   ngOnInit(): void {
 
@@ -62,8 +60,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
   }
 
   newProduct(): void {
-    // TODO: Change to an action. Then can remove productService from this file.
-    this.store.dispatch(new productActions.SetCurrentProduct(this.productService.newProduct()));
+    this.store.dispatch(new productActions.InitializeCurrentProduct());
   }
 
   productSelected(product: Product): void {

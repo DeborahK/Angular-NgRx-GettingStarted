@@ -20,11 +20,6 @@ export class ProductService {
       );
   }
 
-  // Return an initialized product
-  newProduct(): Product {
-    return this.initializeProduct();
-  }
-
   createProduct(product: Product): Observable<Product> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     product.id = null;
@@ -55,17 +50,6 @@ export class ProductService {
         map(() => product),
         catchError(this.handleError)
       );
-  }
-
-  private initializeProduct(): Product {
-    // Return an initialized object
-    return {
-      'id': 0,
-      productName: '',
-      productCode: '',
-      description: '',
-      starRating: 0
-    };
   }
 
   private handleError(err: HttpErrorResponse) {

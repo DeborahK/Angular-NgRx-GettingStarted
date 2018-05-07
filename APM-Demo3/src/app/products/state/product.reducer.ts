@@ -9,12 +9,20 @@ export interface ProductState {
   showProductCode: boolean;
   currentProduct: Product;
   products: Product[];
+  defaultProduct: Product;
 }
 
 const initialState: ProductState = {
   showProductCode: true,
   currentProduct: null,
-  products: []
+  products: [],
+  defaultProduct: {
+    id: 0,
+    productName: '',
+    productCode: 'New',
+    description: '',
+    starRating: 0
+  }
 };
 
 // Selector functions
@@ -25,9 +33,20 @@ export const getShowProductCode = createSelector(
   state => state.showProductCode
 );
 
+export const getDefaultProduct = createSelector(
+  getProductFeatureState,
+  state => state.defaultProduct
+);
+
 export const getCurrentProduct = createSelector(
   getProductFeatureState,
-  state => state.currentProduct
+  getDefaultProduct,
+  (state, defaultProduct) => {
+    if (state.currentProduct && state.currentProduct.id === 0) {
+      return defaultProduct;
+    }
+    return state.currentProduct;
+  }
 );
 
 export const getProducts = createSelector(
@@ -49,13 +68,16 @@ export function reducer(state = initialState, action: ProductActions): ProductSt
       return { ...state, showProductCode: action.payload };
 
     case ProductActionTypes.SetCurrentProduct:
-      return { ...state, currentProduct: action.payload};
+      return { ...state, currentProduct: { ...action.payload } };
 
     case ProductActionTypes.ClearCurrentProduct:
-      return { ...state, currentProduct: null};
+      return { ...state, currentProduct: null };
+
+    case ProductActionTypes.InitializeCurrentProduct:
+      return { ...state, currentProduct: state.defaultProduct };
 
     case ProductActionTypes.LoadSuccess: {
-      return {...state, products: [...action.payload]};
+      return { ...state, products: [...action.payload] };
     }
 
     default:
