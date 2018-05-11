@@ -7,14 +7,14 @@ import { ProductActions, ProductActionTypes } from './product.actions';
 // State for this feature (Product)
 export interface ProductState {
   showProductCode: boolean;
-  currentProductId: number | null;
+  currentProduct: Product;
   products: Product[];
   error: string;
 }
 
 const initialState: ProductState = {
   showProductCode: true,
-  currentProductId: null,
+  currentProduct: null,
   products: [],
   error: ''
 };
@@ -27,27 +27,9 @@ export const getShowProductCode = createSelector(
   state => state.showProductCode
 );
 
-export const getCurrentProductId = createSelector(
-  getProductFeatureState,
-  state => state.currentProductId
-);
-
 export const getCurrentProduct = createSelector(
   getProductFeatureState,
-  getCurrentProductId,
-  (state, currentProductId) => {
-    if (currentProductId === 0) {
-      return {
-        id: 0,
-        productName: '',
-        productCode: 'New',
-        description: '',
-        starRating: 0
-      };
-    } else {
-      return currentProductId ? state.products.find(p => p.id === currentProductId) : null;
-    }
-  }
+  (state) => state.currentProduct
 );
 
 export const getProducts = createSelector(
@@ -72,19 +54,25 @@ export function reducer(state = initialState, action: ProductActions): ProductSt
     case ProductActionTypes.SetCurrentProduct:
       return {
         ...state,
-        currentProductId: action.payload.id
+        currentProduct: { ...action.payload }
       };
 
     case ProductActionTypes.ClearCurrentProduct:
       return {
         ...state,
-        currentProductId: null
+        currentProduct: null
       };
 
     case ProductActionTypes.InitializeCurrentProduct:
       return {
         ...state,
-        currentProductId: 0
+        currentProduct: {
+          id: 0,
+          productName: '',
+          productCode: 'New',
+          description: '',
+          starRating: 0
+        }
       };
 
     case ProductActionTypes.LoadSuccess: {

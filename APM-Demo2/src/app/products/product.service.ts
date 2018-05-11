@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { Observable, of, throwError } from 'rxjs';
 import { catchError, tap, map } from 'rxjs/operators';
@@ -75,7 +75,7 @@ export class ProductService {
       );
   }
 
-  private handleError(err: HttpErrorResponse) {
+  private handleError(err) {
     // in a real world app, we may send the server to some remote logging infrastructure
     // instead of just logging it to the console
     let errorMessage: string;
@@ -85,7 +85,7 @@ export class ProductService {
     } else {
       // The backend returned an unsuccessful response code.
       // The response body may contain clues as to what went wrong,
-      errorMessage = `Backend returned code ${err.status}, body was: ${err.error}`;
+      errorMessage = `Backend returned code ${err.status}: ${err.body.error}`;
     }
     console.error(err);
     return throwError(errorMessage);

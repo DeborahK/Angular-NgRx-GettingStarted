@@ -39,13 +39,22 @@ export function reducer(state = initialState, action: ProductActions): ProductSt
 
   switch (action.type) {
     case ProductActionTypes.ToggleProductCode:
-      return { ...state, showProductCode: action.payload };
+      return {
+        ...state,
+        showProductCode: action.payload
+      };
 
     case ProductActionTypes.SetCurrentProduct:
-      return { ...state, currentProduct: { ...action.payload } };
+      return {
+        ...state,
+        currentProduct: { ... action.payload }
+      };
 
     case ProductActionTypes.ClearCurrentProduct:
-      return { ...state, currentProduct: null };
+      return {
+        ...state,
+        currentProduct: null
+      };
 
     case ProductActionTypes.InitializeCurrentProduct:
       return {
