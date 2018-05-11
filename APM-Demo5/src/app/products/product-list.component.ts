@@ -44,11 +44,6 @@ export class ProductListComponent implements OnInit, OnDestroy {
     this.store.pipe(select(fromProduct.getShowProductCode)).subscribe(
       showProductCode => this.displayCode = showProductCode
     );
-
-    // Demo purposes only
-    this.store.pipe(select(fromProduct.getProductById(1))).subscribe(
-      // p => console.log(p)
-    );
   }
 
   ngOnDestroy(): void {
