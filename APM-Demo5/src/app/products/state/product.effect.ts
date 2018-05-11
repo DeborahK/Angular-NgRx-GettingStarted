@@ -16,7 +16,7 @@ import { ProductActionTypes } from './product.actions';
 export class ProductEffects {
 
   constructor(private productService: ProductService,
-              private actions$: Actions) {}
+              private actions$: Actions) { }
 
   @Effect()
   loadingProducts$: Observable<Action> = this.actions$.pipe(
