@@ -17,7 +17,7 @@ export class ProductEffects {
               private actions$: Actions) { }
 
   @Effect()
-  loadingProducts$: Observable<Action> = this.actions$.pipe(
+  loadProducts$: Observable<Action> = this.actions$.pipe(
     ofType(fromProduct.ProductActionTypes.Load),
     mergeMap(action =>
       this.productService.getProducts().pipe(
