@@ -24,9 +24,7 @@ export class ProductEffects {
     mergeMap(action =>
       this.productService.getProducts().pipe(
         map(products => (new fromProduct.LoadSuccess(products))),
-        // NOTE: This sets up the error handling ... but does not actually do anything with it.
-        // Left to the viewer.
-        catchError(err => of(new fromProduct.LoadFail(err.message)))
+        catchError(err => of(new fromProduct.LoadFail(err)))
       )
     )
   );
@@ -38,9 +36,7 @@ export class ProductEffects {
     mergeMap((product: Product) =>
       this.productService.updateProduct(product).pipe(
         map(updatedProduct => (new fromProduct.UpdateProductSuccess(updatedProduct))),
-        // NOTE: This sets up the error handling ... but does not actually do anything with it.
-        // Left to the viewer.
-        catchError(err => of(new fromProduct.UpdateProductFail(err.message)))
+        catchError(err => of(new fromProduct.UpdateProductFail(err)))
       )
     )
   );
@@ -52,9 +48,7 @@ export class ProductEffects {
     mergeMap((product: Product) =>
       this.productService.createProduct(product).pipe(
         map(updatedProduct => (new fromProduct.CreateProductSuccess(updatedProduct))),
-        // NOTE: This sets up the error handling ... but does not actually do anything with it.
-        // Left to the viewer.
-        catchError(err => of(new fromProduct.CreateProductFail(err.message)))
+        catchError(err => of(new fromProduct.CreateProductFail(err)))
       )
     )
   );
@@ -66,9 +60,7 @@ export class ProductEffects {
     mergeMap((product: Product) =>
       this.productService.deleteProduct(product.id).pipe(
         map(() => (new fromProduct.DeleteProductSuccess(product))),
-        // NOTE: This sets up the error handling ... but does not actually do anything with it.
-        // Left to the viewer.
-        catchError(err => of(new fromProduct.DeleteProductFail(err.message)))
+        catchError(err => of(new fromProduct.DeleteProductFail(err)))
       )
     )
   );

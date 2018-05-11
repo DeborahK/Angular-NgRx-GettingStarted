@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 
-import { Product } from './product';
-
 import { Observable } from 'rxjs';
+
+import { Product } from './product';
 
 /* NgRx */
 import { Store, select } from '@ngrx/store';
@@ -16,7 +16,7 @@ import * as productActions from './state/product.actions';
 })
 export class ProductListComponent implements OnInit, OnDestroy {
   pageTitle = 'Products';
-  errorMessage: string;
+  errorMessage$: Observable<string>;
 
   displayCode: boolean;
 
@@ -29,9 +29,12 @@ export class ProductListComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
 
-    // Do NOT subscribe here because it DOES use an async pipe
+    // Do NOT subscribe here because it uses an async pipe
     // This gets the initial values until the load is complete.
     this.products$ = this.store.pipe(select(fromProduct.getProducts)) as Observable<Product[]>;
+
+    // Do NOT subscribe here because it used an async pipe
+    this.errorMessage$ = this.store.pipe(select(fromProduct.getError));
 
     this.store.dispatch(new productActions.Load());
 

@@ -22,9 +22,7 @@ export class ProductEffects {
     mergeMap(action =>
       this.productService.getProducts().pipe(
         map(products => (new fromProduct.LoadSuccess(products))),
-        // NOTE: This sets up the error handling ... but does not actually do anything with it.
-        // Left to the viewer.
-        catchError(err => of(new fromProduct.LoadFail(err.message)))
+        catchError(err => of(new fromProduct.LoadFail(err)))
       )
     )
   );

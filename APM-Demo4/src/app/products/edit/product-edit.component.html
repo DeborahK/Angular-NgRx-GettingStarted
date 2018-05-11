@@ -96,6 +96,6 @@
     </form>
   </div>
 </div>
-<div *ngIf="errorMessage" class="alert alert-danger">
+<div *ngIf="errorMessage$ | async as errorMessage" class="alert alert-danger">
   Error: {{ errorMessage }}
 </div>
