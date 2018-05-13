@@ -1,39 +1,47 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  Input,
+  EventEmitter,
+  Output,
+  OnChanges,
+  SimpleChanges
+} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
 import { Observable, of } from 'rxjs';
 
-import { Product } from '../product';
-import { GenericValidator } from '../../shared/generic-validator';
-import { NumberValidators } from '../../shared/number.validator';
-
-/* NgRx */
-import { Store, select } from '@ngrx/store';
-import * as fromProduct from '../state/product.reducer';
-import * as productActions from '../state/product.actions';
+import { GenericValidator } from '../../../shared/generic-validator';
+import { NumberValidators } from '../../../shared/number.validator';
+import { Product } from '../../product';
+import { takeWhile } from 'rxjs/operators';
 
 @Component({
   selector: 'pm-product-edit',
   templateUrl: './product-edit.component.html',
   styleUrls: ['./product-edit.component.css']
 })
-export class ProductEditComponent implements OnInit, OnDestroy {
-  pageTitle = 'Product Edit';
-  errorMessage$: Observable<string>;
+export class ProductEditComponent implements OnInit, OnChanges, OnDestroy {
+  validationMessages: {
+    productName: { required: string; minlength: string; maxlength: string };
+    productCode: { required: string };
+    starRating: { range: string };
+  };
+  @Input() errorMessage: string;
+  @Input() selectedProduct: Product;
+  @Output() create = new EventEmitter<Product>();
+  @Output() update = new EventEmitter<Product>();
+  @Output() delete = new EventEmitter<Product>();
+  @Output() clearCurrent = new EventEmitter<Product>();
+
+  componentActive: boolean;
   productForm: FormGroup;
-
   product: Product | null;
-
-  // Use with the generic validation message class
+  pageTitle = 'Product Edit';
   displayMessage: { [key: string]: string } = {};
-  private validationMessages: { [key: string]: { [key: string]: string } };
-  private genericValidator: GenericValidator;
+  genericValidator: GenericValidator;
 
-  constructor(private store: Store<fromProduct.ProductState>,
-              private fb: FormBuilder) {
-
-    // Defines all of the validation messages for the form.
-    // These could instead be retrieved from a file or database.
+  constructor(private fb: FormBuilder) {
     this.validationMessages = {
       productName: {
         required: 'Product name is required.',
@@ -53,39 +61,42 @@ export class ProductEditComponent implements OnInit, OnDestroy {
     this.genericValidator = new GenericValidator(this.validationMessages);
   }
 
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.selectedProduct.currentValue) {
+      const product: any = changes.selectedProduct.currentValue as Product;
+      this.displayProduct(product);
+    }
+  }
+
   ngOnInit() {
     // Define the form group
     this.productForm = this.fb.group({
-      productName: ['', [Validators.required,
-                         Validators.minLength(3),
-                         Validators.maxLength(50)]],
+      productName: [
+        '',
+        [Validators.required, Validators.minLength(3), Validators.maxLength(50)]
+      ],
       productCode: ['', Validators.required],
       starRating: ['', NumberValidators.range(1, 5)],
       description: ''
     });
 
-    // Watch for changes to the currently selected product
-    this.store.pipe(select(fromProduct.getCurrentProduct)).subscribe(
-      selectedProduct => this.displayProduct(selectedProduct)
-    );
-
-    // Watch for changes to the error message
-    this.errorMessage$ = this.store.pipe(select(fromProduct.getError));
-
     // Watch for value changes
-    this.productForm.valueChanges.subscribe(
-      value => this.displayMessage = this.genericValidator.processMessages(this.productForm)
-    );
-  }
-
-  ngOnDestroy(): void {
-    // TODO: Should we be unsubscribing?
+    this.productForm.valueChanges
+      .pipe(takeWhile(() => this.componentActive))
+      .subscribe(
+        value =>
+          (this.displayMessage = this.genericValidator.processMessages(
+            this.productForm
+          ))
+      );
   }
 
   // Also validate on blur
   // Helpful if the user tabs through required fields
   blur(): void {
-    this.displayMessage = this.genericValidator.processMessages(this.productForm);
+    this.displayMessage = this.genericValidator.processMessages(
+      this.productForm
+    );
   }
 
   displayProduct(product: Product | null): void {
@@ -114,40 +125,36 @@ export class ProductEditComponent implements OnInit, OnDestroy {
   }
 
   cancelEdit(): void {
-    // Redisplay the currently selected product
-    // replacing any edits made
     this.displayProduct(this.product);
   }
 
   deleteProduct(): void {
     if (this.product && this.product.id) {
       if (confirm(`Really delete the product: ${this.product.productName}?`)) {
-        this.store.dispatch(new productActions.DeleteProduct(this.product));
+        this.delete.emit(this.product);
       }
     } else {
-      // No need to delete, it was never saved
-      this.store.dispatch(new productActions.ClearCurrentProduct());
+      this.clearCurrent.emit();
     }
   }
 
   saveProduct(): void {
     if (this.productForm.valid) {
       if (this.productForm.dirty) {
-        // Create an object starting with an empty object
-        // Copy over all of the original product properties
-        // Then copy over the values from the form
-        // This ensures values not on the form, such as the Id, are retained
         const p = Object.assign({}, this.product, this.productForm.value);
 
         if (p.id === 0) {
-          this.store.dispatch(new productActions.CreateProduct(p));
+          this.create.emit(p);
         } else {
-          this.store.dispatch(new productActions.UpdateProduct(p));
+          this.update.emit(p);
         }
       }
     } else {
-      this.errorMessage$ = of('Please correct the validation errors.');
+      this.errorMessage = 'Please correct the validation errors.';
     }
   }
 
+  ngOnDestroy(): void {
+    this.componentActive = false;
+  }
 }
