@@ -32,7 +32,7 @@ export class ProductEditComponent implements OnInit, OnChanges, OnDestroy {
   @Output() create = new EventEmitter<Product>();
   @Output() update = new EventEmitter<Product>();
   @Output() delete = new EventEmitter<Product>();
-  @Output() clearCurrent = new EventEmitter<Product>();
+  @Output() clearCurrent = new EventEmitter<void>();
 
   componentActive: boolean;
   productForm: FormGroup;
