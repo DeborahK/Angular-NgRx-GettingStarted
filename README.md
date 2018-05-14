@@ -9,6 +9,6 @@ Materials for NgRx course.
 
 `APM-Demo3`: Completed files after the *Working with Effects* module. It adds an effect to retrieve data via http. NOTE: Once we move the data retrieval to actions and the store, the create, update, and delete operations no longer work. These features are implemented with the store in the next demo.
 
-`APM-Demo4`: Completed files after the *Updating State* module. It adds the code needed for create, update, and delete operations via http.
+`APM-Demo4`: Completed files after the *Performing Update Operations* module. It adds the code needed for create, update, and delete operations via http.
 
-`APM-Demo5`: Completed files after the *Architecture and Feature Modules* module.
+`APM-Demo5`: Completed files after the *Architecture and Best Practices* module.
