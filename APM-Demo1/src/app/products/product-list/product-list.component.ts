@@ -2,8 +2,8 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { Subscription } from 'rxjs';
 
-import { Product } from './product';
-import { ProductService } from './product.service';
+import { Product } from '../product';
+import { ProductService } from '../product.service';
 
 /* NgRx */
 import { Store } from '@ngrx/store';
@@ -38,6 +38,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
       (err: any) => this.errorMessage = err.error
     );
 
+    // TODO: Unsubscribe
     this.store.select('products').subscribe(
       products => {
         if (products) {

@@ -23,8 +23,8 @@ export class LoginComponent implements OnInit {
               private authService: AuthService,
               private router: Router) {}
 
-  // Homework
   ngOnInit(): void {
+    // TODO: Unsubscribe
     this.store.pipe(select(fromUser.getMaskUserName)).subscribe(
       maskUserName => this.maskUserName = maskUserName
     );
@@ -34,7 +34,6 @@ export class LoginComponent implements OnInit {
     this.router.navigate(['welcome']);
   }
 
-  // Homework
   checkChanged(value: boolean): void {
     this.store.dispatch(new userActions.MaskUserName(value));
   }

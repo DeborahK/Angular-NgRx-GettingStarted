@@ -10,7 +10,6 @@ import { Product } from '../product';
 import { Action } from '@ngrx/store';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import * as fromProduct from './product.actions';
-import { ProductActionTypes } from './product.actions';
 
 @Injectable()
 export class ProductEffects {
@@ -31,7 +30,7 @@ export class ProductEffects {
 
   @Effect()
   updateProduct$: Observable<Action> = this.actions$.pipe(
-    ofType(ProductActionTypes.UpdateProduct),
+    ofType(fromProduct.ProductActionTypes.UpdateProduct),
     map((action: fromProduct.UpdateProduct) => action.payload),
     mergeMap((product: Product) =>
       this.productService.updateProduct(product).pipe(
@@ -43,7 +42,7 @@ export class ProductEffects {
 
   @Effect()
   createProduct$: Observable<Action> = this.actions$.pipe(
-    ofType(ProductActionTypes.CreateProduct),
+    ofType(fromProduct.ProductActionTypes.CreateProduct),
     map((action: fromProduct.CreateProduct) => action.payload),
     mergeMap((product: Product) =>
       this.productService.createProduct(product).pipe(
@@ -55,7 +54,7 @@ export class ProductEffects {
 
   @Effect()
   deleteProduct$: Observable<Action> = this.actions$.pipe(
-    ofType(ProductActionTypes.DeleteProduct),
+    ofType(fromProduct.ProductActionTypes.DeleteProduct),
     map((action: fromProduct.DeleteProduct) => action.payload),
     mergeMap((product: Product) =>
       this.productService.deleteProduct(product.id).pipe(

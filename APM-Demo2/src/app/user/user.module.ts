@@ -19,7 +19,6 @@ const userRoutes: Routes = [
   imports: [
     SharedModule,
     RouterModule.forChild(userRoutes),
-    // Homework
     StoreModule.forFeature('users', reducer)
   ],
   declarations: [
