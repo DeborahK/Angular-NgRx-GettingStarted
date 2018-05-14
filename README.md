@@ -3,7 +3,7 @@ Materials for NgRx course.
 
 `APM-Demo0`: The starter files set up for use in VSCode, WebStorm, or other editors. **Use this to code along with the course**.
 
-`APM-Demo1`: Completed files after the *First Look at NgRX* module. It demonstrates a very simple, but complete NgRx example.
+`APM-Demo1`: Completed files after the *First Look at NgRx* module. It demonstrates a very simple, but complete NgRx example.
 
 `APM-Demo2`: Completed files after the *Strongly Typing Actions with Action Creators* module. It refactors the simple example to include developer tooling support and strong typing.
 
