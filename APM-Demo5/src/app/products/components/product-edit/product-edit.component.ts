@@ -21,7 +21,7 @@ import { takeWhile } from 'rxjs/operators';
   templateUrl: './product-edit.component.html',
   styleUrls: ['./product-edit.component.css']
 })
-export class ProductEditComponent implements OnInit, OnChanges, OnDestroy {
+export class ProductEditComponent implements OnChanges, OnDestroy {
   validationMessages: {
     productName: { required: string; minlength: string; maxlength: string };
     productCode: { required: string };
@@ -62,14 +62,6 @@ export class ProductEditComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes.selectedProduct.currentValue) {
-      const product: any = changes.selectedProduct.currentValue as Product;
-      this.displayProduct(product);
-    }
-  }
-
-  ngOnInit() {
-    // Define the form group
     this.productForm = this.fb.group({
       productName: [
         '',
@@ -89,6 +81,10 @@ export class ProductEditComponent implements OnInit, OnChanges, OnDestroy {
             this.productForm
           ))
       );
+
+    // patch form with value from the store
+    const product: any = changes.selectedProduct.currentValue as Product;
+    this.displayProduct(product);
   }
 
   // Also validate on blur
