@@ -3,19 +3,14 @@
     {{pageTitle}}
   </div>
   <div class="card-body">
-    <form  novalidate (ngSubmit)="saveProduct()" [formGroup]="productForm">
+    <form novalidate (ngSubmit)="saveProduct()" [formGroup]="productForm">
       <fieldset>
         <div class="form-group row">
           <label class="col-md-3 col-form-label" for="productNameId">Product Name</label>
 
           <div class="col-md-9">
-            <input [ngClass]="{'is-invalid': displayMessage.productName }" 
-                   class="form-control" 
-                   id="productNameId" 
-                   type="text" 
-                   placeholder="Name (required)" 
-                   formControlName="productName" 
-                   (blur)="blur()"/>
+            <input [ngClass]="{'is-invalid': displayMessage.productName }" class="form-control" id="productNameId" type="text" placeholder="Name (required)"
+              formControlName="productName" (blur)="blur()" />
             <span class="invalid-feedback" *ngIf="displayMessage.productName">
               {{displayMessage.productName}}
             </span>
@@ -26,14 +21,8 @@
           <label class="col-md-3 col-form-label" for="productCodeId">Product Code</label>
 
           <div class="col-md-9">
-            <input [ngClass]="{'is-invalid': displayMessage.productCode}" 
-                   class="form-control"
-                   id="productCodeId"
-                   type="text"
-                   placeholder="Code (required)"
-                   formControlName="productCode"
-                   (blur)="blur()"
-            />
+            <input [ngClass]="{'is-invalid': displayMessage.productCode}" class="form-control" id="productCodeId" type="text" placeholder="Code (required)"
+              formControlName="productCode" (blur)="blur()" />
             <span class="invalid-feedback" *ngIf="displayMessage.productCode">
               {{displayMessage.productCode}}
             </span>
@@ -44,32 +33,24 @@
           <label class="col-md-3 col-form-label" for="starRatingId">Star Rating (1-5)</label>
 
           <div class="col-md-9">
-            <input [ngClass]="{'is-invalid': displayMessage.starRating}"
-                   class="form-control" 
-                   id="starRatingId" 
-                   type="text" 
-                   placeholder="Rating" 
-                   formControlName="starRating" />
+            <input [ngClass]="{'is-invalid': displayMessage.starRating}" class="form-control" id="starRatingId" type="text" placeholder="Rating"
+              formControlName="starRating" />
             <span class="invalid-feedback" *ngIf="displayMessage.starRating">
               {{displayMessage.starRating}}
             </span>
           </div>
         </div>
 
-        <div class="form-group row" >
+        <div class="form-group row">
           <label class="col-md-3 col-form-label" for="descriptionId">Description</label>
 
           <div class="col-md-9">
-            <textarea [ngClass]="{'is-invalid': displayMessage.description}"
-                      class="form-control" 
-                      id="descriptionId" 
-                      placeholder="Description" 
-                      rows=3 
-                      formControlName="description">
+            <textarea [ngClass]="{'is-invalid': displayMessage.description}" class="form-control" id="descriptionId" placeholder="Description"
+              rows=3 formControlName="description">
             </textarea>
-            <span class="invalid-feedback" *ngIf="displayMessage.description">
+            <!-- <span class="invalid-feedback" *ngIf="displayMessage.description">
               {{ displayMessage.description}}
-            </span>
+            </span> -->
           </div>
         </div>
 
@@ -96,6 +77,6 @@
     </form>
   </div>
 </div>
-<div *ngIf="errorMessage$ | async as errorMessage" class="alert alert-danger">
+<div *ngIf="errorMessage" class="alert alert-danger">
   Error: {{ errorMessage }}
 </div>
