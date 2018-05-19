@@ -22,8 +22,8 @@ export class LoginComponent implements OnInit {
               private router: Router) {
   }
 
-  // Homework
   ngOnInit(): void {
+    // TODO: Unsubscribe
     this.store.select('users').subscribe(
       users => {
         if (users) {
@@ -37,7 +37,6 @@ export class LoginComponent implements OnInit {
     this.router.navigate(['welcome']);
   }
 
-  // Homework
   checkChanged(value: boolean): void {
     this.store.dispatch({
       type: 'MASK_USER_NAME',

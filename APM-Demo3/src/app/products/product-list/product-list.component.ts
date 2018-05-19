@@ -1,13 +1,14 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 
-import { Product } from './product';
+import { Product } from '../product';
 
 import { Observable } from 'rxjs';
+import { takeWhile } from 'rxjs/operators';
 
 /* NgRx */
 import { Store, select } from '@ngrx/store';
-import * as fromProduct from './state/product.reducer';
-import * as productActions from './state/product.actions';
+import * as fromProduct from '../state/product.reducer';
+import * as productActions from '../state/product.actions';
 
 @Component({
   selector: 'pm-product-list',
@@ -17,6 +18,7 @@ import * as productActions from './state/product.actions';
 export class ProductListComponent implements OnInit, OnDestroy {
   pageTitle = 'Products';
   errorMessage$: Observable<string>;
+  alive = true;
 
   displayCode: boolean;
 
@@ -25,7 +27,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
   // Used to highlight the selected product in the list
   selectedProduct: Product | null;
 
-  constructor(private store: Store<fromProduct.ProductState>) {}
+  constructor(private store: Store<fromProduct.ProductState>) { }
 
   ngOnInit(): void {
 
@@ -39,18 +41,24 @@ export class ProductListComponent implements OnInit, OnDestroy {
     this.store.dispatch(new productActions.Load());
 
     // Subscribe here because it does not use an async pipe
-    this.store.pipe(select(fromProduct.getCurrentProduct)).subscribe(
+    this.store.pipe(
+      select(fromProduct.getCurrentProduct),
+      takeWhile(() => this.alive)
+    ).subscribe(
       currentProduct => this.selectedProduct = currentProduct
     );
 
     // Subscribe here because it does not use an async pipe
-    this.store.pipe(select(fromProduct.getShowProductCode)).subscribe(
+    this.store.pipe(
+      select(fromProduct.getShowProductCode),
+      takeWhile(() => this.alive)
+    ).subscribe(
       showProductCode => this.displayCode = showProductCode
     );
   }
 
   ngOnDestroy(): void {
-    // TODO: Should we unsubscribe?
+    this.alive = false;
   }
 
   checkChanged(value: boolean): void {

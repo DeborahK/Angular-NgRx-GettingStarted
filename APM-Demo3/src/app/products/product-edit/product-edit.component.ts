@@ -6,6 +6,8 @@ import { ProductService } from '../product.service';
 import { GenericValidator } from '../../shared/generic-validator';
 import { NumberValidators } from '../../shared/number.validator';
 
+import { takeWhile } from 'rxjs/operators';
+
 /* NgRx */
 import { Store, select } from '@ngrx/store';
 import * as fromProduct from '../state/product.reducer';
@@ -19,6 +21,7 @@ import * as productActions from '../state/product.actions';
 export class ProductEditComponent implements OnInit, OnDestroy {
   pageTitle = 'Product Edit';
   errorMessage = '';
+  alive = true;
   productForm: FormGroup;
 
   product: Product | null;
@@ -64,8 +67,10 @@ export class ProductEditComponent implements OnInit, OnDestroy {
       description: ''
     });
 
-    // Watch for changes to the currently selected product
-    this.store.pipe(select(fromProduct.getCurrentProduct)).subscribe(
+    this.store.pipe(
+      select(fromProduct.getCurrentProduct),
+      takeWhile(() => this.alive)
+    ).subscribe(
       selectedProduct => this.displayProduct(selectedProduct)
     );
 
@@ -76,7 +81,7 @@ export class ProductEditComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    // TODO: Should we be unsubscribing?
+    this.alive = false;
   }
 
   // Also validate on blur

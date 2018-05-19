@@ -47,7 +47,7 @@ export function reducer(state = initialState, action: ProductActions): ProductSt
     case ProductActionTypes.SetCurrentProduct:
       return {
         ...state,
-        currentProduct: { ... action.payload }
+        currentProduct: { ...action.payload }
       };
 
     case ProductActionTypes.ClearCurrentProduct:
