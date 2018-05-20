@@ -67,7 +67,7 @@ export class ProductEditComponent implements OnInit, OnDestroy {
       description: ''
     });
 
-    this.store.pipe(
+    // Watch for changes to the currently selected product
       select(fromProduct.getCurrentProduct),
       takeWhile(() => this.alive)
     ).subscribe(

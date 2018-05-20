@@ -28,20 +28,14 @@ export class SetCurrentProduct implements Action {
 
 export class ClearCurrentProduct implements Action {
   readonly type = ProductActionTypes.ClearCurrentProduct;
-
-  constructor() { }
 }
 
 export class InitializeCurrentProduct implements Action {
   readonly type = ProductActionTypes.InitializeCurrentProduct;
-
-  constructor() { }
 }
 
 export class Load implements Action {
   readonly type = ProductActionTypes.Load;
-
-  constructor() { }
 }
 
 export class LoadSuccess implements Action {

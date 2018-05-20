@@ -73,7 +73,7 @@
             "tsConfig": "src/tsconfig.spec.json",
             "karmaConfig": "src/karma.conf.js",
             "styles": [
-              "styles.css",
+              "src/styles.css",
               "node_modules/bootstrap/dist/css/bootstrap.css"
             ],
             "scripts": [],
