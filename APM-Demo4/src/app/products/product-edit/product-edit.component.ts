@@ -22,7 +22,7 @@ import * as productActions from '../state/product.actions';
 export class ProductEditComponent implements OnInit, OnDestroy {
   pageTitle = 'Product Edit';
   errorMessage$: Observable<string>;
-  alive = true;
+  componentActive = true;
   productForm: FormGroup;
 
   product: Product | null;
@@ -56,7 +56,7 @@ export class ProductEditComponent implements OnInit, OnDestroy {
     this.genericValidator = new GenericValidator(this.validationMessages);
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     // Define the form group
     this.productForm = this.fb.group({
       productName: ['', [Validators.required,
@@ -70,7 +70,7 @@ export class ProductEditComponent implements OnInit, OnDestroy {
     // Watch for changes to the currently selected product
     this.store.pipe(
       select(fromProduct.getCurrentProduct),
-      takeWhile(() => this.alive)
+      takeWhile(() => this.componentActive)
     ).subscribe(
       selectedProduct => this.displayProduct(selectedProduct)
     );
@@ -85,7 +85,7 @@ export class ProductEditComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.alive = false;
+    this.componentActive = false;
   }
 
   // Also validate on blur
@@ -143,7 +143,7 @@ export class ProductEditComponent implements OnInit, OnDestroy {
         // Copy over all of the original product properties
         // Then copy over the values from the form
         // This ensures values not on the form, such as the Id, are retained
-        const p = Object.assign({}, this.product, this.productForm.value);
+        const p = {...this.product, ...this.productForm.value};
 
         if (p.id === 0) {
           this.store.dispatch(new productActions.CreateProduct(p));

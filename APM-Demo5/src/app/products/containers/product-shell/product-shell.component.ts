@@ -12,27 +12,17 @@ import { Product } from '../../product';
 })
 export class ProductShellComponent implements OnInit {
   displayCode$: Observable<boolean>;
-  selectedProduct$: Observable<{
-    id: number;
-    productName: string;
-    productCode: string;
-    description: string;
-    starRating: number;
-  }>;
-  products$: Observable<any[]>;
+  selectedProduct$: Observable<Product>;
+  products$: Observable<Product[]>;
   errorMessage$: Observable<string>;
 
   constructor(private store: Store<fromProduct.ProductState>) {}
 
   ngOnInit(): void {
     this.store.dispatch(new productActions.Load());
-    this.products$ = this.store.pipe(
-      select(fromProduct.getProducts)
-    ) as Observable<Product[]>;
+    this.products$ = this.store.pipe(select(fromProduct.getProducts));
     this.errorMessage$ = this.store.pipe(select(fromProduct.getError));
-    this.selectedProduct$ = this.store.pipe(
-      select(fromProduct.getCurrentProduct)
-    );
+    this.selectedProduct$ = this.store.pipe(select(fromProduct.getCurrentProduct));
     this.displayCode$ = this.store.pipe(select(fromProduct.getShowProductCode));
   }
 

@@ -6,8 +6,8 @@
 
   <div class="card-body" *ngIf="products$ | async as products">
     <div class="list-group">
-      <button class="list-group-item list-group-item-action rounded-0" 
-          *ngFor="let product of products" 
+      <button class="list-group-item list-group-item-action rounded-0"
+          *ngFor="let product of products"
           [ngClass]="{'active': product?.id === selectedProduct?.id}"
           (click)="productSelected(product)">{{ product.productName }}
         <ng-container *ngIf="displayCode">
@@ -21,9 +21,9 @@
     <div class="row">
       <div class="form-check col-md-7">
         <label>
-          <input class="form-check-input" 
-                 type="checkbox" 
-                 (change)="checkChanged($event.target.checked)" 
+          <input class="form-check-input"
+                 type="checkbox"
+                 (change)="checkChanged($event.target.checked)"
                  [checked]="displayCode">
           Display Product Code
         </label>

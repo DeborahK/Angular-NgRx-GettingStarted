@@ -1,5 +1,4 @@
-import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
-import { Store, select } from '@ngrx/store';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Product } from '../../product';
 
 @Component({
@@ -8,21 +7,22 @@ import { Product } from '../../product';
   styleUrls: ['./product-list.component.css']
 })
 export class ProductListComponent {
+  pageTitle = 'Products';
+
+  @Input() errorMessage: string;
   @Input() products: Product[];
   @Input() displayCode: boolean;
   @Input() selectedProduct: Product;
   @Output() checked = new EventEmitter<boolean>();
-  @Output() initialiseNewProduct = new EventEmitter<void>();
+  @Output() initializeNewProduct = new EventEmitter<void>();
   @Output() selected = new EventEmitter<Product>();
-
-  pageTitle = 'Products';
 
   checkChanged(value: boolean): void {
     this.checked.emit(value);
   }
 
   newProduct(): void {
-    this.initialiseNewProduct.emit();
+    this.initializeNewProduct.emit();
   }
 
   productSelected(product: Product): void {
