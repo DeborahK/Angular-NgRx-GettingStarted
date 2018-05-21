@@ -6,7 +6,7 @@
     [selectedProduct]="selectedProduct$ | async"
 	[errorMessage]="errorMessage$ | async"
     (checked)="checkChanged($event)"
-    (initialiseNewProduct)="(newProduct())"
+    (initializeNewProduct)="(newProduct())"
     (selected)="productSelected($event)"></pm-product-list>
   </div>
   <div class='col-md-8'>

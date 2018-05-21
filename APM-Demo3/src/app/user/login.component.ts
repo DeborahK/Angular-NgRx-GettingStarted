@@ -18,7 +18,7 @@ import * as userActions from './state/user.actions';
 export class LoginComponent implements OnInit, OnDestroy {
   pageTitle = 'Log In';
   errorMessage: string;
-  alive = true;
+  componentActive = true;
 
   maskUserName: boolean;
 
@@ -29,14 +29,14 @@ export class LoginComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.store.pipe(
       select(fromUser.getMaskUserName),
-      takeWhile(() => this.alive)
+      takeWhile(() => this.componentActive)
     ).subscribe(
       maskUserName => this.maskUserName = maskUserName
     );
   }
 
   ngOnDestroy(): void {
-    this.alive = false;
+    this.componentActive = false;
   }
 
   cancel(): void {

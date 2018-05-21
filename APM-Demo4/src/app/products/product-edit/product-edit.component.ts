@@ -139,11 +139,10 @@ export class ProductEditComponent implements OnInit, OnDestroy {
   saveProduct(): void {
     if (this.productForm.valid) {
       if (this.productForm.dirty) {
-        // Create an object starting with an empty object
         // Copy over all of the original product properties
         // Then copy over the values from the form
         // This ensures values not on the form, such as the Id, are retained
-        const p = {...this.product, ...this.productForm.value};
+        const p = { ...this.product, ...this.productForm.value };
 
         if (p.id === 0) {
           this.store.dispatch(new productActions.CreateProduct(p));

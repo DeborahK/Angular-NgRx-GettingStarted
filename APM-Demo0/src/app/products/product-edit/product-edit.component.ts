@@ -50,7 +50,7 @@ export class ProductEditComponent implements OnInit, OnDestroy {
     this.genericValidator = new GenericValidator(this.validationMessages);
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     // Define the form group
     this.productForm = this.fb.group({
       productName: ['', [Validators.required,
@@ -130,7 +130,6 @@ export class ProductEditComponent implements OnInit, OnDestroy {
   saveProduct(): void {
     if (this.productForm.valid) {
       if (this.productForm.dirty) {
-        // Create an object starting with an empty object
         // Copy over all of the original product properties
         // Then copy over the values from the form
         // This ensures values not on the form, such as the Id, are retained

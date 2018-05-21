@@ -18,7 +18,7 @@ import * as productActions from '../state/product.actions';
 export class ProductListComponent implements OnInit, OnDestroy {
   pageTitle = 'Products';
   errorMessage$: Observable<string>;
-  alive = true;
+  componentActive = true;
 
   displayCode: boolean;
 
@@ -43,7 +43,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
     // Subscribe here because it does not use an async pipe
     this.store.pipe(
       select(fromProduct.getCurrentProduct),
-      takeWhile(() => this.alive)
+      takeWhile(() => this.componentActive)
     ).subscribe(
       currentProduct => this.selectedProduct = currentProduct
     );
@@ -51,14 +51,14 @@ export class ProductListComponent implements OnInit, OnDestroy {
     // Subscribe here because it does not use an async pipe
     this.store.pipe(
       select(fromProduct.getShowProductCode),
-      takeWhile(() => this.alive)
+      takeWhile(() => this.componentActive)
     ).subscribe(
       showProductCode => this.displayCode = showProductCode
     );
   }
 
   ngOnDestroy(): void {
-    this.alive = false;
+    this.componentActive = false;
   }
 
   checkChanged(value: boolean): void {
