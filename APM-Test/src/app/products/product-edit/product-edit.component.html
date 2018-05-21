@@ -3,7 +3,7 @@
     {{pageTitle}}
   </div>
   <div class="card-body">
-    <form novalidate (ngSubmit)="saveProduct()" [formGroup]="productForm">
+    <form  novalidate (ngSubmit)="saveProduct()" [formGroup]="productForm">
       <fieldset>
         <div class="form-group row">
           <label class="col-md-3 col-form-label" for="productNameId">Product Name</label>
@@ -15,7 +15,7 @@
                    type="text" 
                    placeholder="Name (required)" 
                    formControlName="productName" 
-                   (blur)="blur()" />
+                   (blur)="blur()"/>
             <span class="invalid-feedback" *ngIf="displayMessage.productName">
               {{displayMessage.productName}}
             </span>
@@ -32,7 +32,8 @@
                    type="text"
                    placeholder="Code (required)"
                    formControlName="productCode"
-                   (blur)="blur()" />
+                   (blur)="blur()"
+            />
             <span class="invalid-feedback" *ngIf="displayMessage.productCode">
               {{displayMessage.productCode}}
             </span>
@@ -55,7 +56,7 @@
           </div>
         </div>
 
-        <div class="form-group row">
+        <div class="form-group row" >
           <label class="col-md-3 col-form-label" for="descriptionId">Description</label>
 
           <div class="col-md-9">
@@ -95,6 +96,6 @@
     </form>
   </div>
 </div>
-<div *ngIf="errorMessage$ | async as errorMessage" class="alert alert-danger">
+<div *ngIf="errorMessage" class="alert alert-danger">
   Error: {{ errorMessage }}
 </div>

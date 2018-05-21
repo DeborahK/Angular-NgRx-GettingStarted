@@ -7,6 +7,7 @@ import { ProductService } from '../product.service';
 
 /* NgRx */
 import { Store, select } from '@ngrx/store';
+import { ProductState } from '../state/product.reducer';
 
 @Component({
   selector: 'pm-product-list',
@@ -25,7 +26,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
   selectedProduct: Product | null;
   sub: Subscription;
 
-  constructor(private store: Store<any>,
+  constructor(private store: Store<ProductState>,
               private productService: ProductService) { }
 
   ngOnInit(): void {
@@ -40,7 +41,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
 
     // TODO: Unsubscribe
     this.store.pipe(select('products')).subscribe(
-      products => {
+      (products: ProductState) => {
         if (products) {
           this.displayCode = products.showProductCode;
         }

@@ -1,6 +1,6 @@
-# APM-Demo5
+# APM-Demo0
 
-Demo of container/presentational pattern and OnPush change detection strategy.
+Starter files with no NgRx added.
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.0.0.
 
