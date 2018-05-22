@@ -27,7 +27,7 @@ export const getShowProductCode = createSelector(
 
 export const getCurrentProduct = createSelector(
   getProductFeatureState,
-  (state) => state.currentProduct
+  state => state.currentProduct
 );
 
 export const getProducts = createSelector(
