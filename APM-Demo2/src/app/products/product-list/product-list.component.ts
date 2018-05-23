@@ -24,7 +24,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
   // Used to highlight the selected product in the list
   selectedProduct: Product | null;
 
-  constructor(private store: Store<fromProduct.ProductState>,
+  constructor(private store: Store<fromProduct.State>,
               private productService: ProductService) { }
 
   ngOnInit(): void {
@@ -39,8 +39,8 @@ export class ProductListComponent implements OnInit, OnDestroy {
     );
 
     // TODO: Unsubscribe
-    this.store.pipe(select(fromProduct.getShowProductCode)).subscribe(
-      showProductCode => this.displayCode = showProductCode
+    this.store.pipe(select('products')).subscribe(
+      (products: fromProduct.ProductState) => this.displayCode = products.showProductCode
     );
   }
 

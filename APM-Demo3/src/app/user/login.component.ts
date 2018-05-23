@@ -10,6 +10,7 @@ import { takeWhile } from 'rxjs/operators';
 import { Store, select } from '@ngrx/store';
 import * as fromUser from './state/user.reducer';
 import * as userActions from './state/user.actions';
+import * as fromRoot from '../state/app.state';
 
 @Component({
   templateUrl: './login.component.html',
@@ -22,7 +23,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   maskUserName: boolean;
 
-  constructor(private store: Store<fromUser.UserState>,
+  constructor(private store: Store<fromRoot.State>,
               private authService: AuthService,
               private router: Router) { }
 

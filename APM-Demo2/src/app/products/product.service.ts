@@ -6,7 +6,9 @@ import { catchError, tap, map } from 'rxjs/operators';
 
 import { Product } from './product';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class ProductService {
   private productsUrl = 'api/products';
   private products: Product[];

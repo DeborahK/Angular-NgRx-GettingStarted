@@ -2,7 +2,9 @@ import { Injectable } from '@angular/core';
 
 import { User } from './user';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class AuthService {
     currentUser: User | null;
     redirectUrl: string;

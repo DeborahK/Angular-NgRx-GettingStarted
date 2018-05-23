@@ -3,6 +3,14 @@ import { Product } from '../product';
 /* NgRx */
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { ProductActions, ProductActionTypes } from './product.actions';
+import * as fromRoot from '../../state/app.state';
+
+// Extends the app state to include the product feature.
+// This is required because products are lazy loaded.
+// So the reference to ProductState cannot be added to app.state.ts directly.
+export interface State extends fromRoot.State {
+  product: ProductState;
+}
 
 // State for this feature (Product)
 export interface ProductState {
@@ -29,7 +37,7 @@ export const getShowProductCode = createSelector(
 
 export const getCurrentProduct = createSelector(
   getProductFeatureState,
-  (state) => state.currentProduct
+  state => state.currentProduct
 );
 
 export const getProducts = createSelector(
