@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 
 // Imports for loading & configuring the in-memory web api
-import { HttpClientInMemoryWebApiModule  } from 'angular-in-memory-web-api';
+import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { ProductData } from './products/product-data';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -32,6 +32,6 @@ import { UserModule } from './user/user.module';
     WelcomeComponent,
     PageNotFoundComponent
   ],
-  bootstrap: [ AppComponent ]
+  bootstrap: [AppComponent]
 })
 export class AppModule { }

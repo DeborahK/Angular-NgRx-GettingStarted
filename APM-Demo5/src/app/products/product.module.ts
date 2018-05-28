@@ -11,7 +11,7 @@ import { ProductEditComponent } from './components/product-edit/product-edit.com
 import { StoreModule } from '@ngrx/store';
 import { reducer } from './state/product.reducer';
 import { EffectsModule } from '@ngrx/effects';
-import { ProductEffects } from './state/product.effect';
+import { ProductEffects } from './state/product.effects';
 
 const productRoutes: Routes = [
   { path: '', component: ProductShellComponent }

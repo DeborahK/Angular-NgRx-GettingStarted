@@ -22,7 +22,7 @@ export class LoginComponent implements OnInit {
 
   constructor(private store: Store<fromRoot.State>,
               private authService: AuthService,
-              private router: Router) {}
+              private router: Router) { }
 
   ngOnInit(): void {
     // TODO: Unsubscribe

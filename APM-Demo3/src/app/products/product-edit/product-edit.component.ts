@@ -72,7 +72,7 @@ export class ProductEditComponent implements OnInit, OnDestroy {
       select(fromProduct.getCurrentProduct),
       takeWhile(() => this.componentActive)
     ).subscribe(
-      selectedProduct => this.displayProduct(selectedProduct)
+      currentProduct => this.displayProduct(currentProduct)
     );
 
     // Watch for value changes
