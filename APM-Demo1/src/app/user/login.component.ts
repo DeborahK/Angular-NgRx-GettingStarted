@@ -5,7 +5,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { AuthService } from './auth.service';
 
 /* NgRx */
-import { Store } from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
 
 @Component({
   templateUrl: './login.component.html',
@@ -24,13 +24,12 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     // TODO: Unsubscribe
-    this.store.select('users').subscribe(
+    this.store.pipe(select('users')).subscribe(
       users => {
         if (users) {
           this.maskUserName = users.maskUserName;
         }
-      }
-    );
+      });
   }
 
   cancel(): void {
