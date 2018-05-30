@@ -8,7 +8,7 @@ import { takeWhile } from 'rxjs/operators';
 
 /* NgRx */
 import { Store, select } from '@ngrx/store';
-import * as fromUser from './state/user.reducer';
+import * as fromUser from './state';
 import * as userActions from './state/user.actions';
 import * as fromRoot from '../state/app.state';
 

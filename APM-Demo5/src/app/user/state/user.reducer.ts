@@ -1,9 +1,5 @@
-// Homework
-import { User } from '../user';
-
-/* NgRx */
-import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { UserActions, UserActionTypes } from './user.actions';
+import { User } from "../user";
+import { UserActionTypes, UserActions } from "./user.actions";
 
 // State for this feature (User)
 export interface UserState {
@@ -15,19 +11,6 @@ const initialState: UserState = {
   maskUserName: true,
   currentUser: null
 };
-
-// Selector functions
-const getProductFeatureState = createFeatureSelector<UserState>('users');
-
-export const getCurentUser = createSelector(
-  getProductFeatureState,
-  state => state.currentUser
-);
-
-export const getMaskUserName = createSelector(
-  getProductFeatureState,
-  state => state.maskUserName
-);
 
 export function reducer(state = initialState, action: UserActions): UserState {
   switch (action.type) {
