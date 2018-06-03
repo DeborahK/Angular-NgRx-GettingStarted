@@ -83,21 +83,19 @@ export function reducer(state = initialState, action: ProductActions): ProductSt
         }
       };
 
-    case ProductActionTypes.LoadSuccess: {
+    case ProductActionTypes.LoadSuccess:
       return {
         ...state,
         products: action.payload,
         error: ''
       };
-    }
 
-    case ProductActionTypes.LoadFail: {
+    case ProductActionTypes.LoadFail:
       return {
         ...state,
         products: [],
         error: action.payload
       };
-    }
 
     default:
       return state;

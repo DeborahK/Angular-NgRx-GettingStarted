@@ -95,23 +95,21 @@ export function reducer(state = initialState, action: ProductActions): ProductSt
         currentProductId: 0
       };
 
-    case ProductActionTypes.LoadSuccess: {
+    case ProductActionTypes.LoadSuccess:
       return {
         ...state,
         products: action.payload,
         error: ''
       };
-    }
 
-    case ProductActionTypes.LoadFail: {
+    case ProductActionTypes.LoadFail:
       return {
         ...state,
         products: [],
         error: action.payload
       };
-    }
 
-    case ProductActionTypes.UpdateProductSuccess: {
+    case ProductActionTypes.UpdateProductSuccess:
       const updatedProducts = state.products.map(
         item => action.payload.id === item.id ? action.payload : item);
       return {
@@ -120,48 +118,42 @@ export function reducer(state = initialState, action: ProductActions): ProductSt
         currentProductId: action.payload.id,
         error: ''
       };
-    }
 
-    case ProductActionTypes.UpdateProductFail: {
+    case ProductActionTypes.UpdateProductFail:
       return {
         ...state,
         error: action.payload
       };
-    }
 
     // After a create, the currentProduct is the new product.
-    case ProductActionTypes.CreateProductSuccess: {
+    case ProductActionTypes.CreateProductSuccess:
       return {
         ...state,
         products: [...state.products, action.payload],
         currentProductId: action.payload.id,
         error: ''
       };
-    }
 
-    case ProductActionTypes.CreateProductFail: {
+    case ProductActionTypes.CreateProductFail:
       return {
         ...state,
         error: action.payload
       };
-    }
 
     // After a delete, the currentProduct is null.
-    case ProductActionTypes.DeleteProductSuccess: {
+    case ProductActionTypes.DeleteProductSuccess:
       return {
         ...state,
         products: state.products.filter(product => product.id !== action.payload.id),
         currentProductId: null,
         error: ''
       };
-    }
 
-    case ProductActionTypes.DeleteProductFail: {
+    case ProductActionTypes.DeleteProductFail:
       return {
         ...state,
         error: action.payload
       };
-    }
 
     default:
       return state;
