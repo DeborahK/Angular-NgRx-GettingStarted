@@ -46,7 +46,7 @@ export function reducer(state = initialState, action: ProductActions): ProductSt
     case ProductActionTypes.LoadSuccess: {
       return {
         ...state,
-        products: [...action.payload],
+        products: action.payload,
         error: ''
       };
     }
