@@ -46,7 +46,7 @@ export class ProductEffects {
     map((action: productActions.CreateProduct) => action.payload),
     mergeMap((product: Product) =>
       this.productService.createProduct(product).pipe(
-        map(updatedProduct => (new productActions.CreateProductSuccess(updatedProduct))),
+        map(newProduct => (new productActions.CreateProductSuccess(newProduct))),
         catchError(err => of(new productActions.CreateProductFail(err)))
       )
     )
@@ -56,9 +56,9 @@ export class ProductEffects {
   deleteProduct$: Observable<Action> = this.actions$.pipe(
     ofType(productActions.ProductActionTypes.DeleteProduct),
     map((action: productActions.DeleteProduct) => action.payload),
-    mergeMap((product: Product) =>
-      this.productService.deleteProduct(product.id).pipe(
-        map(() => (new productActions.DeleteProductSuccess(product))),
+    mergeMap((productId: number) =>
+      this.productService.deleteProduct(productId).pipe(
+        map(() => (new productActions.DeleteProductSuccess(productId))),
         catchError(err => of(new productActions.DeleteProductFail(err)))
       )
     )

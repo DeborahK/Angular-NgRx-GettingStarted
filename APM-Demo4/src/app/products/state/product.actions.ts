@@ -98,13 +98,13 @@ export class CreateProductFail implements Action {
 export class DeleteProduct implements Action {
   readonly type = ProductActionTypes.DeleteProduct;
 
-  constructor(public payload: Product) { }
+  constructor(public payload: number) { }
 }
 
 export class DeleteProductSuccess implements Action {
   readonly type = ProductActionTypes.DeleteProductSuccess;
 
-  constructor(public payload: Product) { }
+  constructor(public payload: number) { }
 }
 
 export class DeleteProductFail implements Action {

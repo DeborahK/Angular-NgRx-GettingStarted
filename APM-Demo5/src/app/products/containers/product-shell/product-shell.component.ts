@@ -39,7 +39,7 @@ export class ProductShellComponent implements OnInit {
   }
 
   deleteProduct(product: Product): void {
-    this.store.dispatch(new productActions.DeleteProduct(product));
+    this.store.dispatch(new productActions.DeleteProduct(product.id));
   }
 
   clearProduct(): void {
