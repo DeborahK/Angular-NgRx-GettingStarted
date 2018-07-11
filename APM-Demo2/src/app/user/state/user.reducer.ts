@@ -16,15 +16,15 @@ const initialState: UserState = {
 };
 
 // Selector functions
-const getProductFeatureState = createFeatureSelector<UserState>('users');
+const getUserFeatureState = createFeatureSelector<UserState>('users');
 
 export const getMaskUserName = createSelector(
-  getProductFeatureState,
+  getUserFeatureState,
   state => state.maskUserName
 );
 
 export const getCurrentUser = createSelector(
-  getProductFeatureState,
+  getUserFeatureState,
   state => state.currentUser
 );
 
