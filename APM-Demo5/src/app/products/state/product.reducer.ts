@@ -1,4 +1,3 @@
-import { Product } from '../product';
 import { ProductActionTypes, ProductActions } from './product.actions';
 
 // State for this feature (Product)
