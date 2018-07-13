@@ -1,7 +1,5 @@
 import { User } from '../user';
 
-/* NgRx */
-import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { UserActions, UserActionTypes } from './user.actions';
 
 // State for this feature (User)
