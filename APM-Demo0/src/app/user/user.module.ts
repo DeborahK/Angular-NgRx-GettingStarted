@@ -12,7 +12,7 @@ const userRoutes: Routes = [
 @NgModule({
   imports: [
     SharedModule,
-    RouterModule.forChild(userRoutes)
+    RouterModule.forChild(userRoutes),
   ],
   declarations: [
     LoginComponent
