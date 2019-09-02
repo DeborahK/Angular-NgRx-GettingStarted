@@ -48,7 +48,7 @@ export class ProductService {
   createProduct(product: Product): Observable<Product> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     product.id = null;
-    return this.http.post<Product>(this.productsUrl, product, { headers: headers })
+    return this.http.post<Product>(this.productsUrl, product, { headers })
       .pipe(
         tap(data => console.log('createProduct: ' + JSON.stringify(data))),
         tap(data => {
@@ -61,7 +61,7 @@ export class ProductService {
   deleteProduct(id: number): Observable<{}> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     const url = `${this.productsUrl}/${id}`;
-    return this.http.delete<Product>(url, { headers: headers })
+    return this.http.delete<Product>(url, { headers })
       .pipe(
         tap(data => console.log('deleteProduct: ' + id)),
         tap(data => {
@@ -77,7 +77,7 @@ export class ProductService {
   updateProduct(product: Product): Observable<Product> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     const url = `${this.productsUrl}/${product.id}`;
-    return this.http.put<Product>(url, product, { headers: headers })
+    return this.http.put<Product>(url, product, { headers })
       .pipe(
         tap(() => console.log('updateProduct: ' + product.id)),
         // Update the item in the list

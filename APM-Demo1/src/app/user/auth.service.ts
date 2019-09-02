@@ -21,7 +21,7 @@ export class AuthService {
         // This is just hard-coded here.
         this.currentUser = {
             id: 2,
-            userName: userName,
+            userName,
             isAdmin: false
         };
     }

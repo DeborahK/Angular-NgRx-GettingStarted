@@ -2,7 +2,7 @@
 
 Starter files with no NgRx added.
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.0.2.
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.2.
 
 ## Development server
 
