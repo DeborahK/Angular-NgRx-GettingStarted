@@ -31,6 +31,15 @@ import { EffectsModule } from '@ngrx/effects';
     UserModule,
     AppRoutingModule,
     StoreModule.forRoot({}),
+    // StoreModule.forRoot({},
+    //   {
+    //     runtimeChecks: {
+    //       strictStateImmutability: true,
+    //       strictActionImmutability: true,
+    //       strictStateSerializability: true,
+    //       strictActionSerializability: true
+    //     }
+    //   }),
     StoreDevtoolsModule.instrument({
       name: 'APM Demo App DevTools',
       maxAge: 25,

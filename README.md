@@ -12,3 +12,6 @@ Materials for NgRx course.
 `APM-Demo4`: Completed files after the *Performing Update Operations* module. It adds the code needed for create, update, and delete operations via http.
 
 `APM-Demo5`: Completed files after the *Architectural Considerations* module. It implements the container/presentational component pattern and the OnPush change detection strategy.
+
+NOTE: 
+- September 2, 2019: This code was modified to Angular version 8 (v8). See the CHANGELOG.md file for details.
