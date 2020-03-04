@@ -12,6 +12,7 @@
   },
   "private": true,
   "dependencies": {
+    "@angular-devkit/schematics": "^9.0.4",
     "@angular/animations": "~8.2.4",
     "@angular/common": "~8.2.4",
     "@angular/compiler": "~8.2.4",
