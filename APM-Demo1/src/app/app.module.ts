@@ -31,10 +31,10 @@ import { StoreModule } from '@ngrx/store';
     // StoreModule.forRoot({},
     //   {
     //     runtimeChecks: {
-    //       strictStateImmutability: true,
-    //       strictActionImmutability: true,
-    //       strictStateSerializability: true,
-    //       strictActionSerializability: true
+    //       strictStateImmutability: false,
+    //       strictActionImmutability: false,
+    //       strictStateSerializability: false,
+    //       strictActionSerializability: false
     //     }
     //   })
   ],
