@@ -6,6 +6,8 @@ import { AuthService } from './auth.service';
 
 /* NgRx */
 import { Store, select } from '@ngrx/store';
+import { maskUserName } from './state/user.actions';
+import { tap } from 'rxjs/operators';
 
 @Component({
   templateUrl: './login.component.html',
@@ -24,9 +26,13 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     // TODO: Unsubscribe
-    this.store.pipe(select('users')).subscribe(
+    this.store.pipe(tap(val => {
+      val;
+      debugger;
+    }), select('users')).subscribe(
       users => {
         if (users) {
+          debugger;
           this.maskUserName = users.maskUserName;
         }
       });
@@ -37,10 +43,7 @@ export class LoginComponent implements OnInit {
   }
 
   checkChanged(value: boolean): void {
-    this.store.dispatch({
-      type: 'MASK_USER_NAME',
-      payload: value
-    });
+    this.store.dispatch(maskUserName({mask: value}));
   }
 
   login(loginForm: NgForm): void {
