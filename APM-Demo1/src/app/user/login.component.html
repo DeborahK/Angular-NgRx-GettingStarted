@@ -70,7 +70,7 @@
           <label>
             <input class="form-check-input" 
                    type="checkbox" 
-                   (change)="checkChanged($event.target.checked)" 
+                   (change)="checkChanged($any($event.target).checked)" 
                    [checked]="maskUserName">
             Mask user name
           </label>
