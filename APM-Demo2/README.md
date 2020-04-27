@@ -2,7 +2,7 @@
 
 Demo of a basic implementation of NgRx for a simple boolean flag, but using strong typing. Includes implementation of the dev tools.
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.2.
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.1.3.
 
 ## Development server
 
