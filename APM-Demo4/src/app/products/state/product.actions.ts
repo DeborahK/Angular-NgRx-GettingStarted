@@ -46,7 +46,7 @@ export const updateProductSuccess = createAction(
   props<{ product: Product }>()
 );
 
-export const updateProductFail = createAction(
+export const updateProductFailure = createAction(
   '[Product] Update Product Fail',
   props<{ error: string }>()
 );
@@ -61,7 +61,7 @@ export const createProductSuccess = createAction(
   props<{ product: Product }>()
 );
 
-export const createProductFail = createAction(
+export const createProductFailure = createAction(
   '[Product] Create Product Fail',
   props<{ error: string }>()
 );
@@ -76,7 +76,7 @@ export const deleteProductSuccess = createAction(
   props<{ productId: number }>()
 );
 
-export const deleteProductFail = createAction(
+export const deleteProductFailure = createAction(
   '[Product] Delete Product Fail',
   props<{ error: string }>()
 );
@@ -92,12 +92,12 @@ const all = union({
   loadProductsFailure,
   updateProduct,
   updateProductSuccess,
-  updateProductFail,
+  updateProductFailure,
   createProduct,
   createProductSuccess,
-  createProductFail,
+  createProductFailure,
   deleteProduct,
   deleteProductSuccess,
-  deleteProductFail
+  deleteProductFailure
 });
 export type ProductActionsUnion = typeof all;

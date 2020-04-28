@@ -1,7 +1,7 @@
 import { Product } from '../product';
 
 /* NgRx */
-import { createFeatureSelector, createSelector } from '@ngrx/store';
+import { createFeatureSelector, createReducer, createSelector, on } from '@ngrx/store';
 import * as ProductActions from './product.actions';
 import * as fromRoot from '../../state/app.state';
 
@@ -68,97 +68,96 @@ export const getError = createSelector(
   state => state.error
 );
 
+const productReducer = createReducer(
+  initialState,
+  on(
+    ProductActions.toggleProductCode,
+    (state, { showProductCode }) => ({
+      ...state,
+      showProductCode
+    })),
+  on(
+    ProductActions.setCurrentProduct,
+    (state, { product }) => ({
+      ...state,
+      currentProductId: product.id
+    })),
+  on(
+    ProductActions.clearCurrentProduct,
+    state => ({
+      ...state,
+      currentProductId: null
+    })),
+  on(
+    ProductActions.initializeCurrentProduct,
+    state => ({
+      ...state,
+      currentProductId: 0
+    })),
+  on(
+    ProductActions.loadProductsSuccess,
+    (state, { products }) => ({
+      ...state,
+      products,
+      error: ''
+    })),
+  on(
+    ProductActions.loadProductsFailure,
+    (state, { error }) => ({
+      ...state,
+      products: [],
+      error
+    })),
+  on(
+    ProductActions.updateProductSuccess,
+    (state, { product }) => ({
+      ...state,
+      products: state.products.map(
+        item => product.id === item.id ? product : item),
+      currentProductId: product.id,
+      error: ''
+    })),
+  on(
+    ProductActions.updateProductFailure,
+    (state, { error }) => ({
+      ...state,
+      error
+    })),
+  // After a create, the currentProduct is the new product.
+  on(
+    ProductActions.createProductSuccess,
+    (state, { product }) => ({
+      ...state,
+      products: [...state.products, product],
+      currentProductId: product.id,
+      error: ''
+    })),
+  on(
+    ProductActions.createProductFailure,
+    (state, { error }) => ({
+      ...state,
+      error
+    })),
+  // After a delete, the currentProduct is null.
+  on(
+    ProductActions.deleteProductSuccess,
+    (state, { productId }) => ({
+      ...state,
+      products: state.products.filter(product => product.id !== productId),
+      currentProductId: null,
+      error: ''
+    })),
+  on(
+    ProductActions.deleteProductFailure,
+    (state, { error }) => ({
+      ...state,
+      error
+    }))
+);
+
 export function reducer(
-  state = initialState,
+  state: ProductState,
   action: ProductActions.ProductActionsUnion
-): ProductState {
-
-  switch (action.type) {
-    case ProductActions.toggleProductCode.type:
-      return {
-        ...state,
-        showProductCode: action.showProductCode
-      };
-
-    case ProductActions.setCurrentProduct.type:
-      return {
-        ...state,
-        currentProductId: action.product.id
-      };
-
-    case ProductActions.clearCurrentProduct.type:
-      return {
-        ...state,
-        currentProductId: null
-      };
-
-    case ProductActions.initializeCurrentProduct.type:
-      return {
-        ...state,
-        currentProductId: 0
-      };
-
-    case ProductActions.loadProductsSuccess.type:
-      return {
-        ...state,
-        products: action.products,
-        error: ''
-      };
-
-    case ProductActions.loadProductsFailure.type:
-      return {
-        ...state,
-        products: [],
-        error: action.error
-      };
-
-    case ProductActions.updateProductSuccess.type:
-      const updatedProducts = state.products.map(
-        item => action.product.id === item.id ? action.product : item);
-      return {
-        ...state,
-        products: updatedProducts,
-        currentProductId: action.product.id,
-        error: ''
-      };
-
-    case ProductActions.updateProductFail.type:
-      return {
-        ...state,
-        error: action.error
-      };
-
-    // After a create, the currentProduct is the new product.
-    case ProductActions.createProductSuccess.type:
-      return {
-        ...state,
-        products: [...state.products, action.product],
-        currentProductId: action.product.id,
-        error: ''
-      };
-
-    case ProductActions.createProductFail.type:
-      return {
-        ...state,
-        error: action.error
-      };
-
-    // After a delete, the currentProduct is null.
-    case ProductActions.deleteProductSuccess.type:
-      return {
-        ...state,
-        products: state.products.filter(product => product.id !== action.productId),
-        currentProductId: null,
-        error: ''
-      };
-
-    case ProductActions.deleteProductFail.type:
-      return {
-        ...state,
-        error: action.error
-      };
-
-    default:
-      return state;
-  }
+) {
+  return productReducer(state, action);
 }
