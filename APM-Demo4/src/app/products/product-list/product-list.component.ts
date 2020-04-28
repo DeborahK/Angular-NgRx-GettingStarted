@@ -38,7 +38,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
     // Do NOT subscribe here because it used an async pipe
     this.errorMessage$ = this.store.pipe(select(fromProduct.getError));
 
-    this.store.dispatch(new productActions.Load());
+    this.store.dispatch( productActions.loadProducts());
 
     // Subscribe here because it does not use an async pipe
     this.store.pipe(
@@ -62,15 +62,15 @@ export class ProductListComponent implements OnInit, OnDestroy {
   }
 
   checkChanged(value: boolean): void {
-    this.store.dispatch(new productActions.ToggleProductCode(value));
+    this.store.dispatch(productActions.toggleProductCode({ toggle: value }));
   }
 
   newProduct(): void {
-    this.store.dispatch(new productActions.InitializeCurrentProduct());
+    this.store.dispatch(productActions.initializeCurrentProduct());
   }
 
   productSelected(product: Product): void {
-    this.store.dispatch(new productActions.SetCurrentProduct(product));
+    this.store.dispatch(productActions.setCurrentProduct({ product }));
   }
 
 }
