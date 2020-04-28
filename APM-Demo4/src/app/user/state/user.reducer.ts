@@ -30,18 +30,14 @@ export const getCurrentUser = createSelector(
 
 const userReducer = createReducer(
   initialState,
-  on(
-    UserActions.maskUserName,
-    (state, { maskUserName }) => ({
+  on(UserActions.maskUserName, (state, action) => {
+    return {
       ...state,
-      maskUserName
-    })
-  )
+      maskUserName: action.maskUserName
+    };
+  })
 );
 
-export function reducer(
-  state: UserState,
-  action: UserActions.UserActionsUnion
-) {
+export function reducer(state: UserState, action: UserActions.UserActionsUnion) {
   return userReducer(state, action);
 }

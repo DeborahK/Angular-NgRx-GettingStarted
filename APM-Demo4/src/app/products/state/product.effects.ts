@@ -1,21 +1,20 @@
 import { Injectable } from '@angular/core';
 
-import { Observable, of } from 'rxjs';
-import { mergeMap, map, catchError } from 'rxjs/operators';
+import { of } from 'rxjs';
+import { concatMap, mergeMap, map, catchError } from 'rxjs/operators';
 
 import { ProductService } from '../product.service';
 
 /* NgRx */
-import { Action } from '@ngrx/store';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import * as ProductActions from './product.actions';
 
 @Injectable()
 export class ProductEffects {
 
-  loadProducts$: Observable<Action> = createEffect(() =>
+  loadProducts$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(ProductActions.loadProducts.type),
+      ofType(ProductActions.loadProducts),
       mergeMap(() =>
         this.productService.getProducts()
           .pipe(
@@ -25,34 +24,34 @@ export class ProductEffects {
       )
     ));
 
-  updateProduct$: Observable<Action> = createEffect(() =>
+  updateProduct$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(ProductActions.updateProduct.type),
-      mergeMap(({ product }) =>
+      ofType(ProductActions.updateProduct),
+      concatMap(({ product }) =>
         this.productService.updateProduct(product)
           .pipe(
-            map(updatedProduct => (ProductActions.updateProductSuccess({ product: updatedProduct }))),
+            map(product => (ProductActions.updateProductSuccess({ product }))),
             catchError(error => of(ProductActions.updateProductFailure({ error })))
           )
       )
     ));
 
-  createProduct$: Observable<Action> = createEffect(() =>
+  createProduct$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(ProductActions.createProduct.type),
-      mergeMap(({ product }) =>
+      ofType(ProductActions.createProduct),
+      concatMap(({ product }) =>
         this.productService.createProduct(product)
           .pipe(
-            map(newProduct => (ProductActions.createProductSuccess({ product: newProduct }))),
+            map(product => (ProductActions.createProductSuccess({ product }))),
             catchError(error => of(ProductActions.createProductFailure({ error })))
           )
       )
     ));
 
-  deleteProduct$: Observable<Action> = createEffect(() =>
+  deleteProduct$ = createEffect(() =>
     this.actions$
       .pipe(
-        ofType(ProductActions.deleteProduct.type),
+        ofType(ProductActions.deleteProduct),
         mergeMap(({ productId }) =>
           this.productService.deleteProduct(productId).pipe(
             map(() => (ProductActions.deleteProductSuccess({ productId }))),

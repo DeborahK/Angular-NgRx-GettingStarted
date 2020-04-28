@@ -70,94 +70,91 @@ export const getError = createSelector(
 
 const productReducer = createReducer(
   initialState,
-  on(
-    ProductActions.toggleProductCode,
-    (state, { showProductCode }) => ({
+  on(ProductActions.toggleProductCode, (state, action) => {
+    return {
       ...state,
-      showProductCode
-    })),
-  on(
-    ProductActions.setCurrentProduct,
-    (state, { product }) => ({
+      showProductCode: action.showProductCode
+    };
+  }),
+  on(ProductActions.setCurrentProduct, (state, action) => {
+    return {
       ...state,
-      currentProductId: product.id
-    })),
-  on(
-    ProductActions.clearCurrentProduct,
-    state => ({
+      currentProductId: action.product.id
+    };
+  }),
+  on(ProductActions.clearCurrentProduct, state => {
+    return {
       ...state,
       currentProductId: null
-    })),
-  on(
-    ProductActions.initializeCurrentProduct,
-    state => ({
+    };
+  }),
+  on(ProductActions.initializeCurrentProduct, state => {
+    return {
       ...state,
       currentProductId: 0
-    })),
-  on(
-    ProductActions.loadProductsSuccess,
-    (state, { products }) => ({
+    };
+  }),
+  on(ProductActions.loadProductsSuccess, (state, action) => {
+    return {
       ...state,
-      products,
+      products: action.products,
       error: ''
-    })),
-  on(
-    ProductActions.loadProductsFailure,
-    (state, { error }) => ({
+    };
+  }),
+  on(ProductActions.loadProductsFailure, (state, action) => {
+    return {
       ...state,
       products: [],
-      error
-    })),
-  on(
-    ProductActions.updateProductSuccess,
-    (state, { product }) => ({
+      error: action.error
+    };
+  }),
+  on(ProductActions.updateProductSuccess, (state, action) => {
+    return {
       ...state,
       products: state.products.map(
-        item => product.id === item.id ? product : item),
-      currentProductId: product.id,
+        item => action.product.id === item.id ? action.product : item),
+      currentProductId: action.product.id,
       error: ''
-    })),
-  on(
-    ProductActions.updateProductFailure,
-    (state, { error }) => ({
+    };
+  }),
+  on(ProductActions.updateProductFailure, (state, action) => {
+    return {
       ...state,
-      error
-    })),
+      error: action.error
+    };
+  }),
   // After a create, the currentProduct is the new product.
-  on(
-    ProductActions.createProductSuccess,
-    (state, { product }) => ({
+  on(ProductActions.createProductSuccess, (state, action) => {
+    return {
       ...state,
-      products: [...state.products, product],
-      currentProductId: product.id,
+      products: [...state.products, action.product],
+      currentProductId: action.product.id,
       error: ''
-    })),
-  on(
-    ProductActions.createProductFailure,
-    (state, { error }) => ({
+    };
+  }),
+  on(ProductActions.createProductFailure, (state, action) => {
+    return {
       ...state,
-      error
-    })),
+      error: action.error
+    };
+  }),
   // After a delete, the currentProduct is null.
-  on(
-    ProductActions.deleteProductSuccess,
-    (state, { productId }) => ({
+  on(ProductActions.deleteProductSuccess, (state, action) => {
+    return {
       ...state,
-      products: state.products.filter(product => product.id !== productId),
+      products: state.products.filter(product => product.id !== action.productId),
       currentProductId: null,
       error: ''
-    })),
-  on(
-    ProductActions.deleteProductFailure,
-    (state, { error }) => ({
+    };
+  }),
+  on(ProductActions.deleteProductFailure, (state, action) => {
+    return {
       ...state,
-      error
-    }))
+      error: action.error
+    };
+  })
 );
 
-export function reducer(
-  state: ProductState,
-  action: ProductActions.ProductActionsUnion
-) {
+export function reducer(state: ProductState, action: ProductActions.ProductActionsUnion) {
   return productReducer(state, action);
 }
