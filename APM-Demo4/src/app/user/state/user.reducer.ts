@@ -1,7 +1,7 @@
 import { User } from '../user';
 
 /* NgRx */
-import { createFeatureSelector, createReducer, createSelector, on } from '@ngrx/store';
+import { Action, createFeatureSelector, createReducer, createSelector, on } from '@ngrx/store';
 import * as UserActions from './user.actions';
 
 // State for this feature (User)
@@ -38,6 +38,6 @@ const userReducer = createReducer(
   })
 );
 
-export function reducer(state: UserState, action: UserActions.UserActionsUnion) {
+export function reducer(state: UserState, action: Action) {
   return userReducer(state, action);
 }

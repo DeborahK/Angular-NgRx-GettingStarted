@@ -12,6 +12,8 @@ import * as ProductActions from './product.actions';
 @Injectable()
 export class ProductEffects {
 
+  constructor(private productService: ProductService, private actions$: Actions) { }
+
   loadProducts$ = createEffect(() =>
     this.actions$.pipe(
       ofType(ProductActions.loadProducts),
@@ -22,7 +24,8 @@ export class ProductEffects {
             catchError(error => of(ProductActions.loadProductsFailure({ error })))
           )
       )
-    ));
+    )
+  );
 
   updateProduct$ = createEffect(() =>
     this.actions$.pipe(
@@ -34,7 +37,8 @@ export class ProductEffects {
             catchError(error => of(ProductActions.updateProductFailure({ error })))
           )
       )
-    ));
+    )
+  );
 
   createProduct$ = createEffect(() =>
     this.actions$.pipe(
@@ -46,7 +50,8 @@ export class ProductEffects {
             catchError(error => of(ProductActions.createProductFailure({ error })))
           )
       )
-    ));
+    )
+  );
 
   deleteProduct$ = createEffect(() =>
     this.actions$
@@ -58,8 +63,6 @@ export class ProductEffects {
             catchError(error => of(ProductActions.deleteProductFailure({ error })))
           )
         )
-      ));
-
-  constructor(private productService: ProductService,
-              private actions$: Actions<ProductActions.ProductActionsUnion>) { }
+      )
+  );
 }

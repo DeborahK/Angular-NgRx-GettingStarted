@@ -60,8 +60,8 @@ export class ProductEditComponent implements OnInit, OnDestroy {
     // Define the form group
     this.productForm = this.fb.group({
       productName: ['', [Validators.required,
-      Validators.minLength(3),
-      Validators.maxLength(50)]],
+                         Validators.minLength(3),
+                         Validators.maxLength(50)]],
       productCode: ['', Validators.required],
       starRating: ['', NumberValidators.range(1, 5)],
       description: ''

@@ -1,7 +1,7 @@
 import { Product } from '../product';
 
 /* NgRx */
-import { createFeatureSelector, createReducer, createSelector, on } from '@ngrx/store';
+import { Action, createFeatureSelector, createReducer, createSelector, on } from '@ngrx/store';
 import * as ProductActions from './product.actions';
 import * as fromRoot from '../../state/app.state';
 
@@ -155,6 +155,6 @@ const productReducer = createReducer(
   })
 );
 
-export function reducer(state: ProductState, action: ProductActions.ProductActionsUnion) {
+export function reducer(state: ProductState, action: Action) {
   return productReducer(state, action);
 }

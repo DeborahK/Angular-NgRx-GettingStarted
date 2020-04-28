@@ -1,7 +1,7 @@
 import { Product } from '../product';
 
 /* NgRx */
-import { createAction, props, union } from '@ngrx/store';
+import { createAction, props } from '@ngrx/store';
 
 // Action Creators
 export const toggleProductCode = createAction(
@@ -80,24 +80,3 @@ export const deleteProductFailure = createAction(
   '[Product] Delete Product Fail',
   props<{ error: string }>()
 );
-
-// Union the valid types
-const all = union({
-  toggleProductCode,
-  setCurrentProduct,
-  clearCurrentProduct,
-  initializeCurrentProduct,
-  loadProducts,
-  loadProductsSuccess,
-  loadProductsFailure,
-  updateProduct,
-  updateProductSuccess,
-  updateProductFailure,
-  createProduct,
-  createProductSuccess,
-  createProductFailure,
-  deleteProduct,
-  deleteProductSuccess,
-  deleteProductFailure
-});
-export type ProductActionsUnion = typeof all;
