@@ -35,10 +35,10 @@ export class ProductListComponent implements OnInit, OnDestroy {
     // This gets the initial values until the load is complete.
     this.products$ = this.store.pipe(select(fromProduct.getProducts)) as Observable<Product[]>;
 
-    // Do NOT subscribe here because it used an async pipe
+    // Do NOT subscribe here because it uses an async pipe
     this.errorMessage$ = this.store.pipe(select(fromProduct.getError));
 
-    this.store.dispatch( productActions.loadProducts());
+    this.store.dispatch(productActions.loadProducts());
 
     // Subscribe here because it does not use an async pipe
     this.store.pipe(
@@ -62,7 +62,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
   }
 
   checkChanged(value: boolean): void {
-    this.store.dispatch(productActions.toggleProductCode({ toggle: value }));
+    this.store.dispatch(productActions.toggleProductCode({ showProductCode: value }));
   }
 
   newProduct(): void {

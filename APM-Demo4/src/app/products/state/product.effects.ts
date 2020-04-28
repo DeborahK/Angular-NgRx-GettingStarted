@@ -58,5 +58,5 @@ export class ProductEffects {
   );
 
   constructor(private productService: ProductService,
-    private actions$: Actions<ProductActions.ProductActionsUnion>) { }
+              private actions$: Actions<ProductActions.ProductActionsUnion>) { }
 }

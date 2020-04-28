@@ -33,7 +33,7 @@ export class ProductEditComponent implements OnInit, OnDestroy {
   private genericValidator: GenericValidator;
 
   constructor(private store: Store<fromProduct.State>,
-    private fb: FormBuilder) {
+              private fb: FormBuilder) {
 
     // Defines all of the validation messages for the form.
     // These could instead be retrieved from a file or database.
@@ -128,7 +128,7 @@ export class ProductEditComponent implements OnInit, OnDestroy {
   deleteProduct(): void {
     if (this.product && this.product.id) {
       if (confirm(`Really delete the product: ${this.product.productName}?`)) {
-        this.store.dispatch(productActions.deleteProduct({productId: this.product.id}));
+        this.store.dispatch(productActions.deleteProduct({ productId: this.product.id }));
       }
     } else {
       // No need to delete, it was never saved

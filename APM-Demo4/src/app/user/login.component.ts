@@ -45,7 +45,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   checkChanged(value: boolean): void {
-    this.store.dispatch(new userActions.MaskUserName(value));
+    this.store.dispatch(userActions.maskUserName({maskUserName: value}));
   }
 
   login(loginForm: NgForm): void {

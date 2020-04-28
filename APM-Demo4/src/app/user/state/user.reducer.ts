@@ -2,7 +2,7 @@ import { User } from '../user';
 
 /* NgRx */
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { UserActions, UserActionTypes } from './user.actions';
+import * as UserActions from './user.actions';
 
 // State for this feature (User)
 export interface UserState {
@@ -28,12 +28,16 @@ export const getCurrentUser = createSelector(
   state => state.currentUser
 );
 
-export function reducer(state = initialState, action: UserActions): UserState {
+export function reducer(
+  state = initialState,
+  action: UserActions.UserActionsUnion
+): UserState {
+
   switch (action.type) {
-    case UserActionTypes.MaskUserName:
+    case UserActions.maskUserName.type:
       return {
         ...state,
-        maskUserName: action.payload
+        maskUserName: action.maskUserName
       };
 
     default:

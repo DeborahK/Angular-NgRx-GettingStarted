@@ -77,7 +77,7 @@ export function reducer(
     case ProductActions.toggleProductCode.type:
       return {
         ...state,
-        showProductCode: action.toggle
+        showProductCode: action.showProductCode
       };
 
     case ProductActions.setCurrentProduct.type:
