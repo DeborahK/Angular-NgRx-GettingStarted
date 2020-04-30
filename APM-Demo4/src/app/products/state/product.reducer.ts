@@ -70,12 +70,18 @@ export const getError = createSelector(
 
 const productReducer = createReducer<ProductState>(
   initialState,
-  on(ProductActions.toggleProductCode, (state, action) => {
+  on(ProductActions.toggleProductCode, state => {
     return {
       ...state,
-      showProductCode: action.showProductCode
+      showProductCode: !state.showProductCode
     };
   }),
+  // on(ProductActions.toggleProductCode, (state, action) => {
+  //   return {
+  //     ...state,
+  //     showProductCode: action.showProductCode
+  //   };
+  // }),
   on(ProductActions.setCurrentProduct, (state, action) => {
     return {
       ...state,

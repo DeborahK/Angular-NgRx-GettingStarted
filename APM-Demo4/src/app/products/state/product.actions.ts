@@ -5,9 +5,12 @@ import { createAction, props } from '@ngrx/store';
 
 // Action Creators
 export const toggleProductCode = createAction(
-  '[Product] Toggle Product Code',
-  props<{ showProductCode: boolean }>()
+  '[Product] Toggle Product Code'
 );
+// export const toggleProductCode = createAction(
+//   '[Product] Toggle Product Code',
+//   props<{ showProductCode: boolean }>()
+// );
 
 export const setCurrentProduct = createAction(
   '[Product] Set Current Product',
