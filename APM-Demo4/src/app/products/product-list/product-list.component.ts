@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Product } from '../product';
-
 import { Observable } from 'rxjs';
+
+import { Product } from '../product';
 
 /* NgRx */
 import { Store, select } from '@ngrx/store';
