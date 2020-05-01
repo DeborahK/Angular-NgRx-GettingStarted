@@ -115,10 +115,11 @@ const productReducer = createReducer<ProductState>(
     };
   }),
   on(ProductActions.updateProductSuccess, (state, action): ProductState => {
+    const updatedProducts = state.products.map(
+      item => action.product.id === item.id ? action.product : item);
     return {
       ...state,
-      products: state.products.map(
-        item => action.product.id === item.id ? action.product : item),
+      products: updatedProducts,
       currentProductId: action.product.id,
       error: ''
     };
