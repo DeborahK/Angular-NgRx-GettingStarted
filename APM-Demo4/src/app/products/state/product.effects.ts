@@ -12,7 +12,7 @@ import * as ProductActions from './product.actions';
 @Injectable()
 export class ProductEffects {
 
-  constructor(private productService: ProductService, private actions$: Actions) { }
+  constructor(private actions$: Actions, private productService: ProductService) { }
 
   loadProducts$ = createEffect(() => {
     return this.actions$

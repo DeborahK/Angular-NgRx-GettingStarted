@@ -22,9 +22,7 @@ const productRoutes: Routes = [
     SharedModule,
     RouterModule.forChild(productRoutes),
     StoreModule.forFeature('products', reducer),
-    EffectsModule.forFeature(
-      [ ProductEffects ]
-    ),
+    EffectsModule.forFeature([ProductEffects]),
   ],
   declarations: [
     ProductShellComponent,
