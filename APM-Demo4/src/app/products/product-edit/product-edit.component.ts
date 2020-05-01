@@ -122,18 +122,18 @@ export class ProductEditComponent implements OnInit {
     }
   }
 
-  saveProduct(product: Product): void {
+  saveProduct(originalProduct: Product): void {
     if (this.productForm.valid) {
       if (this.productForm.dirty) {
         // Copy over all of the original product properties
         // Then copy over the values from the form
         // This ensures values not on the form, such as the Id, are retained
-        const p = { ...product, ...this.productForm.value };
+        const product = { ...originalProduct, ...this.productForm.value };
 
-        if (p.id === 0) {
-          this.store.dispatch(productActions.createProduct({ product: p }));
+        if (product.id === 0) {
+          this.store.dispatch(productActions.createProduct({ product }));
         } else {
-          this.store.dispatch(productActions.updateProduct({ product: p }));
+          this.store.dispatch(productActions.updateProduct({ product }));
         }
       }
     } else {
