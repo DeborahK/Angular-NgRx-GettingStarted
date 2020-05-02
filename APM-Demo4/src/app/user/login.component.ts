@@ -33,8 +33,8 @@ export class LoginComponent implements OnInit {
     this.router.navigate(['welcome']);
   }
 
-  checkChanged(value: boolean): void {
-    this.store.dispatch(userActions.maskUserName({ maskUserName: value }));
+  checkChanged(): void {
+    this.store.dispatch(userActions.maskUserName());
   }
 
   login(loginForm: NgForm): void {

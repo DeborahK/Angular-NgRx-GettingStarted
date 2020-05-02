@@ -14,7 +14,7 @@ export class LoginComponent implements OnInit {
 
   maskUserName: boolean;
 
-  constructor(private store: Store<any>, private authService: AuthService, private router: Router) { }
+  constructor(private authService: AuthService, private router: Router) { }
 
   ngOnInit(): void {
 
@@ -24,8 +24,8 @@ export class LoginComponent implements OnInit {
     this.router.navigate(['welcome']);
   }
 
-  checkChanged(value: boolean): void {
-    this.maskUserName = value;
+  checkChanged(): void {
+    this.maskUserName = !this.maskUserName;
   }
 
   login(loginForm: NgForm): void {

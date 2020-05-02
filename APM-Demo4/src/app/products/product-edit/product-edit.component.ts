@@ -15,8 +15,7 @@ import * as productActions from '../state/product.actions';
 
 @Component({
   selector: 'pm-product-edit',
-  templateUrl: './product-edit.component.html',
-  styleUrls: ['./product-edit.component.css']
+  templateUrl: './product-edit.component.html'
 })
 export class ProductEditComponent implements OnInit {
   pageTitle = 'Product Edit';
@@ -73,7 +72,7 @@ export class ProductEditComponent implements OnInit {
 
     // Watch for value changes for validation
     this.productForm.valueChanges.subscribe(
-      value => this.displayMessage = this.genericValidator.processMessages(this.productForm)
+      () => this.displayMessage = this.genericValidator.processMessages(this.productForm)
     );
   }
 

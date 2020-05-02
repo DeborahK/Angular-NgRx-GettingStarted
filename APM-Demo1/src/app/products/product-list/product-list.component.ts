@@ -34,7 +34,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
 
     this.productService.getProducts().subscribe({
       next: (products: Product[]) => this.products = products,
-      error: (err: any) => this.errorMessage = err.error
+      error: err => this.errorMessage = err
     });
 
     // TODO: Unsubscribe

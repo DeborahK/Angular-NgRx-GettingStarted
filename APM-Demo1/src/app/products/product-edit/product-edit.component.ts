@@ -10,8 +10,7 @@ import { NumberValidators } from '../../shared/number.validator';
 
 @Component({
   selector: 'pm-product-edit',
-  templateUrl: './product-edit.component.html',
-  styleUrls: ['./product-edit.component.css']
+  templateUrl: './product-edit.component.html'
 })
 export class ProductEditComponent implements OnInit, OnDestroy {
   pageTitle = 'Product Edit';
@@ -63,9 +62,9 @@ export class ProductEditComponent implements OnInit, OnDestroy {
       selectedProduct => this.displayProduct(selectedProduct)
     );
 
-    // Watch for value changes
+    // Watch for value changes for validation
     this.productForm.valueChanges.subscribe(
-      value => this.displayMessage = this.genericValidator.processMessages(this.productForm)
+      () => this.displayMessage = this.genericValidator.processMessages(this.productForm)
     );
   }
 
@@ -115,7 +114,7 @@ export class ProductEditComponent implements OnInit, OnDestroy {
       if (confirm(`Really delete the product: ${product.productName}?`)) {
         this.productService.deleteProduct(product.id).subscribe({
           next: () => this.productService.changeSelectedProduct(null),
-          error: err => this.errorMessage = err.error
+          error: err => this.errorMessage = err
         });
       }
     } else {
@@ -130,17 +129,17 @@ export class ProductEditComponent implements OnInit, OnDestroy {
         // Copy over all of the original product properties
         // Then copy over the values from the form
         // This ensures values not on the form, such as the Id, are retained
-        const product = { ...originalProduct, ...this.productForm.value };
+        const updatedProduct = { ...originalProduct, ...this.productForm.value };
 
-        if (product.id === 0) {
-          this.productService.createProduct(product).subscribe({
-            next: p => this.productService.changeSelectedProduct(p),
-            error: err => this.errorMessage = err.error
+        if (updatedProduct.id === 0) {
+          this.productService.createProduct(updatedProduct).subscribe({
+            next: product => this.productService.changeSelectedProduct(product),
+            error: err => this.errorMessage = err
           });
         } else {
-          this.productService.updateProduct(product).subscribe({
-            next: p => this.productService.changeSelectedProduct(p),
-            error: err => this.errorMessage = err.error
+          this.productService.updateProduct(updatedProduct).subscribe({
+            next: product => this.productService.changeSelectedProduct(product),
+            error: err => this.errorMessage = err
           });
         }
       }

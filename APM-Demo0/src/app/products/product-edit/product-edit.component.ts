@@ -10,8 +10,7 @@ import { NumberValidators } from '../../shared/number.validator';
 
 @Component({
   selector: 'pm-product-edit',
-  templateUrl: './product-edit.component.html',
-  styleUrls: ['./product-edit.component.css']
+  templateUrl: './product-edit.component.html'
 })
 export class ProductEditComponent implements OnInit, OnDestroy {
   pageTitle = 'Product Edit';
@@ -65,7 +64,7 @@ export class ProductEditComponent implements OnInit, OnDestroy {
 
     // Watch for value changes
     this.productForm.valueChanges.subscribe(
-      value => this.displayMessage = this.genericValidator.processMessages(this.productForm)
+      () => this.displayMessage = this.genericValidator.processMessages(this.productForm)
     );
   }
 
@@ -115,7 +114,7 @@ export class ProductEditComponent implements OnInit, OnDestroy {
       if (confirm(`Really delete the product: ${product.productName}?`)) {
         this.productService.deleteProduct(product.id).subscribe({
           next: () => this.productService.changeSelectedProduct(null),
-          error: err => this.errorMessage = err.error
+          error: err => this.errorMessage = err
         });
       }
     } else {
@@ -135,12 +134,12 @@ export class ProductEditComponent implements OnInit, OnDestroy {
         if (product.id === 0) {
           this.productService.createProduct(product).subscribe({
             next: p => this.productService.changeSelectedProduct(p),
-            error: err => this.errorMessage = err.error
+            error: err => this.errorMessage = err
           });
         } else {
           this.productService.updateProduct(product).subscribe({
             next: p => this.productService.changeSelectedProduct(p),
-            error: err => this.errorMessage = err.error
+            error: err => this.errorMessage = err
           });
         }
       }

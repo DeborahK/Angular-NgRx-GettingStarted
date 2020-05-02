@@ -29,17 +29,15 @@ export class ProductListComponent implements OnInit {
 
     // Do NOT subscribe here because it uses an async pipe
     // This gets the initial values until the load is complete.
-    this.products$ = this.store.pipe(select(fromProduct.getProducts)) as Observable<Product[]>;
+    this.products$ = this.store.select(fromProduct.getProducts) as Observable<Product[]>;
 
     // Do NOT subscribe here because it uses an async pipe
-    this.errorMessage$ = this.store.pipe(select(fromProduct.getError));
+    this.errorMessage$ = this.store.select(fromProduct.getError);
 
     this.store.dispatch(productActions.loadProducts());
 
     // Do NOT subscribe here because it uses an async pipe
-    this.selectedProduct$ = this.store.pipe(
-      select(fromProduct.getCurrentProduct)
-    );
+    this.selectedProduct$ = this.store.select(fromProduct.getCurrentProduct);
 
     // Do NOT subscribe here because it uses an async pipe
     this.displayCode$ = this.store.select(fromProduct.getShowProductCode);
