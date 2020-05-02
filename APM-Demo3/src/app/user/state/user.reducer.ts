@@ -2,18 +2,20 @@
 import { User } from '../user';
 
 /* NgRx */
-import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { UserActions, UserActionTypes } from './user.actions';
+import { Action, createFeatureSelector, createReducer, createSelector, on } from '@ngrx/store';
+import * as UserActions from './user.actions';
 
 // State for this feature (User)
 export interface UserState {
   maskUserName: boolean;
   currentUser: User;
+  error: string;
 }
 
 const initialState: UserState = {
   maskUserName: true,
-  currentUser: null
+  currentUser: null,
+  error: ''
 };
 
 // Selector functions
@@ -29,15 +31,21 @@ export const getCurrentUser = createSelector(
   state => state.currentUser
 );
 
-export function reducer(state = initialState, action: UserActions): UserState {
-  switch (action.type) {
-    case UserActionTypes.MaskUserName:
-      return {
-        ...state,
-        maskUserName: action.payload
-      };
+export const getError = createSelector(
+  getUserFeatureState,
+  state => state.error
+);
 
-    default:
-      return state;
-  }
+const userReducer = createReducer<UserState>(
+  initialState,
+  on(UserActions.maskUserName, (state): UserState => {
+    return {
+      ...state,
+      maskUserName: !state.maskUserName
+    };
+  })
+);
+
+export function reducer(state: UserState, action: Action) {
+  return userReducer(state, action);
 }

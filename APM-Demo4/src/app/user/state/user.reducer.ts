@@ -8,11 +8,13 @@ import * as UserActions from './user.actions';
 export interface UserState {
   maskUserName: boolean;
   currentUser: User;
+  error: string;
 }
 
 const initialState: UserState = {
   maskUserName: true,
-  currentUser: null
+  currentUser: null,
+  error: ''
 };
 
 // Selector functions
@@ -28,9 +30,14 @@ export const getCurrentUser = createSelector(
   state => state.currentUser
 );
 
+export const getError = createSelector(
+  getUserFeatureState,
+  state => state.error
+);
+
 const userReducer = createReducer<UserState>(
   initialState,
-  on(UserActions.maskUserName, state => {
+  on(UserActions.maskUserName, (state): UserState => {
     return {
       ...state,
       maskUserName: !state.maskUserName

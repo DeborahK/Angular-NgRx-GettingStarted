@@ -70,7 +70,7 @@ export const getError = createSelector(
 
 const productReducer = createReducer<ProductState>(
   initialState,
-  on(ProductActions.toggleProductCode, state => {
+  on(ProductActions.toggleProductCode, (state): ProductState => {
     return {
       ...state,
       showProductCode: !state.showProductCode

@@ -45,13 +45,13 @@ export const getProducts = createSelector(
 
 const productReducer = createReducer<ProductState>(
   initialState,
-  on(ProductActions.toggleProductCode, state => {
+  on(ProductActions.toggleProductCode, (state): ProductState => {
     return {
       ...state,
       showProductCode: !state.showProductCode
     };
   }),
-  on(ProductActions.setCurrentProduct, (state, action) => {
+  on(ProductActions.setCurrentProduct, (state, action): ProductState => {
     return {
       ...state,
       currentProduct: action.product

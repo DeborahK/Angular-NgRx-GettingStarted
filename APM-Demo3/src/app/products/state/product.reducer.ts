@@ -1,8 +1,8 @@
 import { Product } from '../product';
 
 /* NgRx */
-import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { ProductActions, ProductActionTypes } from './product.actions';
+import { Action, createFeatureSelector, createReducer, createSelector, on } from '@ngrx/store';
+import * as ProductActions from './product.actions';
 import * as fromRoot from '../../state/app.state';
 
 // Extends the app state to include the product feature.
@@ -50,54 +50,54 @@ export const getError = createSelector(
   state => state.error
 );
 
-export function reducer(state = initialState, action: ProductActions): ProductState {
+const productReducer = createReducer<ProductState>(
+  initialState,
+  on(ProductActions.toggleProductCode, (state): ProductState => {
+    return {
+      ...state,
+      showProductCode: !state.showProductCode
+    };
+  }),
+  on(ProductActions.setCurrentProduct, (state, action): ProductState => {
+    return {
+      ...state,
+      currentProduct: action.product
+    };
+  }),
+  on(ProductActions.clearCurrentProduct, (state): ProductState => {
+    return {
+      ...state,
+      currentProduct: null
+    };
+  }),
+  on(ProductActions.initializeCurrentProduct, (state): ProductState => {
+    return {
+      ...state,
+      currentProduct: {
+        id: 0,
+        productName: '',
+        productCode: 'New',
+        description: '',
+        starRating: 0
+      }
+    };
+  }),
+  on(ProductActions.loadProductsSuccess, (state, action): ProductState => {
+    return {
+      ...state,
+      products: action.products,
+      error: ''
+    };
+  }),
+  on(ProductActions.loadProductsFailure, (state, action): ProductState => {
+    return {
+      ...state,
+      products: [],
+      error: action.error
+    };
+  })
+);
 
-  switch (action.type) {
-    case ProductActionTypes.ToggleProductCode:
-      return {
-        ...state,
-        showProductCode: action.payload
-      };
-
-    case ProductActionTypes.SetCurrentProduct:
-      return {
-        ...state,
-        currentProduct: { ...action.payload }
-      };
-
-    case ProductActionTypes.ClearCurrentProduct:
-      return {
-        ...state,
-        currentProduct: null
-      };
-
-    case ProductActionTypes.InitializeCurrentProduct:
-      return {
-        ...state,
-        currentProduct: {
-          id: 0,
-          productName: '',
-          productCode: 'New',
-          description: '',
-          starRating: 0
-        }
-      };
-
-    case ProductActionTypes.LoadSuccess:
-      return {
-        ...state,
-        products: action.payload,
-        error: ''
-      };
-
-    case ProductActionTypes.LoadFail:
-      return {
-        ...state,
-        products: [],
-        error: action.payload
-      };
-
-    default:
-      return state;
-  }
+export function reducer(state: ProductState, action: Action) {
+  return productReducer(state, action);
 }
