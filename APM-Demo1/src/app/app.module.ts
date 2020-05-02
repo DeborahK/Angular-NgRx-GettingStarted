@@ -28,15 +28,6 @@ import { StoreModule } from '@ngrx/store';
     UserModule,
     AppRoutingModule,
     StoreModule.forRoot({})
-    // StoreModule.forRoot({},
-    //   {
-    //     runtimeChecks: {
-    //       strictStateImmutability: false,
-    //       strictActionImmutability: false,
-    //       strictStateSerializability: false,
-    //       strictActionSerializability: false
-    //     }
-    //   })
   ],
   declarations: [
     AppComponent,

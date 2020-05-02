@@ -39,8 +39,8 @@ export class ProductListComponent implements OnInit, OnDestroy {
     this.sub.unsubscribe();
   }
 
-  checkChanged(value: boolean): void {
-    this.displayCode = value;
+  checkChanged(): void {
+    this.displayCode = !this.displayCode;
   }
 
   newProduct(): void {

@@ -1,13 +1,15 @@
+/* NgRx */
+import { createReducer, on, createAction } from '@ngrx/store';
+
+const productReducer = createReducer(
+  { showProductCode: true },
+  on(createAction('[Product] Toggle Product Code'), state => ({
+    ...state,
+    showProductCode: !state.showProductCode
+    // showProductCode: state.showProductCode = false,
+  }))
+);
+
 export function reducer(state, action) {
-  switch (action.type) {
-
-    case 'TOGGLE_PRODUCT_CODE':
-      return {
-        ...state,
-        showProductCode: action.payload
-      };
-
-    default:
-      return state;
-  }
+  return productReducer(state, action);
 }

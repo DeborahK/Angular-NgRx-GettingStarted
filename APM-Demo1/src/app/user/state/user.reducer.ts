@@ -1,9 +1,11 @@
-import { createReducer, on } from '@ngrx/store';
-import { maskUserName } from './user.actions';
+import { createReducer, on, createAction } from '@ngrx/store';
 
 const userReducer = createReducer(
-  {},
-  on(maskUserName, (state: any, action: any) => ({ ...state, maskUserName: action.mask })),
+  { maskUserName: true },
+  on(createAction('[User] Mask User Name'), state => ({
+    ...state,
+    maskUserName: !state.maskUserName
+  })),
 );
 
 export function reducer(state, action) {

@@ -45,7 +45,7 @@ export class ProductListComponent implements OnInit {
     this.displayCode$ = this.store.select(fromProduct.getShowProductCode);
   }
 
-  checkChanged(value: boolean): void {
+  checkChanged(): void {
     // this.store.dispatch(productActions.toggleProductCode({ showProductCode: value }));
     this.store.dispatch(productActions.toggleProductCode());
   }
