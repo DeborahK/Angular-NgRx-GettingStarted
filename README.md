@@ -15,5 +15,3 @@ Materials for NgRx course.
 
 NOTE:
 - April 27, 2020: This code was modified to Angular version 9 (v9). See the CHANGELOG.md file for details.
-
-- September 2, 2019: This code was modified to Angular version 8 (v8). See the CHANGELOG.md file for details.
