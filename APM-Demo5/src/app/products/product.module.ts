@@ -23,7 +23,7 @@ const productRoutes: Routes = [
     RouterModule.forChild(productRoutes),
     StoreModule.forFeature('products', reducer),
     EffectsModule.forFeature(
-      [ ProductEffects ]
+      [ProductEffects]
     ),
   ],
   declarations: [

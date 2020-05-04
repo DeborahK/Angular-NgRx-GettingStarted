@@ -14,8 +14,7 @@ import * as productActions from './product.actions';
 @Injectable()
 export class ProductEffects {
 
-  constructor(private productService: ProductService,
-              private actions$: Actions) { }
+  constructor(private productService: ProductService, private actions$: Actions) { }
 
   @Effect()
   loadProducts$: Observable<Action> = this.actions$.pipe(

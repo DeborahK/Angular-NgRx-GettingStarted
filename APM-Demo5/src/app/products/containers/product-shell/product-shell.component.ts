@@ -16,7 +16,7 @@ export class ProductShellComponent implements OnInit {
   products$: Observable<Product[]>;
   errorMessage$: Observable<string>;
 
-  constructor(private store: Store<fromProduct.State>) {}
+  constructor(private store: Store<fromProduct.State>) { }
 
   ngOnInit(): void {
     this.store.dispatch(new productActions.Load());
