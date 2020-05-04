@@ -76,13 +76,7 @@ const productReducer = createReducer<ProductState>(
       showProductCode: !state.showProductCode
     };
   }),
-  // on(ProductActions.toggleProductCode, (state, action) => {
-  //   return {
-  //     ...state,
-  //     showProductCode: action.showProductCode
-  //   };
-  // }),
-  on(ProductActions.setCurrentProduct, (state, action) => {
+  on(ProductActions.setCurrentProduct, (state, action): ProductState => {
     return {
       ...state,
       currentProductId: action.product.id

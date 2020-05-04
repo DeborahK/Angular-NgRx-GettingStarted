@@ -129,16 +129,16 @@ export class ProductEditComponent implements OnInit, OnDestroy {
         // Copy over all of the original product properties
         // Then copy over the values from the form
         // This ensures values not on the form, such as the Id, are retained
-        const updatedProduct = { ...originalProduct, ...this.productForm.value };
+        const product = { ...originalProduct, ...this.productForm.value };
 
-        if (updatedProduct.id === 0) {
-          this.productService.createProduct(updatedProduct).subscribe({
-            next: product => this.productService.changeSelectedProduct(product),
+        if (product.id === 0) {
+          this.productService.createProduct(product).subscribe({
+            next: p => this.productService.changeSelectedProduct(p),
             error: err => this.errorMessage = err
           });
         } else {
-          this.productService.updateProduct(updatedProduct).subscribe({
-            next: product => this.productService.changeSelectedProduct(product),
+          this.productService.updateProduct(product).subscribe({
+            next: p => this.productService.changeSelectedProduct(p),
             error: err => this.errorMessage = err
           });
         }

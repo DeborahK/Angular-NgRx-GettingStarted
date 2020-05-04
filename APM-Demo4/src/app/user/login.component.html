@@ -72,8 +72,8 @@
           </div>
         </fieldset>
       </form>
-      <div class="alert alert-danger"
-           *ngIf="errorMessage">{{errorMessage}}</div>
+      <div *ngIf="errorMessage$ | async as errorMessage"
+           class="alert alert-danger">{{errorMessage}}</div>
     </div>
 
     <div class="card-footer">

@@ -1,3 +1,4 @@
+// Homework
 import { User } from '../user';
 
 /* NgRx */
