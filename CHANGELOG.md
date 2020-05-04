@@ -6,7 +6,7 @@
   
   - Updated to NgRx v9.
   
-  - Turned on the new strictTemplates flag and modified use of $event to use $any($event) due to that flag.
+  - Turned on the new strictTemplates flag.
   
 - September 2, 2019: This code was modified to Angular version 8 (v8). Changes include:
 
