@@ -143,8 +143,6 @@ export class ProductEditComponent implements OnInit, OnDestroy {
           });
         }
       }
-    } else {
-      this.errorMessage = 'Please correct the validation errors.';
     }
   }
 

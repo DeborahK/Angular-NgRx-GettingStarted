@@ -13,7 +13,6 @@ import { Store } from '@ngrx/store';
 })
 export class LoginComponent implements OnInit {
   pageTitle = 'Log In';
-  errorMessage: string;
 
   maskUserName: boolean;
 
@@ -48,8 +47,6 @@ export class LoginComponent implements OnInit {
       } else {
         this.router.navigate(['/products']);
       }
-    } else {
-      this.errorMessage = 'Please enter a user name and password.';
     }
   }
 }

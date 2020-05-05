@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 
 import { AuthService } from './auth.service';
 
@@ -18,15 +18,13 @@ import * as fromRoot from '../state/app.state';
 })
 export class LoginComponent implements OnInit {
   pageTitle = 'Log In';
-  errorMessage$: Observable<string>;
+
   maskUserName$: Observable<boolean>;
 
   constructor(private store: Store<fromRoot.State>, private authService: AuthService, private router: Router) { }
 
   ngOnInit(): void {
     this.maskUserName$ = this.store.select(fromUser.getMaskUserName);
-
-    this.errorMessage$ = this.store.select(fromUser.getError);
   }
 
   cancel(): void {
@@ -48,8 +46,6 @@ export class LoginComponent implements OnInit {
       } else {
         this.router.navigate(['/products']);
       }
-    } else {
-      this.errorMessage$ = of('Please enter a user name and password.');
     }
   }
 }

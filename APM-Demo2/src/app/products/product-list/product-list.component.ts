@@ -4,7 +4,7 @@ import { Product } from '../product';
 import { ProductService } from '../product.service';
 
 /* NgRx */
-import { Store, select } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import * as fromProduct from '../state/product.reducer';
 import * as productActions from '../state/product.actions';
 

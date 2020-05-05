@@ -62,7 +62,7 @@ export class ProductEditComponent implements OnInit, OnDestroy {
       selectedProduct => this.displayProduct(selectedProduct)
     );
 
-    // Watch for value changes
+    // Watch for value changes for validation
     this.productForm.valueChanges.subscribe(
       () => this.displayMessage = this.genericValidator.processMessages(this.productForm)
     );
@@ -143,8 +143,6 @@ export class ProductEditComponent implements OnInit, OnDestroy {
           });
         }
       }
-    } else {
-      this.errorMessage = 'Please correct the validation errors.';
     }
   }
 

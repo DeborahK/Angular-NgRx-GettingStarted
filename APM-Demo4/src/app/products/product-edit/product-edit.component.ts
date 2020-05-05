@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
 import { Product } from '../product';
@@ -135,8 +135,6 @@ export class ProductEditComponent implements OnInit {
           this.store.dispatch(productActions.updateProduct({ product }));
         }
       }
-    } else {
-      this.errorMessage$ = of('Please correct the validation errors.');
     }
   }
 

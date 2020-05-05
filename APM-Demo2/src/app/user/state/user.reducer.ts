@@ -29,7 +29,7 @@ export const getCurrentUser = createSelector(
   state => state.currentUser
 );
 
-const userReducer = createReducer<UserState>(
+export const userReducer = createReducer<UserState>(
   initialState,
   on(UserActions.maskUserName, (state): UserState => {
     return {
@@ -38,7 +38,3 @@ const userReducer = createReducer<UserState>(
     };
   })
 );
-
-export function reducer(state: UserState, action: Action) {
-  return userReducer(state, action);
-}

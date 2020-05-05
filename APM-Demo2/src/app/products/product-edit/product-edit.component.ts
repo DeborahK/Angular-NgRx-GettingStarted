@@ -142,8 +142,6 @@ export class ProductEditComponent implements OnInit {
           });
         }
       }
-    } else {
-      this.errorMessage = 'Please correct the validation errors.';
     }
   }
 
