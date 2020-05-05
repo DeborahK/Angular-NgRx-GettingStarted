@@ -19,7 +19,7 @@
               <input class="form-control"
                      [ngClass]="{'is-invalid': (userNameVar.touched || userNameVar.dirty) && !userNameVar.valid }"
                      id="userNameId"
-                     [type]="maskUserName ? 'password' : 'text'"
+                     [type]="(maskUserName$ | async) ? 'password' : 'text'"
                      placeholder="User Name (required)"
                      required
                      ngModel
@@ -72,7 +72,7 @@
           </div>
         </fieldset>
       </form>
-      <div *ngIf="errorMessage"
+      <div *ngIf="errorMessage$ | async as errorMessage"
            class="alert alert-danger">{{errorMessage}}</div>
     </div>
 
@@ -82,8 +82,8 @@
           <label>
             <input class="form-check-input"
                    type="checkbox"
-                   (change)="checkChanged($any($event.target).checked)"
-                   [checked]="maskUserName">
+                   (change)="checkChanged()"
+                   [checked]="maskUserName$ | async">
             Mask user name
           </label>
         </div>

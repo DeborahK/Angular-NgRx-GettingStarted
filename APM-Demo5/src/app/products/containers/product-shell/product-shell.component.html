@@ -4,16 +4,16 @@
                      [products]="products$ | async"
                      [selectedProduct]="selectedProduct$ | async"
                      [errorMessage]="errorMessage$ | async"
-                     (checked)="checkChanged($event)"
+                     (checked)="checkChanged()"
                      (initializeNewProduct)="(newProduct())"
-                     (selected)="productSelected($event)"></pm-product-list>
+                     (selected)="productSelected($any($event))"></pm-product-list>
   </div>
   <div class='col-md-8'>
     <pm-product-edit [selectedProduct]="selectedProduct$ | async"
                      [errorMessage]="errorMessage$ | async"
                      (clearCurrent)="clearProduct()"
-                     (update)="updateProduct($event)"
-                     (delete)="deleteProduct($event)"
-                     (create)="saveProduct($event)"></pm-product-edit>
+                     (update)="updateProduct($any($event))"
+                     (delete)="deleteProduct($any($event))"
+                     (create)="saveProduct($any($event))"></pm-product-edit>
   </div>
 </div>

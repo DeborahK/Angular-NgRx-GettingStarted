@@ -10,7 +10,7 @@ import {
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import { Product } from '../../product';
+import { Product } from '../../../state/product/product';
 import { GenericValidator } from '../../../shared/generic-validator';
 import { NumberValidators } from '../../../shared/number.validator';
 
