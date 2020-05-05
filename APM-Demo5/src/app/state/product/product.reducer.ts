@@ -68,7 +68,7 @@ export const getError = createSelector(
   state => state.error
 );
 
-const productReducer = createReducer<ProductState>(
+export const productReducer = createReducer<ProductState>(
   initialState,
   on(productPageActions.toggleProductCode, (state): ProductState => {
     return {
@@ -155,7 +155,3 @@ const productReducer = createReducer<ProductState>(
     };
   })
 );
-
-export function reducer(state: ProductState, action: Action) {
-  return productReducer(state, action);
-}

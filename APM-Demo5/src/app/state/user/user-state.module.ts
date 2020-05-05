@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { StoreModule } from '@ngrx/store';
 
-import { reducer } from '../user/user.reducer';
+import { userReducer } from '../user/user.reducer';
 
 @NgModule({
   imports: [
-    StoreModule.forFeature('users', reducer),
+    StoreModule.forFeature('users', userReducer),
   ]
 })
 export class UserStateModule { }

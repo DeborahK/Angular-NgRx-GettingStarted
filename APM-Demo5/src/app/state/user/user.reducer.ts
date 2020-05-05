@@ -1,20 +1,18 @@
 import { User } from './user';
 
 /* NgRx */
-import { Action, createFeatureSelector, createReducer, createSelector, on } from '@ngrx/store';
+import { createFeatureSelector, createReducer, createSelector, on } from '@ngrx/store';
 import { UserPageActions } from './actions';
 
 // State for this feature (User)
 export interface UserState {
   maskUserName: boolean;
   currentUser: User;
-  error: string;
 }
 
 const initialState: UserState = {
   maskUserName: true,
-  currentUser: null,
-  error: ''
+  currentUser: null
 };
 
 // Selector functions
@@ -30,12 +28,7 @@ export const getCurrentUser = createSelector(
   state => state.currentUser
 );
 
-export const getError = createSelector(
-  getUserFeatureState,
-  state => state.error
-);
-
-const userReducer = createReducer<UserState>(
+export const userReducer = createReducer<UserState>(
   initialState,
   on(UserPageActions.maskUserName, (state): UserState => {
     return {
@@ -44,7 +37,3 @@ const userReducer = createReducer<UserState>(
     };
   })
 );
-
-export function reducer(state: UserState, action: Action) {
-  return userReducer(state, action);
-}
