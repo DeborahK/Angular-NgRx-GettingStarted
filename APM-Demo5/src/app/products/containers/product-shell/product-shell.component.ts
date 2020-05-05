@@ -1,10 +1,10 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { Store, select } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
-import * as fromProduct from './../../state';
-import * as productActions from './../../state/product.actions';
-import { Product } from '../../product';
+import * as fromProduct from '../../../state/product';
+import { Product } from '../../../state/product/product';
+import { productPageActions } from '../../../state/product/actions';
 
 @Component({
   templateUrl: './product-shell.component.html',
@@ -19,37 +19,37 @@ export class ProductShellComponent implements OnInit {
   constructor(private store: Store<fromProduct.State>) { }
 
   ngOnInit(): void {
-    this.store.dispatch(new productActions.Load());
-    this.products$ = this.store.pipe(select(fromProduct.getProducts));
-    this.errorMessage$ = this.store.pipe(select(fromProduct.getError));
-    this.selectedProduct$ = this.store.pipe(select(fromProduct.getCurrentProduct));
-    this.displayCode$ = this.store.pipe(select(fromProduct.getShowProductCode));
+    this.store.dispatch(productPageActions.loadProducts());
+    this.products$ = this.store.select(fromProduct.getProducts);
+    this.errorMessage$ = this.store.select(fromProduct.getError);
+    this.selectedProduct$ = this.store.select(fromProduct.getCurrentProduct);
+    this.displayCode$ = this.store.select(fromProduct.getShowProductCode);
   }
 
-  checkChanged(value: boolean): void {
-    this.store.dispatch(new productActions.ToggleProductCode(value));
+  checkChanged(): void {
+    this.store.dispatch(productPageActions.toggleProductCode());
   }
 
   newProduct(): void {
-    this.store.dispatch(new productActions.InitializeCurrentProduct());
+    this.store.dispatch(productPageActions.initializeCurrentProduct());
   }
 
   productSelected(product: Product): void {
-    this.store.dispatch(new productActions.SetCurrentProduct(product));
+    this.store.dispatch(productPageActions.setCurrentProduct({ product }));
   }
 
   deleteProduct(product: Product): void {
-    this.store.dispatch(new productActions.DeleteProduct(product.id));
+    this.store.dispatch(productPageActions.deleteProduct({ productId: product.id }));
   }
 
   clearProduct(): void {
-    this.store.dispatch(new productActions.ClearCurrentProduct());
+    this.store.dispatch(productPageActions.clearCurrentProduct());
   }
   saveProduct(product: Product): void {
-    this.store.dispatch(new productActions.CreateProduct(product));
+    this.store.dispatch(productPageActions.createProduct({ product }));
   }
 
   updateProduct(product: Product): void {
-    this.store.dispatch(new productActions.UpdateProduct(product));
+    this.store.dispatch(productPageActions.updateProduct({ product }));
   }
 }

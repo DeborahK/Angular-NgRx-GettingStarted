@@ -7,11 +7,7 @@ import { ProductShellComponent } from './containers/product-shell/product-shell.
 import { ProductListComponent } from './components/product-list/product-list.component';
 import { ProductEditComponent } from './components/product-edit/product-edit.component';
 
-/* NgRx */
-import { StoreModule } from '@ngrx/store';
-import { reducer } from './state/product.reducer';
-import { EffectsModule } from '@ngrx/effects';
-import { ProductEffects } from './state/product.effects';
+import { ProductStateModule } from '../state/product/product-state.module';
 
 const productRoutes: Routes = [
   { path: '', component: ProductShellComponent }
@@ -21,10 +17,7 @@ const productRoutes: Routes = [
   imports: [
     SharedModule,
     RouterModule.forChild(productRoutes),
-    StoreModule.forFeature('products', reducer),
-    EffectsModule.forFeature(
-      [ProductEffects]
-    ),
+    ProductStateModule
   ],
   declarations: [
     ProductShellComponent,

@@ -1,6 +1,8 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import * as fromRoot from '../../state/app.state';
+import * as fromRoot from '../app.state';
 import * as fromProducts from './product.reducer';
+
+export * from './product-state.module';
 
 // Extends the app state to include the product feature.
 // This is required because products are lazy loaded.
