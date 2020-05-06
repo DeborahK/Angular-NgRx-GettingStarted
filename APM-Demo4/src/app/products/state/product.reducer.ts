@@ -1,14 +1,14 @@
 import { Product } from '../product';
 
 /* NgRx */
-import { Action, createFeatureSelector, createReducer, createSelector, on } from '@ngrx/store';
+import { createFeatureSelector, createReducer, createSelector, on } from '@ngrx/store';
 import * as ProductActions from './product.actions';
-import * as fromRoot from '../../state/app.state';
+import * as AppState from '../../state/app.state';
 
 // Extends the app state to include the product feature.
 // This is required because products are lazy loaded.
 // So the reference to ProductState cannot be added to app.state.ts directly.
-export interface State extends fromRoot.State {
+export interface State extends AppState.State {
   products: ProductState;
 }
 
