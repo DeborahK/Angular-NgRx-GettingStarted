@@ -51,7 +51,9 @@ export class ProductListComponent implements OnInit, OnDestroy {
   }
 
   checkChanged(): void {
-    this.store.dispatch({ type: '[Product] Toggle Product Code' });
+    this.store.dispatch(
+      { type: '[Product] Toggle Product Code' }
+    );
   }
 
   newProduct(): void {
