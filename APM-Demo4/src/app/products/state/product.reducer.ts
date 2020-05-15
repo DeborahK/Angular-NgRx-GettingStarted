@@ -79,7 +79,7 @@ export const productReducer = createReducer<ProductState>(
   on(ProductActions.setCurrentProduct, (state, action): ProductState => {
     return {
       ...state,
-      currentProductId: action.product.id
+      currentProductId: action.currentProductId
     };
   }),
   on(ProductActions.clearCurrentProduct, (state): ProductState => {

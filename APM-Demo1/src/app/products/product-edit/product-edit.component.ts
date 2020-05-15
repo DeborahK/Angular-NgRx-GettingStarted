@@ -59,7 +59,7 @@ export class ProductEditComponent implements OnInit, OnDestroy {
 
     // Watch for changes to the currently selected product
     this.sub = this.productService.selectedProductChanges$.subscribe(
-      selectedProduct => this.displayProduct(selectedProduct)
+      currentProduct => this.displayProduct(currentProduct)
     );
 
     // Watch for value changes for validation
