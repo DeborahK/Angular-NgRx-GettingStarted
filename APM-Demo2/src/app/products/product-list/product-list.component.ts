@@ -5,7 +5,7 @@ import { ProductService } from '../product.service';
 
 /* NgRx */
 import { Store } from '@ngrx/store';
-import { State, getCurrentProduct, getShowProductCode } from '../state/product.reducer';
+import { State, getShowProductCode, getCurrentProduct } from '../state/product.reducer';
 import * as ProductActions from '../state/product.actions';
 
 @Component({
