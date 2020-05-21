@@ -1,5 +1,5 @@
 <div class="card"
-     *ngIf="product$ | async as product">
+     *ngIf="product">
   <div class="card-header">
     {{pageTitle}}
   </div>
@@ -115,7 +115,7 @@
     </form>
   </div>
 </div>
-<div *ngIf="errorMessage$ | async as errorMessage"
+<div *ngIf="errorMessage"
      class="alert alert-danger">
   Error: {{ errorMessage }}
 </div>

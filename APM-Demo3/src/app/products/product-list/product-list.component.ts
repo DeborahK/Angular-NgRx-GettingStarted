@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-
 import { Observable } from 'rxjs';
 
 import { Product } from '../product';
 
 /* NgRx */
 import { Store } from '@ngrx/store';
-import { State, getCurrentProduct, getError, getProducts, getShowProductCode } from '../state/product.reducer';
+import { State, getShowProductCode, getCurrentProduct, getProducts, getError } from '../state/product.reducer';
 import * as ProductActions from '../state/product.actions';
 
 @Component({
@@ -16,8 +15,8 @@ import * as ProductActions from '../state/product.actions';
 })
 export class ProductListComponent implements OnInit {
   pageTitle = 'Products';
-  errorMessage$: Observable<string>;
   displayCode$: Observable<boolean>;
+  errorMessage$: Observable<string>;
 
   products$: Observable<Product[]>;
   // Used to highlight the selected product in the list
@@ -29,7 +28,7 @@ export class ProductListComponent implements OnInit {
 
     // Do NOT subscribe here because it uses an async pipe
     // This gets the initial values until the load is complete.
-    this.products$ = this.store.select(getProducts) as Observable<Product[]>;
+    this.products$ = this.store.select(getProducts);
 
     // Do NOT subscribe here because it uses an async pipe
     this.errorMessage$ = this.store.select(getError);
