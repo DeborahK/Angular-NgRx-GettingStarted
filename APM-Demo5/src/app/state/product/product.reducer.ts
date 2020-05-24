@@ -1,7 +1,7 @@
 import { Product } from './product';
 
 /* NgRx */
-import { Action, createFeatureSelector, createReducer, createSelector, on } from '@ngrx/store';
+import { createFeatureSelector, createReducer, createSelector, on } from '@ngrx/store';
 import * as fromRoot from '../app.state';
 import { productPageActions, productApiActions } from './actions';
 

@@ -2,11 +2,6 @@ import { createFeatureSelector, createSelector } from '@ngrx/store';
 import * as AppState from '../../state/app.state';
 import { ProductState } from './product.reducer';
 
-export * from './product-state.module';
-export * from './product.service';
-export * from './product.reducer';
-export * from './actions';
-
 export interface State extends AppState.State {
     products: ProductState;
 }
