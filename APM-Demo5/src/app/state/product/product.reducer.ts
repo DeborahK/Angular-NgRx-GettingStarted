@@ -1,16 +1,6 @@
 import { Product } from './product';
-
-/* NgRx */
 import { createFeatureSelector, createReducer, createSelector, on } from '@ngrx/store';
-import * as fromRoot from '../app.state';
-import { productPageActions, productApiActions } from './actions';
-
-// Extends the app state to include the product feature.
-// This is required because products are lazy loaded.
-// So the reference to ProductState cannot be added to app.state.ts directly.
-export interface State extends fromRoot.State {
-  products: ProductState;
-}
+import { ProductPageActions, ProductApiActions } from './actions';
 
 // State for this feature (Product)
 export interface ProductState {
@@ -70,45 +60,45 @@ export const getError = createSelector(
 
 export const productReducer = createReducer<ProductState>(
   initialState,
-  on(productPageActions.toggleProductCode, (state): ProductState => {
+  on(ProductPageActions.toggleProductCode, (state): ProductState => {
     return {
       ...state,
       showProductCode: !state.showProductCode
     };
   }),
-  on(productPageActions.setCurrentProduct, (state, action): ProductState => {
+  on(ProductPageActions.setCurrentProduct, (state, action): ProductState => {
     return {
       ...state,
       currentProductId: action.product.id
     };
   }),
-  on(productPageActions.clearCurrentProduct, (state): ProductState => {
+  on(ProductPageActions.clearCurrentProduct, (state): ProductState => {
     return {
       ...state,
       currentProductId: null
     };
   }),
-  on(productPageActions.initializeCurrentProduct, (state): ProductState => {
+  on(ProductPageActions.initializeCurrentProduct, (state): ProductState => {
     return {
       ...state,
       currentProductId: 0
     };
   }),
-  on(productApiActions.loadProductsSuccess, (state, action): ProductState => {
+  on(ProductApiActions.loadProductsSuccess, (state, action): ProductState => {
     return {
       ...state,
       products: action.products,
       error: ''
     };
   }),
-  on(productApiActions.loadProductsFailure, (state, action): ProductState => {
+  on(ProductApiActions.loadProductsFailure, (state, action): ProductState => {
     return {
       ...state,
       products: [],
       error: action.error
     };
   }),
-  on(productApiActions.updateProductSuccess, (state, action): ProductState => {
+  on(ProductApiActions.updateProductSuccess, (state, action): ProductState => {
     const updatedProducts = state.products.map(
       item => action.product.id === item.id ? action.product : item);
     return {
@@ -118,14 +108,14 @@ export const productReducer = createReducer<ProductState>(
       error: ''
     };
   }),
-  on(productApiActions.updateProductFailure, (state, action): ProductState => {
+  on(ProductApiActions.updateProductFailure, (state, action): ProductState => {
     return {
       ...state,
       error: action.error
     };
   }),
   // After a create, the currentProduct is the new product.
-  on(productApiActions.createProductSuccess, (state, action): ProductState => {
+  on(ProductApiActions.createProductSuccess, (state, action): ProductState => {
     return {
       ...state,
       products: [...state.products, action.product],
@@ -133,14 +123,14 @@ export const productReducer = createReducer<ProductState>(
       error: ''
     };
   }),
-  on(productApiActions.createProductFailure, (state, action): ProductState => {
+  on(ProductApiActions.createProductFailure, (state, action): ProductState => {
     return {
       ...state,
       error: action.error
     };
   }),
   // After a delete, the currentProduct is null.
-  on(productApiActions.deleteProductSuccess, (state, action): ProductState => {
+  on(ProductApiActions.deleteProductSuccess, (state, action): ProductState => {
     return {
       ...state,
       products: state.products.filter(product => product.id !== action.productId),
@@ -148,7 +138,7 @@ export const productReducer = createReducer<ProductState>(
       error: ''
     };
   }),
-  on(productApiActions.deleteProductFailure, (state, action): ProductState => {
+  on(ProductApiActions.deleteProductFailure, (state, action): ProductState => {
     return {
       ...state,
       error: action.error

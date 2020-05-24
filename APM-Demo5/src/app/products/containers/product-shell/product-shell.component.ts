@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 
 import * as fromProduct from '../../../state/product';
 import { Product } from '../../../state/product/product';
-import { productPageActions } from '../../../state/product/actions';
+import { ProductPageActions } from '../../../state/product/actions';
 
 @Component({
   templateUrl: './product-shell.component.html',
@@ -19,7 +19,7 @@ export class ProductShellComponent implements OnInit {
   constructor(private store: Store<fromProduct.State>) { }
 
   ngOnInit(): void {
-    this.store.dispatch(productPageActions.loadProducts());
+    this.store.dispatch(ProductPageActions.loadProducts());
     this.products$ = this.store.select(fromProduct.getProducts);
     this.errorMessage$ = this.store.select(fromProduct.getError);
     this.selectedProduct$ = this.store.select(fromProduct.getCurrentProduct);
@@ -27,29 +27,29 @@ export class ProductShellComponent implements OnInit {
   }
 
   checkChanged(): void {
-    this.store.dispatch(productPageActions.toggleProductCode());
+    this.store.dispatch(ProductPageActions.toggleProductCode());
   }
 
   newProduct(): void {
-    this.store.dispatch(productPageActions.initializeCurrentProduct());
+    this.store.dispatch(ProductPageActions.initializeCurrentProduct());
   }
 
   productSelected(product: Product): void {
-    this.store.dispatch(productPageActions.setCurrentProduct({ product }));
+    this.store.dispatch(ProductPageActions.setCurrentProduct({ product }));
   }
 
   deleteProduct(product: Product): void {
-    this.store.dispatch(productPageActions.deleteProduct({ productId: product.id }));
+    this.store.dispatch(ProductPageActions.deleteProduct({ productId: product.id }));
   }
 
   clearProduct(): void {
-    this.store.dispatch(productPageActions.clearCurrentProduct());
+    this.store.dispatch(ProductPageActions.clearCurrentProduct());
   }
   saveProduct(product: Product): void {
-    this.store.dispatch(productPageActions.createProduct({ product }));
+    this.store.dispatch(ProductPageActions.createProduct({ product }));
   }
 
   updateProduct(product: Product): void {
-    this.store.dispatch(productPageActions.updateProduct({ product }));
+    this.store.dispatch(ProductPageActions.updateProduct({ product }));
   }
 }
