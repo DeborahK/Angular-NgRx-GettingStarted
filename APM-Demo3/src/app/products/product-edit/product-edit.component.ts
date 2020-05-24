@@ -1,9 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
-
 import { Product } from '../product';
 import { ProductService } from '../product.service';
 import { GenericValidator } from '../../shared/generic-validator';
@@ -11,7 +8,7 @@ import { NumberValidators } from '../../shared/number.validator';
 
 /* NgRx */
 import { Store } from '@ngrx/store';
-import { State, getCurrentProduct, getError } from '../state/product.reducer';
+import { State, getCurrentProduct } from '../state/product.reducer';
 import * as ProductActions from '../state/product.actions';
 
 @Component({
@@ -20,11 +17,10 @@ import * as ProductActions from '../state/product.actions';
 })
 export class ProductEditComponent implements OnInit {
   pageTitle = 'Product Edit';
-  errorMessage$: Observable<string>;
   errorMessage = '';
   productForm: FormGroup;
 
-  product$: Observable<Product | null>;
+  product: Product | null;
 
   // Use with the generic validation message class
   displayMessage: { [key: string]: string } = {};
@@ -64,13 +60,10 @@ export class ProductEditComponent implements OnInit {
     });
 
     // Watch for changes to the currently selected product
-    this.product$ = this.store.select(getCurrentProduct)
-      .pipe(
-        tap(currentProduct => this.displayProduct(currentProduct))
-      );
-
-    // Watch for changes to the error message
-    this.errorMessage$ = this.store.select(getError);
+    // TODO: Unsubscribe
+    this.store.select(getCurrentProduct).subscribe(
+      currentProduct => this.displayProduct(currentProduct)
+    );
 
     // Watch for value changes for validation
     this.productForm.valueChanges.subscribe(
@@ -85,6 +78,9 @@ export class ProductEditComponent implements OnInit {
   }
 
   displayProduct(product: Product | null): void {
+    // Set the local product property
+    this.product = product;
+
     if (product) {
       // Reset the form back to pristine
       this.productForm.reset();
