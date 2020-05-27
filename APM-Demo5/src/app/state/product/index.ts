@@ -1,18 +1,12 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import * as fromRoot from '../app.state';
-import * as fromProducts from './product.reducer';
+import * as AppState from '../../state/app.state';
+import { ProductState } from './product.reducer';
 
-export * from './product-state.module';
-
-// Extends the app state to include the product feature.
-// This is required because products are lazy loaded.
-// So the reference to ProductState cannot be added to app.state.ts directly.
-export interface State extends fromRoot.State {
-    products: fromProducts.ProductState;
+export interface State extends AppState.State {
+    products: ProductState;
 }
 
-// Selector functions
-const getProductFeatureState = createFeatureSelector<fromProducts.ProductState>('products');
+const getProductFeatureState = createFeatureSelector<ProductState>('products');
 
 export const getShowProductCode = createSelector(
     getProductFeatureState,
