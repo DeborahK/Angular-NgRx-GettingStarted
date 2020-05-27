@@ -10,7 +10,7 @@ import { NumberValidators } from '../../shared/number.validator';
 
 /* NgRx */
 import { Store } from '@ngrx/store';
-import { State, getCurrentProduct, getError } from '../state/product.reducer';
+import { State, getCurrentProduct } from '../state/product.reducer';
 import * as ProductActions from '../state/product.actions';
 
 @Component({
@@ -19,7 +19,7 @@ import * as ProductActions from '../state/product.actions';
 })
 export class ProductEditComponent implements OnInit {
   pageTitle = 'Product Edit';
-  errorMessage$: Observable<string>;
+  errorMessage = '';
   productForm: FormGroup;
 
   product$: Observable<Product | null>;
@@ -66,9 +66,6 @@ export class ProductEditComponent implements OnInit {
       .pipe(
         tap(currentProduct => this.displayProduct(currentProduct))
       );
-
-    // Watch for changes to the error message
-    this.errorMessage$ = this.store.select(getError);
 
     // Watch for value changes for validation
     this.productForm.valueChanges.subscribe(
