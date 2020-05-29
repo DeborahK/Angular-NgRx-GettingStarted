@@ -1,5 +1,5 @@
 import { Product } from './product';
-import { createFeatureSelector, createReducer, createSelector, on } from '@ngrx/store';
+import { createReducer, on, createFeatureSelector, createSelector } from '@ngrx/store';
 import { ProductPageActions, ProductApiActions } from './actions';
 
 // State for this feature (Product)
@@ -69,7 +69,7 @@ export const productReducer = createReducer<ProductState>(
   on(ProductPageActions.setCurrentProduct, (state, action): ProductState => {
     return {
       ...state,
-      currentProductId: action.product.id
+      currentProductId: action.currentProductId
     };
   }),
   on(ProductPageActions.clearCurrentProduct, (state): ProductState => {

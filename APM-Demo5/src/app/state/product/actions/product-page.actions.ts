@@ -3,14 +3,13 @@ import { Product } from '../product';
 /* NgRx */
 import { createAction, props } from '@ngrx/store';
 
-// Action Creators
 export const toggleProductCode = createAction(
   '[Product Page] Toggle Product Code'
 );
 
 export const setCurrentProduct = createAction(
   '[Product Page] Set Current Product',
-  props<{ product: Product }>()
+  props<{ currentProductId: number }>()
 );
 
 export const clearCurrentProduct = createAction(

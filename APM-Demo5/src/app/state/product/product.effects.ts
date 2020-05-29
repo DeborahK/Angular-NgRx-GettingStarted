@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 
+import { mergeMap, map, catchError, concatMap } from 'rxjs/operators';
 import { of } from 'rxjs';
-import { concatMap, mergeMap, map, catchError } from 'rxjs/operators';
-
 import { ProductService } from './product.service';
 
 /* NgRx */
@@ -18,12 +17,11 @@ export class ProductEffects {
     return this.actions$
       .pipe(
         ofType(ProductPageActions.loadProducts),
-        mergeMap(() =>
-          this.productService.getProducts()
-            .pipe(
-              map(products => ProductApiActions.loadProductsSuccess({ products })),
-              catchError(error => of(ProductApiActions.loadProductsFailure({ error })))
-            )
+        mergeMap(() => this.productService.getProducts()
+          .pipe(
+            map(products => ProductApiActions.loadProductsSuccess({ products })),
+            catchError(error => of(ProductApiActions.loadProductsFailure({ error })))
+          )
         )
       );
   });
@@ -35,7 +33,7 @@ export class ProductEffects {
         concatMap(action =>
           this.productService.updateProduct(action.product)
             .pipe(
-              map(product => (ProductApiActions.updateProductSuccess({ product }))),
+              map(product => ProductApiActions.updateProductSuccess({ product })),
               catchError(error => of(ProductApiActions.updateProductFailure({ error })))
             )
         )
@@ -49,7 +47,7 @@ export class ProductEffects {
         concatMap(action =>
           this.productService.createProduct(action.product)
             .pipe(
-              map(product => (ProductApiActions.createProductSuccess({ product }))),
+              map(product => ProductApiActions.createProductSuccess({ product })),
               catchError(error => of(ProductApiActions.createProductFailure({ error })))
             )
         )
@@ -62,7 +60,7 @@ export class ProductEffects {
         ofType(ProductPageActions.deleteProduct),
         mergeMap(action =>
           this.productService.deleteProduct(action.productId).pipe(
-            map(() => (ProductApiActions.deleteProductSuccess({ productId: action.productId }))),
+            map(() => ProductApiActions.deleteProductSuccess({ productId: action.productId })),
             catchError(error => of(ProductApiActions.deleteProductFailure({ error })))
           )
         )

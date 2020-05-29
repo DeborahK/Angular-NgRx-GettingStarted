@@ -1,7 +1,6 @@
 import {
   Component,
   OnInit,
-  OnDestroy,
   Input,
   EventEmitter,
   Output,
@@ -18,7 +17,7 @@ import { NumberValidators } from '../../../shared/number.validator';
   selector: 'pm-product-edit',
   templateUrl: './product-edit.component.html'
 })
-export class ProductEditComponent implements OnInit, OnChanges, OnDestroy {
+export class ProductEditComponent implements OnInit, OnChanges {
   pageTitle = 'Product Edit';
   @Input() errorMessage: string;
   @Input() selectedProduct: Product;
@@ -27,10 +26,7 @@ export class ProductEditComponent implements OnInit, OnChanges, OnDestroy {
   @Output() delete = new EventEmitter<Product>();
   @Output() clearCurrent = new EventEmitter<void>();
 
-  componentActive = true;
   productForm: FormGroup;
-
-  product: Product | null;
 
   // Use with the generic validation message class
   displayMessage: { [key: string]: string } = {};
@@ -62,31 +58,24 @@ export class ProductEditComponent implements OnInit, OnChanges, OnDestroy {
   ngOnInit(): void {
     // Define the form group
     this.productForm = this.fb.group({
-      productName: ['', [Validators.required,
-      Validators.minLength(3),
-      Validators.maxLength(50)]],
+      productName: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
       productCode: ['', Validators.required],
       starRating: ['', NumberValidators.range(1, 5)],
       description: ''
     });
 
-    // Watch for value changes
+    // Watch for value changes for validation
     this.productForm.valueChanges.subscribe(
-      value => this.displayMessage = this.genericValidator.processMessages(this.productForm)
+      () => this.displayMessage = this.genericValidator.processMessages(this.productForm)
     );
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-
     // patch form with value from the store
     if (changes.selectedProduct) {
-      const product: any = changes.selectedProduct.currentValue as Product;
+      const product = changes.selectedProduct.currentValue as Product;
       this.displayProduct(product);
     }
-  }
-
-  ngOnDestroy(): void {
-    this.componentActive = false;
   }
 
   // Also validate on blur
@@ -96,26 +85,23 @@ export class ProductEditComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   displayProduct(product: Product | null): void {
-    // Set the local product property
-    this.product = product;
-
-    if (this.product && this.productForm) {
+    if (product) {
       // Reset the form back to pristine
       this.productForm.reset();
 
       // Display the appropriate page title
-      if (this.product.id === 0) {
+      if (product.id === 0) {
         this.pageTitle = 'Add Product';
       } else {
-        this.pageTitle = `Edit Product: ${this.product.productName}`;
+        this.pageTitle = `Edit Product: ${product.productName}`;
       }
 
       // Update the data on the form
       this.productForm.patchValue({
-        productName: this.product.productName,
-        productCode: this.product.productCode,
-        starRating: this.product.starRating,
-        description: this.product.description
+        productName: product.productName,
+        productCode: product.productCode,
+        starRating: product.starRating,
+        description: product.description
       });
     }
   }
@@ -123,13 +109,13 @@ export class ProductEditComponent implements OnInit, OnChanges, OnDestroy {
   cancelEdit(): void {
     // Redisplay the currently selected product
     // replacing any edits made
-    this.displayProduct(this.product);
+    this.displayProduct(this.selectedProduct);
   }
 
   deleteProduct(): void {
-    if (this.product && this.product.id) {
-      if (confirm(`Really delete the product: ${this.product.productName}?`)) {
-        this.delete.emit(this.product);
+    if (this.selectedProduct && this.selectedProduct.id) {
+      if (confirm(`Really delete the product: ${this.selectedProduct.productName}?`)) {
+        this.delete.emit(this.selectedProduct);
       }
     } else {
       // No need to delete, it was never saved
@@ -143,16 +129,14 @@ export class ProductEditComponent implements OnInit, OnChanges, OnDestroy {
         // Copy over all of the original product properties
         // Then copy over the values from the form
         // This ensures values not on the form, such as the Id, are retained
-        const p = { ...this.product, ...this.productForm.value };
+        const product = { ...this.selectedProduct, ...this.productForm.value };
 
-        if (p.id === 0) {
-          this.create.emit(p);
+        if (product.id === 0) {
+          this.create.emit(product);
         } else {
-          this.update.emit(p);
+          this.update.emit(product);
         }
       }
-    } else {
-      this.errorMessage = 'Please correct the validation errors.';
     }
   }
 

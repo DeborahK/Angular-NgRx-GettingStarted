@@ -1,9 +1,12 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
-import * as fromProduct from '../../../state/product';
 import { Product } from '../../../state/product/product';
+
+/* NgRx */
+import { Store } from '@ngrx/store';
+import { State, getShowProductCode, getCurrentProduct, getProducts, getError } from '../../../state/product';
+
 import { ProductPageActions } from '../../../state/product/actions';
 
 @Component({
@@ -16,14 +19,24 @@ export class ProductShellComponent implements OnInit {
   products$: Observable<Product[]>;
   errorMessage$: Observable<string>;
 
-  constructor(private store: Store<fromProduct.State>) { }
+  constructor(private store: Store<State>) { }
 
   ngOnInit(): void {
+
+    // Do NOT subscribe here because it uses an async pipe
+    // This gets the initial values until the load is complete.
+    this.products$ = this.store.select(getProducts);
+
+    // Do NOT subscribe here because it uses an async pipe
+    this.errorMessage$ = this.store.select(getError);
+
     this.store.dispatch(ProductPageActions.loadProducts());
-    this.products$ = this.store.select(fromProduct.getProducts);
-    this.errorMessage$ = this.store.select(fromProduct.getError);
-    this.selectedProduct$ = this.store.select(fromProduct.getCurrentProduct);
-    this.displayCode$ = this.store.select(fromProduct.getShowProductCode);
+
+    // Do NOT subscribe here because it uses an async pipe
+    this.selectedProduct$ = this.store.select(getCurrentProduct);
+
+    // Do NOT subscribe here because it uses an async pipe
+    this.displayCode$ = this.store.select(getShowProductCode);
   }
 
   checkChanged(): void {
@@ -35,7 +48,7 @@ export class ProductShellComponent implements OnInit {
   }
 
   productSelected(product: Product): void {
-    this.store.dispatch(ProductPageActions.setCurrentProduct({ product }));
+    this.store.dispatch(ProductPageActions.setCurrentProduct({ currentProductId: product.id }));
   }
 
   deleteProduct(product: Product): void {

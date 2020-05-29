@@ -34,7 +34,7 @@ import { EffectsModule } from '@ngrx/effects';
     StoreDevtoolsModule.instrument({
       name: 'APM Demo App DevTools',
       maxAge: 25,
-      logOnly: environment.production,
+      logOnly: environment.production
     }),
     EffectsModule.forRoot([])
   ],
