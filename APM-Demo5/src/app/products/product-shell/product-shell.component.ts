@@ -1,13 +1,13 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { Product } from '../../../state/product/product';
+import { Product } from '../../state/product/product';
 
 /* NgRx */
 import { Store } from '@ngrx/store';
-import { State, getShowProductCode, getCurrentProduct, getProducts, getError } from '../../../state/product';
+import { State, getShowProductCode, getCurrentProduct, getProducts, getError } from '../../state/product';
 
-import { ProductPageActions } from '../../../state/product/actions';
+import { ProductPageActions } from '../../state/product/actions';
 
 @Component({
   templateUrl: './product-shell.component.html',

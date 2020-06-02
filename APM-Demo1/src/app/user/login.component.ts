@@ -35,7 +35,8 @@ export class LoginComponent implements OnInit {
   checkChanged(): void {
     this.store.dispatch(
       { type: '[User] Mask User Name' }
-    );  }
+    );
+  }
 
   login(loginForm: NgForm): void {
     if (loginForm && loginForm.valid) {

@@ -4,7 +4,6 @@ import { productReducer } from './product.reducer';
 import { EffectsModule } from '@ngrx/effects';
 import { ProductEffects } from './product.effects';
 
-
 @NgModule({
   imports: [
     StoreModule.forFeature('products', productReducer),

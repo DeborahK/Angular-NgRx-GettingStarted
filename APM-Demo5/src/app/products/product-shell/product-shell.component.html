@@ -4,9 +4,9 @@
                      [products]="products$ | async"
                      [selectedProduct]="selectedProduct$ | async"
                      [errorMessage]="errorMessage$ | async"
-                     (checked)="checkChanged()"
+                     (displayCodeChanged)="checkChanged()"
                      (initializeNewProduct)="(newProduct())"
-                     (selected)="productSelected($any($event))"></pm-product-list>
+                     (productWasSelected)="productSelected($any($event))"></pm-product-list>
   </div>
   <div class='col-md-8'>
     <pm-product-edit [selectedProduct]="selectedProduct$ | async"
