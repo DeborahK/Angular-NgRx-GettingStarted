@@ -85,7 +85,7 @@ export class ProductEditComponent implements OnInit, OnChanges {
   }
 
   displayProduct(product: Product | null): void {
-    if (product) {
+    if (product && this.productForm) {
       // Reset the form back to pristine
       this.productForm.reset();
 
