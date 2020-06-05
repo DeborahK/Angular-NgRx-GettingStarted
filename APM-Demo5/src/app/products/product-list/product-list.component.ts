@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { Product } from '../../state/product/product';
+import { Product } from '../../state/products/product';
 
 @Component({
   selector: 'pm-product-list',
