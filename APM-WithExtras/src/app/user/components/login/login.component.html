@@ -1,0 +1,92 @@
+<div class='container main-content'>
+
+  <div class="card">
+    <div class="card-header">
+      {{pageTitle}}
+    </div>
+
+    <div class="card-body">
+      <form class="needs-validation"
+            novalidate
+            (ngSubmit)="login(loginForm)"
+            #loginForm="ngForm"
+            autocomplete="off">
+        <fieldset>
+          <div class="form-group row">
+            <label class="col-md-2 col-form-label"
+                   for="userNameId">User Name</label>
+            <div class="col-md-8">
+              <input class="form-control"
+                     [ngClass]="{'is-invalid': (userNameVar.touched || userNameVar.dirty) && !userNameVar.valid }"
+                     id="userNameId"
+                     [type]="(maskUserName$ | async) ? 'password' : 'text'"
+                     placeholder="User Name (required)"
+                     required
+                     ngModel
+                     name="userName"
+                     #userNameVar="ngModel" />
+              <div class="invalid-feedback"
+                   *ngIf="(userNameVar.touched || userNameVar.dirty) && passwordVar.hasError('required')">
+                User name is required.
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-md-2 col-form-label"
+                   for="passwordId">Password</label>
+            <div class="col-md-8">
+              <input class="form-control"
+                     [ngClass]="{'is-invalid': (passwordVar.touched || passwordVar.dirty) && !passwordVar.valid }"
+                     id="passwordId"
+                     type="password"
+                     placeholder="Password (required)"
+                     required
+                     ngModel
+                     name="password"
+                     #passwordVar="ngModel" />
+              <div class="invalid-feedback"
+                   *ngIf="(passwordVar.touched || passwordVar.dirty) && passwordVar.hasError('required')">
+                Password is required.
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="col-md-4 col-md-offset-2">
+              <span>
+                <button class="btn btn-primary"
+                        type="submit"
+                        style="width:80px;margin-right:10px"
+                        [disabled]="!loginForm.valid">
+                  Log In
+                </button>
+              </span>
+              <span>
+                <a class="btn btn-light"
+                   (click)="cancel()">
+                  Cancel
+                </a>
+              </span>
+            </div>
+          </div>
+        </fieldset>
+      </form>
+    </div>
+
+    <div class="card-footer">
+      <div class="row">
+        <div class="form-check col-md-7">
+          <label>
+            <input class="form-check-input"
+                   type="checkbox"
+                   (change)="checkChanged()"
+                   [checked]="maskUserName$ | async">
+            Mask user name
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
