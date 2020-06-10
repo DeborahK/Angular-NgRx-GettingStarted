@@ -1,4 +1,4 @@
-import { Product } from '../product';
+import { Product } from '../../product';
 
 /* NgRx */
 import { createAction, props } from '@ngrx/store';

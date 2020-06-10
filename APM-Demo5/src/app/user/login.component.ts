@@ -4,13 +4,13 @@ import { Router } from '@angular/router';
 
 import { Observable } from 'rxjs';
 
+import { AuthService } from './auth.service';
 
 /* NgRx */
 import { Store } from '@ngrx/store';
-import * as fromUser from '../state/user';
 import { State } from '../state/app.state';
-import { AuthService } from '../state/user';
-import { UserPageActions } from '../state/user/actions';
+import { getMaskUserName } from './state/user.reducer';
+import { UserPageActions } from './state/actions';
 
 @Component({
   templateUrl: './login.component.html',
@@ -24,7 +24,7 @@ export class LoginComponent implements OnInit {
   constructor(private store: Store<State>, private authService: AuthService, private router: Router) { }
 
   ngOnInit(): void {
-    this.maskUserName$ = this.store.select(fromUser.getMaskUserName);
+    this.maskUserName$ = this.store.select(getMaskUserName);
   }
 
   cancel(): void {

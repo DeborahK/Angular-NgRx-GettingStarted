@@ -1,7 +1,8 @@
-import { User } from './user';
+// Homework
+import { User } from '../user';
 
 /* NgRx */
-import { createFeatureSelector, createReducer, createSelector, on } from '@ngrx/store';
+import { createReducer, on, createFeatureSelector, createSelector } from '@ngrx/store';
 import { UserPageActions } from './actions';
 
 // State for this feature (User)
