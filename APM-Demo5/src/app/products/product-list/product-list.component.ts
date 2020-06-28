@@ -13,7 +13,7 @@ export class ProductListComponent {
   @Input() products: Product[];
   @Input() displayCode: boolean;
   @Input() selectedProduct: Product;
-  @Output() displayCodeChanged = new EventEmitter<boolean>();
+  @Output() displayCodeChanged = new EventEmitter<void>();
   @Output() initializeNewProduct = new EventEmitter<void>();
   @Output() productWasSelected = new EventEmitter<Product>();
 
