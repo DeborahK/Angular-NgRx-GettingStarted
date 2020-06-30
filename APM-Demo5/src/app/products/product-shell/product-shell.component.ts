@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { Product } from '../product';
@@ -10,8 +10,7 @@ import { State, getShowProductCode, getCurrentProduct, getProducts, getError } f
 import { ProductPageActions } from '../state/actions';
 
 @Component({
-  templateUrl: './product-shell.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  templateUrl: './product-shell.component.html'
 })
 export class ProductShellComponent implements OnInit {
   displayCode$: Observable<boolean>;
