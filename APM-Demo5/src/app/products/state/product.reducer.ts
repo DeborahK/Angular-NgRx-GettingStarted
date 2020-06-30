@@ -1,7 +1,10 @@
 import { Product } from '../product';
-import { ProductApiActions, ProductPageActions } from './actions';
-import { createReducer, on } from '@ngrx/store';
 
+/* NgRx */
+import { createReducer, on } from '@ngrx/store';
+import { ProductApiActions, ProductPageActions } from './actions';
+
+// State for this feature (Product)
 export interface ProductState {
   showProductCode: boolean;
   currentProductId: number | null;
