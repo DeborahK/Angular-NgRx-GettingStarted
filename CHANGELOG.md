@@ -22,4 +22,4 @@
 
   - Addition of four runtime checks as part of the `StoreModule.forRoot` to guide developers following NgRx core concepts and best practices. These are currently commented out, but available by uncommenting them and instead commenting out the `StoreModule.forRoot` with no second argument. When they are commented out, you may see a warning about them in the browser console.
 
-  This update does **NOT** include action creators, reducer creators, and effect creators. They will be coming in a later update.
+  - This update does **NOT** include action creators, reducer creators, and effect creators. They will be coming in a later update.
