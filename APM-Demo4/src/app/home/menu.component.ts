@@ -21,8 +21,7 @@ export class MenuComponent implements OnInit {
     return '';
   }
 
-  constructor(private router: Router,
-              private authService: AuthService) { }
+  constructor(private router: Router, private authService: AuthService) { }
 
   ngOnInit() {
   }

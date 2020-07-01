@@ -1,14 +1,14 @@
 import { Product } from '../product';
 
 /* NgRx */
-import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { ProductActions, ProductActionTypes } from './product.actions';
-import * as fromRoot from '../../state/app.state';
+import { createReducer, on, createFeatureSelector, createSelector } from '@ngrx/store';
+import * as ProductActions from './product.actions';
+import * as AppState from '../../state/app.state';
 
 // Extends the app state to include the product feature.
 // This is required because products are lazy loaded.
 // So the reference to ProductState cannot be added to app.state.ts directly.
-export interface State extends fromRoot.State {
+export interface State extends AppState.State {
   products: ProductState;
 }
 
@@ -43,40 +43,36 @@ export const getProducts = createSelector(
   state => state.products
 );
 
-export function reducer(state = initialState, action: ProductActions): ProductState {
-
-  switch (action.type) {
-    case ProductActionTypes.ToggleProductCode:
-      return {
-        ...state,
-        showProductCode: action.payload
-      };
-
-    case ProductActionTypes.SetCurrentProduct:
-      return {
-        ...state,
-        currentProduct: { ...action.payload }
-      };
-
-    case ProductActionTypes.ClearCurrentProduct:
-      return {
-        ...state,
-        currentProduct: null
-      };
-
-    case ProductActionTypes.InitializeCurrentProduct:
-      return {
-        ...state,
-        currentProduct: {
-          id: 0,
-          productName: '',
-          productCode: 'New',
-          description: '',
-          starRating: 0
-        }
-      };
-
-    default:
-      return state;
-  }
-}
+export const productReducer = createReducer<ProductState>(
+  initialState,
+  on(ProductActions.toggleProductCode, (state): ProductState => {
+    return {
+      ...state,
+      showProductCode: !state.showProductCode
+    };
+  }),
+  on(ProductActions.setCurrentProduct, (state, action): ProductState => {
+    return {
+      ...state,
+      currentProduct: action.product
+    };
+  }),
+  on(ProductActions.clearCurrentProduct, (state): ProductState => {
+    return {
+      ...state,
+      currentProduct: null
+    };
+  }),
+  on(ProductActions.initializeCurrentProduct, (state): ProductState => {
+    return {
+      ...state,
+      currentProduct: {
+        id: 0,
+        productName: '',
+        productCode: 'New',
+        description: '',
+        starRating: 0
+      }
+    };
+  })
+);

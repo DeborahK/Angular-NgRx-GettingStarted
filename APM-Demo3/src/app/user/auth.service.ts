@@ -3,13 +3,13 @@ import { Injectable } from '@angular/core';
 import { User } from './user';
 
 @Injectable({
-  providedIn: 'root',
+    providedIn: 'root',
 })
 export class AuthService {
     currentUser: User | null;
     redirectUrl: string;
 
-    constructor() {  }
+    constructor() { }
 
     isLoggedIn(): boolean {
         return !!this.currentUser;

@@ -6,7 +6,7 @@ import { Product } from '../product';
 import { ProductService } from '../product.service';
 
 /* NgRx */
-import { Store, select } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'pm-product-list',
@@ -25,21 +25,20 @@ export class ProductListComponent implements OnInit, OnDestroy {
   selectedProduct: Product | null;
   sub: Subscription;
 
-  constructor(private store: Store<any>,
-              private productService: ProductService) { }
+  constructor(private store: Store<any>, private productService: ProductService) { }
 
   ngOnInit(): void {
     this.sub = this.productService.selectedProductChanges$.subscribe(
-      selectedProduct => this.selectedProduct = selectedProduct
+      currentProduct => this.selectedProduct = currentProduct
     );
 
     this.productService.getProducts().subscribe({
       next: (products: Product[]) => this.products = products,
-      error: err => this.errorMessage = err.error
+      error: err => this.errorMessage = err
     });
 
     // TODO: Unsubscribe
-    this.store.pipe(select('products')).subscribe(
+    this.store.select('products').subscribe(
       products => {
         if (products) {
           this.displayCode = products.showProductCode;
@@ -51,11 +50,10 @@ export class ProductListComponent implements OnInit, OnDestroy {
     this.sub.unsubscribe();
   }
 
-  checkChanged(value: boolean): void {
-    this.store.dispatch({
-      type: 'TOGGLE_PRODUCT_CODE',
-      payload: value
-    });
+  checkChanged(): void {
+    this.store.dispatch(
+      { type: '[Product] Toggle Product Code' }
+    );
   }
 
   newProduct(): void {

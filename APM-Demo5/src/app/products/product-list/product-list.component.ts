@@ -1,10 +1,11 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { Product } from '../../product';
+import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
+import { Product } from '../product';
 
 @Component({
   selector: 'pm-product-list',
   templateUrl: './product-list.component.html',
-  styleUrls: ['./product-list.component.css']
+  styleUrls: ['./product-list.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ProductListComponent {
   pageTitle = 'Products';
@@ -13,12 +14,12 @@ export class ProductListComponent {
   @Input() products: Product[];
   @Input() displayCode: boolean;
   @Input() selectedProduct: Product;
-  @Output() checked = new EventEmitter<boolean>();
+  @Output() displayCodeChanged = new EventEmitter<void>();
   @Output() initializeNewProduct = new EventEmitter<void>();
-  @Output() selected = new EventEmitter<Product>();
+  @Output() productWasSelected = new EventEmitter<Product>();
 
-  checkChanged(value: boolean): void {
-    this.checked.emit(value);
+  checkChanged(): void {
+    this.displayCodeChanged.emit();
   }
 
   newProduct(): void {
@@ -26,7 +27,7 @@ export class ProductListComponent {
   }
 
   productSelected(product: Product): void {
-    this.selected.emit(product);
+    this.productWasSelected.emit(product);
   }
 
 }

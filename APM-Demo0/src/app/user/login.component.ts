@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 
 import { AuthService } from './auth.service';
 
@@ -10,13 +10,10 @@ import { AuthService } from './auth.service';
 })
 export class LoginComponent implements OnInit {
   pageTitle = 'Log In';
-  errorMessage: string;
 
   maskUserName: boolean;
 
-  constructor(private authService: AuthService,
-              private router: Router) {
-  }
+  constructor(private authService: AuthService, private router: Router) { }
 
   ngOnInit(): void {
 
@@ -26,8 +23,8 @@ export class LoginComponent implements OnInit {
     this.router.navigate(['welcome']);
   }
 
-  checkChanged(value: boolean): void {
-    this.maskUserName = value;
+  checkChanged(): void {
+    this.maskUserName = !this.maskUserName;
   }
 
   login(loginForm: NgForm): void {
@@ -41,8 +38,6 @@ export class LoginComponent implements OnInit {
       } else {
         this.router.navigate(['/products']);
       }
-    } else {
-      this.errorMessage = 'Please enter a user name and password.';
     }
   }
 }

@@ -1,30 +1,28 @@
 import { Injectable } from '@angular/core';
 
-import { Observable, of } from 'rxjs';
 import { mergeMap, map, catchError } from 'rxjs/operators';
-
+import { of } from 'rxjs';
 import { ProductService } from '../product.service';
 
 /* NgRx */
-import { Action } from '@ngrx/store';
-import { Actions, Effect, ofType } from '@ngrx/effects';
-import * as productActions from './product.actions';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
+import * as ProductActions from './product.actions';
 
 @Injectable()
 export class ProductEffects {
 
-  constructor(private productService: ProductService,
-              private actions$: Actions) { }
+  constructor(private actions$: Actions, private productService: ProductService) { }
 
-  @Effect()
-  loadProducts$: Observable<Action> = this.actions$.pipe(
-    ofType(productActions.ProductActionTypes.Load),
-    mergeMap(action =>
-      this.productService.getProducts().pipe(
-        map(products => (new productActions.LoadSuccess(products))),
-        catchError(err => of(new productActions.LoadFail(err)))
-      )
-    )
-  );
-
+  loadProducts$ = createEffect(() => {
+    return this.actions$
+      .pipe(
+        ofType(ProductActions.loadProducts),
+        mergeMap(() => this.productService.getProducts()
+          .pipe(
+            map(products => ProductActions.loadProductsSuccess({ products })),
+            catchError(error => of(ProductActions.loadProductsFailure({ error })))
+          )
+        )
+      );
+  });
 }
