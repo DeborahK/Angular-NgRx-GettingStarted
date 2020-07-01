@@ -14,4 +14,4 @@ Materials for NgRx course.
 `APM-Demo5`: Completed files after the *Architectural Considerations* module. It implements the container/presentational component pattern and the OnPush change detection strategy.
 
 NOTE:
-- April 27, 2020: This code was modified to Angular version 9 and NgRx version 9. See the CHANGELOG.md file for details.
+- June 30, 2020: This code was modified to Angular version 9 and NgRx version 9. See the CHANGELOG.md file for details.
