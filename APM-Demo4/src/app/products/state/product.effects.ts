@@ -31,7 +31,7 @@ export class ProductEffects {
       .pipe(
         ofType(ProductActions.updateProduct),
         concatMap(action =>
-          this.productService.updateProduct(action.product)
+          return this.productService.updateProduct(action.product)
             .pipe(
               map(product => ProductActions.updateProductSuccess({ product })),
               catchError(error => of(ProductActions.updateProductFailure({ error })))
