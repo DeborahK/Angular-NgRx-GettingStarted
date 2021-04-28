@@ -1,7 +1,7 @@
 # Angular-ngrx-GettingStarted
 Materials for NgRx course.
 
-`APM-Demo0`: The starter files for this course. **Use this to code along with the course**.
+`APM-Demo0`: Here is a conflict.  The starter files for this course. **Use this to code along with the course**.
 
 `APM-Demo1`: Completed files after the *First Look at NgRx* module. It demonstrates a very simple NgRx example.
 
