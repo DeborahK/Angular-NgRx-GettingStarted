@@ -1,8 +1,6 @@
 # Angular-ngrx-GettingStarted
 Materials for NgRx course.
 
-`APM-Demo0`: The starter files for this course. **Use this to code along with the course**.
-
 `APM-Demo1`: Completed files after the *First Look at NgRx* module. It demonstrates a very simple NgRx example.
 
 `APM-Demo2`: Completed files after the *Strongly Typing Actions with Action Creators* module. It refactors the simple example to include developer tooling support and strong typing.
