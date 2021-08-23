@@ -48,7 +48,9 @@ export class ProductService {
   createProduct(product: Product): Observable<Product> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     // Product Id must be null for the Web API to assign an Id
-    const newProduct = { ...product, id: null };
+    // in case other products exist, in case all products are removed, an id different than null must be set
+    let productId = this.products.length===0? 1 : null;
+    const newProduct = { ...product, id: productId };
     return this.http.post<Product>(this.productsUrl, newProduct, { headers })
       .pipe(
         tap(data => console.log('createProduct: ' + JSON.stringify(data))),
