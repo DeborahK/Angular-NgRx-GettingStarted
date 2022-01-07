@@ -1,16 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-
-import { Observable } from 'rxjs';
-
 import { AuthService } from './auth.service';
-
-/* NgRx */
-import { Store } from '@ngrx/store';
-import { State } from '../state/app.state';
-import { getMaskUserName } from './state/user.reducer';
-import { UserPageActions } from './state/actions';
+import { UserStateFacadeService } from './state/user-state-facade.service';
 
 @Component({
     templateUrl: './login.component.html',
@@ -19,24 +11,20 @@ import { UserPageActions } from './state/actions';
 export class LoginComponent implements OnInit {
     pageTitle = 'Log In';
 
-    maskUserName$: Observable<boolean>;
-
     constructor(
-        private store: Store<State>,
         private authService: AuthService,
+        public userStateFacade: UserStateFacadeService,
         private router: Router
     ) {}
 
-    ngOnInit(): void {
-        this.maskUserName$ = this.store.select(getMaskUserName);
-    }
+    ngOnInit(): void {}
 
     cancel(): void {
         this.router.navigate(['welcome']);
     }
 
     checkChanged(): void {
-        this.store.dispatch(UserPageActions.maskUserName());
+        this.userStateFacade.maskUserName();
     }
 
     login(loginForm: NgForm): void {
