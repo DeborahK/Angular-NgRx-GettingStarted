@@ -1,17 +1,27 @@
-# Angular-ngrx-GettingStarted
-Materials for NgRx course.
+# NgStateManagementComparison
 
-`APM-Demo0`: The starter files for this course. **Use this to code along with the course**.
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.1.2.
 
-`APM-Demo1`: Completed files after the *First Look at NgRx* module. It demonstrates a very simple NgRx example.
+## Development server
 
-`APM-Demo2`: Completed files after the *Strongly Typing Actions with Action Creators* module. It refactors the simple example to include developer tooling support and strong typing.
+Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
-`APM-Demo3`: Completed files after the *Working with Effects* module. It adds an effect to retrieve data via http. NOTE: Once we move the data retrieval to actions and the store, the create, update, and delete operations no longer work. These features are implemented with the store in the next demo.
+## Code scaffolding
 
-`APM-Demo4`: Completed files after the *Performing Update Operations* module. It adds the code needed for create, update, and delete operations via http.
+Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
 
-`APM-Demo5`: Completed files after the *Architectural Considerations* module. It implements the container/presentational component pattern and the OnPush change detection strategy.
+## Build
 
-NOTE:
-- June 30, 2020: This code was modified to Angular version 9 and NgRx version 9. See the CHANGELOG.md file for details.
+Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+
+## Running unit tests
+
+Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+
+## Running end-to-end tests
+
+Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+
+## Further help
+
+To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
