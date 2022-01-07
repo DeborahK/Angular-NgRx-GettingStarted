@@ -4,15 +4,15 @@ import { mergeMap, map, catchError, concatMap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { ProductService } from '../product.service';
 
-import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { ProductPageActions, ProductApiActions } from './actions';
+import { Actions } from 'mini-rx-store';
+import {ofType} from 'ts-action-operators'
 
 @Injectable()
 export class ProductEffects {
     constructor(private actions$: Actions, private productService: ProductService) {}
 
-    loadProducts$ = createEffect(() => {
-        return this.actions$.pipe(
+    loadProducts$ = this.actions$.pipe(
             ofType(ProductPageActions.loadProducts),
             mergeMap(() =>
                 this.productService.getProducts().pipe(
@@ -21,10 +21,8 @@ export class ProductEffects {
                 )
             )
         );
-    });
 
-    updateProduct$ = createEffect(() => {
-        return this.actions$.pipe(
+    updateProduct$ = this.actions$.pipe(
             ofType(ProductPageActions.updateProduct),
             concatMap((action) =>
                 this.productService.updateProduct(action.product).pipe(
@@ -33,10 +31,8 @@ export class ProductEffects {
                 )
             )
         );
-    });
 
-    createProduct$ = createEffect(() => {
-        return this.actions$.pipe(
+    createProduct$ = this.actions$.pipe(
             ofType(ProductPageActions.createProduct),
             concatMap((action) =>
                 this.productService.createProduct(action.product).pipe(
@@ -45,10 +41,8 @@ export class ProductEffects {
                 )
             )
         );
-    });
 
-    deleteProduct$ = createEffect(() => {
-        return this.actions$.pipe(
+    deleteProduct$ = this.actions$.pipe(
             ofType(ProductPageActions.deleteProduct),
             mergeMap((action) =>
                 this.productService.deleteProduct(action.productId).pipe(
@@ -61,5 +55,4 @@ export class ProductEffects {
                 )
             )
         );
-    });
 }

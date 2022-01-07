@@ -17,9 +17,8 @@ import { PageNotFoundComponent } from './home/page-not-found.component';
 /* Feature Modules */
 import { UserModule } from './user/user.module';
 
-import { StoreModule } from '@ngrx/store';
-import { EffectsModule } from '@ngrx/effects';
 import { extModules } from './build-specifics';
+import { StoreModule } from 'mini-rx-store-ng';
 
 @NgModule({
     imports: [
@@ -29,7 +28,6 @@ import { extModules } from './build-specifics';
         UserModule,
         AppRoutingModule,
         StoreModule.forRoot({}),
-        EffectsModule.forRoot([]),
         extModules,
     ],
     declarations: [

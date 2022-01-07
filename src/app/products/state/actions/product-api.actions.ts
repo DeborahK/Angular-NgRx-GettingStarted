@@ -1,6 +1,6 @@
 import { Product } from '../../product';
 
-import { createAction, props } from '@ngrx/store';
+import { action as createAction, props } from 'ts-action';
 
 export const loadProductsSuccess = createAction(
     '[Product API] Load Success',

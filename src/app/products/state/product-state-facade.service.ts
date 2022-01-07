@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Store } from '@ngrx/store';
+import { Store } from 'mini-rx-store';
 import { Observable } from 'rxjs';
 import { Product } from '../product';
 import { getCurrentProduct, getError, getProducts, getShowProductCode } from './index';

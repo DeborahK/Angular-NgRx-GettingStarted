@@ -1,7 +1,8 @@
 // Homework
 import { User } from '../user';
 
-import { createReducer, on, createFeatureSelector, createSelector } from '@ngrx/store';
+import { createFeatureSelector, createSelector } from 'mini-rx-store';
+import { reducer as createReducer, on} from 'ts-action';
 import { UserPageActions } from './actions';
 
 // State for this feature (User)

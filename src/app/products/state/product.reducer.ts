@@ -1,6 +1,6 @@
 import { Product } from '../product';
 
-import { createReducer, on } from '@ngrx/store';
+import { reducer as createReducer, on } from 'ts-action';
 import { ProductApiActions, ProductPageActions } from './actions';
 
 // State for this feature (Product)
