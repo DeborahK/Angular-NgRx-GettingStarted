@@ -24,27 +24,27 @@ import { environment } from '../environments/environment';
 import { EffectsModule } from '@ngrx/effects';
 
 @NgModule({
-  imports: [
-    BrowserModule,
-    HttpClientModule,
-    HttpClientInMemoryWebApiModule.forRoot(ProductData),
-    UserModule,
-    AppRoutingModule,
-    StoreModule.forRoot({}),
-    StoreDevtoolsModule.instrument({
-      name: 'APM Demo App DevTools',
-      maxAge: 25,
-      logOnly: environment.production
-    }),
-    EffectsModule.forRoot([])
-  ],
-  declarations: [
-    AppComponent,
-    ShellComponent,
-    MenuComponent,
-    WelcomeComponent,
-    PageNotFoundComponent
-  ],
-  bootstrap: [AppComponent]
+    imports: [
+        BrowserModule,
+        HttpClientModule,
+        HttpClientInMemoryWebApiModule.forRoot(ProductData),
+        UserModule,
+        AppRoutingModule,
+        StoreModule.forRoot({}),
+        StoreDevtoolsModule.instrument({
+            name: 'APM Demo App DevTools',
+            maxAge: 25,
+            logOnly: environment.production,
+        }),
+        EffectsModule.forRoot([]),
+    ],
+    declarations: [
+        AppComponent,
+        ShellComponent,
+        MenuComponent,
+        WelcomeComponent,
+        PageNotFoundComponent,
+    ],
+    bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

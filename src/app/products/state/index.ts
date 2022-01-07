@@ -14,12 +14,12 @@ const getProductFeatureState = createFeatureSelector<ProductState>('products');
 
 export const getShowProductCode = createSelector(
     getProductFeatureState,
-    state => state.showProductCode
+    (state) => state.showProductCode
 );
 
 export const getCurrentProductId = createSelector(
     getProductFeatureState,
-    state => state.currentProductId
+    (state) => state.currentProductId
 );
 
 export const getCurrentProduct = createSelector(
@@ -32,20 +32,14 @@ export const getCurrentProduct = createSelector(
                 productName: '',
                 productCode: 'New',
                 description: '',
-                starRating: 0
+                starRating: 0,
             };
         } else {
-            return currentProductId ? state.products.find(p => p.id === currentProductId) : null;
+            return currentProductId ? state.products.find((p) => p.id === currentProductId) : null;
         }
     }
 );
 
-export const getProducts = createSelector(
-    getProductFeatureState,
-    state => state.products
-);
+export const getProducts = createSelector(getProductFeatureState, (state) => state.products);
 
-export const getError = createSelector(
-    getProductFeatureState,
-    state => state.error
-);
+export const getError = createSelector(getProductFeatureState, (state) => state.error);

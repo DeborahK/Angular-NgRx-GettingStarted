@@ -9,7 +9,7 @@ export class AuthService {
     currentUser: User | null;
     redirectUrl: string;
 
-    constructor() { }
+    constructor() {}
 
     isLoggedIn(): boolean {
         return !!this.currentUser;
@@ -22,7 +22,7 @@ export class AuthService {
         this.currentUser = {
             id: 2,
             userName,
-            isAdmin: false
+            isAdmin: false,
         };
     }
 
