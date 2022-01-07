@@ -13,7 +13,7 @@
                  for="productNameId">Product Name</label>
 
           <div class="col-md-9">
-            <input [ngClass]="{'is-invalid': displayMessage.productName }"
+            <input [ngClass]="{'is-invalid': displayMessage['productName'] }"
                    class="form-control"
                    id="productNameId"
                    type="text"
@@ -21,8 +21,8 @@
                    formControlName="productName"
                    (blur)="blur()" />
             <span class="invalid-feedback"
-                  *ngIf="displayMessage.productName">
-              {{displayMessage.productName}}
+                  *ngIf="displayMessage['productName']">
+              {{displayMessage['productName']}}
             </span>
           </div>
         </div>
@@ -32,7 +32,7 @@
                  for="productCodeId">Product Code</label>
 
           <div class="col-md-9">
-            <input [ngClass]="{'is-invalid': displayMessage.productCode}"
+            <input [ngClass]="{'is-invalid': displayMessage['productCode']}"
                    class="form-control"
                    id="productCodeId"
                    type="text"
@@ -40,8 +40,8 @@
                    formControlName="productCode"
                    (blur)="blur()" />
             <span class="invalid-feedback"
-                  *ngIf="displayMessage.productCode">
-              {{displayMessage.productCode}}
+                  *ngIf="displayMessage['productCode']">
+              {{displayMessage['productCode']}}
             </span>
           </div>
         </div>
@@ -51,15 +51,15 @@
                  for="starRatingId">Star Rating (1-5)</label>
 
           <div class="col-md-9">
-            <input [ngClass]="{'is-invalid': displayMessage.starRating}"
+            <input [ngClass]="{'is-invalid': displayMessage['starRating']}"
                    class="form-control"
                    id="starRatingId"
                    type="text"
                    placeholder="Rating"
                    formControlName="starRating" />
             <span class="invalid-feedback"
-                  *ngIf="displayMessage.starRating">
-              {{displayMessage.starRating}}
+                  *ngIf="displayMessage['starRating']">
+              {{displayMessage['starRating']}}
             </span>
           </div>
         </div>
@@ -69,7 +69,7 @@
                  for="descriptionId">Description</label>
 
           <div class="col-md-9">
-            <textarea [ngClass]="{'is-invalid': displayMessage.description}"
+            <textarea [ngClass]="{'is-invalid': displayMessage['description']}"
                       class="form-control"
                       id="descriptionId"
                       placeholder="Description"
@@ -77,8 +77,8 @@
                       formControlName="description">
             </textarea>
             <span class="invalid-feedback"
-                  *ngIf="displayMessage.description">
-              {{ displayMessage.description}}
+                  *ngIf="displayMessage['description']">
+              {{ displayMessage['description']}}
             </span>
           </div>
         </div>

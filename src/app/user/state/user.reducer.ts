@@ -8,7 +8,7 @@ import { UserPageActions } from './actions';
 // State for this feature (User)
 export interface UserState {
   maskUserName: boolean;
-  currentUser: User;
+  currentUser: User | null;
 }
 
 const initialState: UserState = {

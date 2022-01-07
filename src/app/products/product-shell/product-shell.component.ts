@@ -14,7 +14,7 @@ import { ProductPageActions } from '../state/actions';
 })
 export class ProductShellComponent implements OnInit {
   displayCode$: Observable<boolean>;
-  selectedProduct$: Observable<Product>;
+  selectedProduct$: Observable<Product | undefined | null>;
   products$: Observable<Product[]>;
   errorMessage$: Observable<string>;
 
@@ -47,11 +47,11 @@ export class ProductShellComponent implements OnInit {
   }
 
   productSelected(product: Product): void {
-    this.store.dispatch(ProductPageActions.setCurrentProduct({ currentProductId: product.id }));
+    this.store.dispatch(ProductPageActions.setCurrentProduct({ currentProductId: product.id! }));
   }
 
   deleteProduct(product: Product): void {
-    this.store.dispatch(ProductPageActions.deleteProduct({ productId: product.id }));
+    this.store.dispatch(ProductPageActions.deleteProduct({ productId: product.id! }));
   }
 
   clearProduct(): void {

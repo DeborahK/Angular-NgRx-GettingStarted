@@ -72,8 +72,8 @@ export class ProductEditComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     // patch form with value from the store
-    if (changes.selectedProduct) {
-      const product = changes.selectedProduct.currentValue as Product;
+    if (changes['selectedProduct']) {
+      const product = changes['selectedProduct'].currentValue as Product;
       this.displayProduct(product);
     }
   }
