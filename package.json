@@ -5,6 +5,8 @@
         "ng": "ng",
         "start": "ng serve",
         "build": "ng build",
+        "build:sourcemap": "ng build --source-map",
+        "build:stats": "npm run build:sourcemap && source-map-explorer dist/**/*.js",
         "watch": "ng build --watch --configuration development",
         "test": "ng test",
         "pretty-quick": "pretty-quick"
@@ -43,7 +45,8 @@
         "angular-in-memory-web-api": "^0.13.0",
         "prettier": "^2.3.2",
         "pretty-quick": "^2.0.1",
-        "husky": "^4.3.8"
+        "husky": "^4.3.8",
+        "source-map-explorer": "^2.5.2"
     },
     "husky": {
         "hooks": {
