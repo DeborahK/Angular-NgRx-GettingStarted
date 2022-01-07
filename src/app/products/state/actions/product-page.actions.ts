@@ -1,6 +1,5 @@
 import { Product } from '../../product';
 
-/* NgRx */
 import { createAction, props } from '@ngrx/store';
 
 export const toggleProductCode = createAction('[Product Page] Toggle Product Code');

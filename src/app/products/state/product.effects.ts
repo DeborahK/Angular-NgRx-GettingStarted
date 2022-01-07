@@ -4,7 +4,6 @@ import { mergeMap, map, catchError, concatMap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { ProductService } from '../product.service';
 
-/* NgRx */
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { ProductPageActions, ProductApiActions } from './actions';
 

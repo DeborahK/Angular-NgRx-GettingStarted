@@ -1,7 +1,6 @@
 // Homework
 import { User } from '../user';
 
-/* NgRx */
 import { createReducer, on, createFeatureSelector, createSelector } from '@ngrx/store';
 import { UserPageActions } from './actions';
 

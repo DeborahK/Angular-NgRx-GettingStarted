@@ -1,6 +1,5 @@
 import { Product } from '../product';
 
-/* NgRx */
 import { createReducer, on } from '@ngrx/store';
 import { ProductApiActions, ProductPageActions } from './actions';
 
