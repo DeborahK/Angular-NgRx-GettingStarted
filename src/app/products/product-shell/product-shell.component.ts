@@ -6,18 +6,18 @@ import { ProductStateFacadeService } from '../state/product-state-facade.service
     templateUrl: './product-shell.component.html',
 })
 export class ProductShellComponent implements OnInit {
-   constructor(public productState: ProductStateFacadeService) {}
+    constructor(public productState: ProductStateFacadeService) {}
 
     ngOnInit(): void {
         this.productState.loadProducts();
     }
 
     checkChanged(): void {
-      this.productState.toggleProductCode();
+        this.productState.toggleProductCode();
     }
 
     newProduct(): void {
-       this.productState.initializeCurrentProduct();
+        this.productState.initializeCurrentProduct();
     }
 
     productSelected(product: Product): void {
@@ -25,18 +25,18 @@ export class ProductShellComponent implements OnInit {
     }
 
     deleteProduct(product: Product): void {
-      this.deleteProduct(product);
+        this.productState.deleteProduct(product);
     }
 
     clearProduct(): void {
-      this.productState.clearCurrentProduct();
+        this.productState.clearCurrentProduct();
     }
 
     saveProduct(product: Product): void {
-this.productState.createProduct(product);
+        this.productState.createProduct(product);
     }
 
     updateProduct(product: Product): void {
-this.productState.updateProduct(product)
+        this.productState.updateProduct(product);
     }
 }
